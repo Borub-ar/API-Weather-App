@@ -1,0 +1,35 @@
+:root {
+    --bg-gradient: linear-gradient(#892b64, #1780a1);
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+    font-family: 'Oswald', sans-serif;
+    background: var(--bg-gradient);
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+/* Top Bar / Header   */
+
+.top_bar {
+    background: #023153;
+}
+
+.top__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    color: white;
+}
+
+.main_header {
+    font-weight: 200;
+}
