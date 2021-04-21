@@ -1,13 +1,11 @@
 :root {
-    --bg-gradient: linear-gradient(#892b64, #1780a1);
-    --dark-blue-background: #023153;
+    --dark-blue-background: #143c58;
 }
 
 body {
-    height: 100vh;
     margin: 0;
     font-family: 'Oswald', sans-serif;
-    background: var(--bg-gradient);
+    background: rgb(107, 107, 236);
 }
 
 *,
@@ -16,24 +14,54 @@ body {
     box-sizing: border-box;
 }
 
+*:focus {
+    outline: none;
+}
+
+p,
+h1,
+h2,
+h3 {
+    padding: 0;
+    margin: 0;
+}
+
+/* Utilities  */
+
+.d-flex {
+    display: flex;
+}
+
+.bold_txt {
+    font-weight: 700;
+}
 
 /* Top Bar / Header */
 
 .top_bar {
     background: var(--dark-blue-background);
-    border-radius: 0 0 1rem 1rem;
+    position: fixed;
+    width: 100%;
+    z-index: 99999;
+    box-shadow: 0px 0px 32px -4px rgb(143, 180, 228);
 }
 
 .top__inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 90%;
+    width: clamp(1rem, 90%, 95rem);
+    padding: .7rem 0;
     margin: 0 auto;
     color: white;
 }
 
 .main_header {
+    font-weight: 200;
+}
+
+.date {
+    font-size: 1.7rem;
     font-weight: 200;
 }
 
@@ -93,20 +121,61 @@ body {
 
 .main_section {
     position: relative;
-    width: clamp(15em, 80vw, 90rem);
-    border-radius: 1rem;
-    margin-top: 3rem;
-    height: 500px;
-    background: var(--dark-blue-background);
+    width: clamp(15em, 70vw, 90rem);
+    margin: 8rem 0 3rem;
 }
 
 .top_screen {
-    height: 50%;
+    height: 40%;
     border-radius: 1rem 1rem 0 0;
 }
 
-.search_bar {
-    padding: 1rem 0;
-    width: 90%;
-    margin: 0 auto;
+.city_info {
+    position: relative;
+    background: url(img/eva-dang-EXdXLrZXS9Q-unsplash.jpg) center no-repeat;
+    background-size: cover;
+    border-bottom: 10px solid white;
+    padding: 7rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.city_info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.455);
+    border-radius: 1rem 1rem 0 0;
+}
+
+.name,
+.info {
+    position: relative;
+    z-index: 800;
+    color: white;
+}
+
+.info {
+  width: 20%;
+  text-align: center;
+}
+
+.temp {
+    font-size: 4rem;
+}
+
+.name {
+    width: 40%;
+    font-size: 3.5rem;
+    text-align: center;
+}
+
+.bottom_screen {
+    background: rgb(255, 255, 255);
+    height: 200px;
+    border-radius: 0 0 1rem 1rem;
 }

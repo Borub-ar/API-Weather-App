@@ -16,8 +16,8 @@
     <header class="top_bar">
 
         <div class="top__inner">
-            <h1 class="main_header">Simple Weather App</h1>
-            <p>Day, Year, month</p>
+            <h1 class="main_header"><span class="bold_txt">Simple Weather</span> App</h1>
+            <p class="date"><span class="bold_txt">Day</span>, Year, month</p>
             <span class="toggle_btn"></span>
         </div>
 
@@ -37,9 +37,20 @@
 
         <div class="main_section">
             <div class="top_screen">
-                <div class="search_bar">
-                    <label for="city_search">Enter city name</label>
-                    <input type="search" name="" id="city_search">
+                <div class="city_info">
+                    <div class="info">
+                        <p class="temp">12</p>
+                        <p>Wind</p>
+
+                        <div class="d-flex">
+                            <p>Fog</p>
+                            <p>Humidity.</p>
+                        </div>
+                    </div>
+
+                    <div class="name">
+                        <p>London</p>
+                    </div>
                 </div>
             </div>
 
@@ -49,7 +60,6 @@
         </div>
 
     </main>
-
 
     <script src="app.js"></script>
 </body>
