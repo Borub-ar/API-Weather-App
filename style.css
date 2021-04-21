@@ -1,5 +1,6 @@
 :root {
     --bg-gradient: linear-gradient(#892b64, #1780a1);
+    --dark-blue-background: #023153;
 }
 
 body {
@@ -15,10 +16,12 @@ body {
     box-sizing: border-box;
 }
 
-/* Top Bar / Header   */
+
+/* Top Bar / Header */
 
 .top_bar {
-    background: #023153;
+    background: var(--dark-blue-background);
+    border-radius: 0 0 1rem 1rem;
 }
 
 .top__inner {
@@ -32,4 +35,78 @@ body {
 
 .main_header {
     font-weight: 200;
+}
+
+.toggle_btn {
+    position: relative;
+    display: block;
+    height: 4px;
+    width: 30px;
+    background: white;
+    border-radius: 1rem;
+} 
+
+.toggle_btn::after,
+.toggle_btn::before {
+    content: '';
+    position: absolute;
+    display: block;
+    height: 4px;
+    width: 30px;
+    background: white;
+    border-radius: 1rem;
+}
+
+.toggle_btn::after {
+    top: .5rem;
+}
+
+.toggle_btn::before {
+    bottom: .5rem;
+}
+
+/* Aside  */
+
+.aside_nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 30%;
+    height: 100%;
+    background: white;
+    transform: translate(-100%);
+    transition: transform .25s linear;
+}
+
+.aside_show {
+    transform: translate(0);
+}
+
+/* Main */
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main_section {
+    position: relative;
+    width: clamp(15em, 80vw, 90rem);
+    border-radius: 1rem;
+    margin-top: 3rem;
+    height: 500px;
+    background: var(--dark-blue-background);
+}
+
+.top_screen {
+    height: 50%;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.search_bar {
+    padding: 1rem 0;
+    width: 90%;
+    margin: 0 auto;
 }

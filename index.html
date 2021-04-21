@@ -5,20 +5,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Aplication</title>
+    <title>Simple Weather Aplication</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <!-- Header -->
     <header class="top_bar">
+
         <div class="top__inner">
-            <h1 class="main_header">Weather App</h1>
-            <p>Current day</p>
-            <button>Toggle Menu Button</button>
+            <h1 class="main_header">Simple Weather App</h1>
+            <p>Day, Year, month</p>
+            <span class="toggle_btn"></span>
         </div>
+
     </header>
+
+    <!-- Aside menu -->
+    <aside>
+
+        <nav class="aside_nav">
+
+        </nav>
+
+    </aside>
+
+    <!-- Main section -->
+    <main class="wrapper">
+
+        <div class="main_section">
+            <div class="top_screen">
+                <div class="search_bar">
+                    <label for="city_search">Enter city name</label>
+                    <input type="search" name="" id="city_search">
+                </div>
+            </div>
+
+            <div class="bottom_screen">
+
+            </div>
+        </div>
+
+    </main>
 
 
     <script src="app.js"></script>
