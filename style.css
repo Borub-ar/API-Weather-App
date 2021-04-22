@@ -188,28 +188,44 @@ h3 {
 }
 
 .search {
+    position: relative;
     background-color: var(--dark-blue-background);
     display: flex;
     justify-content: center;
+    align-items: center;
     text-align: center;
     padding: .7rem 0;
+    color: white;
+    font-weight: 200;
+    font-size: 1.3rem;
 }
 
 input[type="search"] {
-    margin-left: 2rem;
+    margin: 0 2rem;
     width: clamp(10rem, 30%, 30rem);
     padding: .4rem;
     border-radius: .4rem;
-    font-size: 1.2 rem;
-    font-weight: 700;
     color: rgb(104, 104, 104);
     border: none;
 }
 
 label[for="search"] {
-    color: white;
     font-size: 1.3rem;
     font-weight: 200;
+}
+
+.search_button {
+    font-size: 1rem;
+}
+
+.options_container {
+    position: absolute;
+    right: 3rem;
+    display: flex;
+}
+
+.seven_days {
+    margin-right: 1rem;
 }
 
 ::placeholder {
@@ -218,7 +234,7 @@ label[for="search"] {
 
 .bottom_menu {
     padding: 2rem .5rem;
-    background: rgba(231, 231, 231, 0.664);
+    background: rgba(255, 255, 255, 0.664);
     border-radius: 0 0 1rem 1rem;
     display: flex;
 }

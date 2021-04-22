@@ -21,6 +21,8 @@
             <span class="toggle_btn"></span>
         </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     </header>
 
     <!-- Aside menu -->
@@ -38,7 +40,7 @@
         <div class="main_section">
             <div class="city_photo">
                 <div class="info">
-                    <p class="temp">12</p>
+                    <p class="temp">12 &#176;C</p>
                     <p>Wind</p>
 
                     <div class="d-flex">
@@ -53,8 +55,14 @@
             </div>
 
             <div class="search">
+                <div class="options_container">
+                    <p class="seven_days">Seven Days</p>
+                    <p class="hours">Hourly</p>
+                </div>
+
                 <label for="search">Enter city name</label>
-                <input type="search" name="search" id="search" placeholder="City name">
+                <input type="search" id="search" placeholder="City name">
+                <button class="search_button">Search</button>
             </div>
 
             <div class="bottom_menu">
@@ -65,36 +73,43 @@
                 <div class="right">
                     <div class="day">
                         <p>MON</p>
+                        <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
                         <p class="icon_temp">30 &#176;C</p>
                     </div>
 
                     <div class="day">
                         <p>TUE</p>
+                        <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
                         <p class="icon_temp">24 &#176;C</p>
                     </div>
 
                     <div class="day">
                         <p>WED</p>
+                        <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
                         <p class="icon_temp">20 &#176;C</p>
                     </div>
 
                     <div class="day">
                         <p>THU</p>
+                        <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
                         <p class="icon_temp">27 &#176;C</p>
                     </div>
 
                     <div class="day">
                         <p>FRI</p>
+                        <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
                         <p class="icon_temp">20 &#176;C</p>
                     </div>
 
                     <div class="day">
                         <p>SAT</p>
+                        <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
                         <p class="icon_temp">25 &#176;C</p>
                     </div>
 
                     <div class="day">
                         <p>SUN</p>
+                        <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
                         <p class="icon_temp">22 &#176;C</p>
                     </div>
                 </div>
