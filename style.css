@@ -172,7 +172,6 @@ h3 {
 
 .name,
 .info {
-    position: relative;
     z-index: 800;
     color: white;
     text-align: center;
@@ -213,7 +212,8 @@ h3 {
 }
 
 .temp {
-    font-size: 4rem;
+    font-size: clamp(2rem, 5vw, 5rem);
+    font-weight: 200;
 }
 
 .current_weather_icon{
@@ -280,6 +280,17 @@ label[for="search"] {
 
 .seven_days {
     margin-right: 1rem;
+    cursor: pointer;
+    transition: transform .2s linear;
+}
+
+.hours {
+    cursor: pointer;
+    transition: transform .2s linear;
+}
+
+.hours:hover, .seven_days:hover {
+    transform: scale(1.2);
 }
 
 ::placeholder {
@@ -287,6 +298,7 @@ label[for="search"] {
 }
 
 .bottom_menu {
+    position: relative;
     padding: 2rem .5rem;
     background: rgba(255, 255, 255, 0.664);
     border-radius: 0 0 1rem 1rem;
@@ -295,10 +307,11 @@ label[for="search"] {
 
 .left {
     flex: 3;
+    min-width: 15rem;
 }
 
 .right {
-    flex: 5;
+    flex: 6;
     display: flex;
 }
 
@@ -319,7 +332,11 @@ label[for="search"] {
     box-shadow: 0px 0px 28px -4px #000000;
 }
 
+.day img {
+    height: clamp(2rem, 5vw, 6rem);
+}
+
 .icon_temp {
     color: rgb(82, 82, 82);
-    font-size: clamp(1rem, 2.1vw, 2rem);
+    font-size: clamp(1rem, 1.8vw, 2rem);
 }
