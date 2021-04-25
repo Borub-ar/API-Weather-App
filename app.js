@@ -10,7 +10,6 @@ toggleBtn.addEventListener('click', () => {
 const searchBtn = document.querySelector('.search_button');
 const searchCity = document.querySelector('#search');
 
-
 searchBtn.addEventListener('click', async () => {
     const cityInf = await currentWeather();
     const bgPhoto = await bgImage();
@@ -64,23 +63,24 @@ const bgImage = async () => {
 // ///////////////Seven days forecast 
 const sevenDaysWeth = async () => {
     try {
-        config = { params: { key: '4c1299c9ae164edd8cb6e247728e94af', days: 7, city: searchCity.value } };
+        config = { params: { key: '4c1299c9ae164edd8cb6e247728e94af', days: 8, city: searchCity.value } };
         const res = await axios.get('http://api.weatherbit.io/v2.0/forecast/daily', config);
         return res.data.data
-    } catch(e) {
+    } catch (e) {
         console.log(e);
     };
 };
 
+const days = document.querySelectorAll('.day');
+
 const forecastSeven = async () => {
-    const days = document.querySelectorAll('.day');
     const dayInfo = await sevenDaysWeth();
-    console.log(dayInfo);
 
     for (let [index, day] of days.entries()) {
-        day.children[0].innerText = dayInfo[index].datetime;
-        day.children[1].src = `https://www.weatherbit.io/static/img/icons/${dayInfo[index].weather.icon}.png`;
-        day.children[2].children[0].innerText = dayInfo[index].temp;
+        day.children[0].innerText = dayInfo[index + 1].datetime.substr(5).replace('-', '.')
+        day.children[1].src = `https://www.weatherbit.io/static/img/icons/${dayInfo[index + 1].weather.icon}.png`;
+        day.children[2].children[0].innerText = dayInfo[index + 1].temp;
     };
 };
 
+// //////////////////////////Information about single day from seven days forecast
