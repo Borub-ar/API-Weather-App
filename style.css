@@ -94,7 +94,7 @@ h3 {
     width: 30px;
     background: white;
     border-radius: 1rem;
-} 
+}
 
 .toggle_btn::after,
 .toggle_btn::before {
@@ -197,10 +197,10 @@ h3 {
 }
 
 .info {
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .weather_descr {
@@ -216,10 +216,10 @@ h3 {
     font-weight: 200;
 }
 
-.current_weather_icon{
+.current_weather_icon {
     height: 4rem;
     width: 4rem;
-} 
+}
 
 .bottom_screen {
     background: rgb(255, 255, 255);
@@ -289,7 +289,8 @@ label[for="search"] {
     transition: transform .2s linear;
 }
 
-.hours:hover, .seven_days:hover {
+.hours:hover,
+.seven_days:hover {
     transform: scale(1.2);
 }
 
@@ -303,6 +304,22 @@ label[for="search"] {
     background: rgba(255, 255, 255, 0.664);
     border-radius: 0 0 1rem 1rem;
     display: flex;
+}
+
+.hourly_forecast {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999999;
+    padding: 2rem .5rem;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 255);
+    border-radius: 0 0 1rem 1rem;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(12, 1fr);
+    gap: .5rem;
 }
 
 .left {
