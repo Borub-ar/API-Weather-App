@@ -54,8 +54,12 @@ h3 {
     border-radius: 1rem 1rem 0 0;
 }
 
-.d-flex {
+.d_flex {
     display: flex;
+}
+
+.d_none {
+    display: none;
 }
 
 /*/////////////////////////////////////////////////////////////////// Top Bar / Header */
@@ -304,6 +308,7 @@ label[for="search"] {
     background: rgba(255, 255, 255, 0.664);
     border-radius: 0 0 1rem 1rem;
     display: flex;
+    overflow: hidden;
 }
 
 .hourly_forecast {
@@ -314,22 +319,40 @@ label[for="search"] {
     padding: 2rem .5rem;
     width: 100%;
     height: 100%;
-    background-color: rgb(0, 0, 255);
     border-radius: 0 0 1rem 1rem;
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: repeat(12, 1fr);
     gap: .5rem;
+    transform: translate(100%);
+    transition: transform .5s linear;
+}
+
+.weather_card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+}
+
+.weather_card img {
+    width: 4rem;
+    height: 4rem;
 }
 
 .left {
     flex: 3;
     min-width: 15rem;
+    height: 8rem;
 }
 
 .right {
+    position: absolute;
+    right: .5rem;
     flex: 6;
     display: flex;
+    transition: transform .5s linear;
 }
 
 .day {
