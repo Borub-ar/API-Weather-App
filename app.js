@@ -8,13 +8,13 @@ toggleBtn.addEventListener('click', () => {
     asideNav.classList.toggle('aside_show');
 });
 
-// /////////////////////////////////////////////////// Current weather request 
+// ///////////////////////////////////////////////////Weather request 
 const searchBtn = document.querySelector('.search_button');
 const searchCity = document.querySelector('#search');
 
 searchBtn.addEventListener('click', async () => {
     const cityInf = await currentWeather();
-    const bgPhoto = await bgImage();
+    // const bgPhoto = await bgImage();
     await sevenDayForecast();
     const hForecast = await hourlyForecast();
     makeHourlyIcons(hForecast);
@@ -27,7 +27,7 @@ searchBtn.addEventListener('click', async () => {
     const descr = document.querySelector('.weather_descr');
     const sunrise = document.querySelector('.sunrise_span');
     const sunset = document.querySelector('.sunset_span');
-    const cityPhoto = document.querySelector('.city_photo');
+    // const cityPhoto = document.querySelector('.city_photo');
 
 
     mainTemp.innerText = cityInf.temp;
@@ -36,7 +36,7 @@ searchBtn.addEventListener('click', async () => {
     descr.innerText = cityInf.weather.description;
     sunrise.innerText = cityInf.sunrise;
     sunset.innerText = cityInf.sunset;
-    cityPhoto.style.backgroundImage = `url(${bgPhoto})`;
+    // cityPhoto.style.backgroundImage = `url(${bgPhoto})`;
 });
 
 // //////////////Current weather in searched city - function 
@@ -58,23 +58,23 @@ const currentWeather = async () => {
 };
 
 // /////////////////Current city background image - function
-const bgImage = async () => {
-    try {
-        const config = {
-            params: {
-                client_id: 'hpthTi3lgM1vdtMHcfvAiW-hFUjaLHYCSAtG4y-Er-I',
-                query: searchCity.value,
-                per_page: 1
-            }
-        };
+// const bgImage = async () => {
+//     try {
+//         const config = {
+//             params: {
+//                 client_id: 'hpthTi3lgM1vdtMHcfvAiW-hFUjaLHYCSAtG4y-Er-I',
+//                 query: searchCity.value,
+//                 per_page: 1
+//             }
+//         };
 
-        const res = await axios.get('https://api.unsplash.com/search/photos', config);
-        const resData = res.data.results[0].urls.full;
-        return resData
-    } catch (err) {
-        console.log(err)
-    };
-};
+//         const res = await axios.get('https://api.unsplash.com/search/photos', config);
+//         const resData = res.data.results[0].urls.full;
+//         return resData
+//     } catch (err) {
+//         console.log(err)
+//     };
+// };
 
 
 // ///////////////Seven days forecast 
@@ -117,29 +117,49 @@ const hourlyForecast = async () => {
                 hours: 12
             }
         };
-        
+
         const res = await axios.get('https://api.weatherbit.io/v2.0/forecast/hourly', config);
         console.log(res.data.data);
         return res.data.data
-    } catch(e) {
+    } catch (e) {
         console.log(e);
     };
 };
 
+
 const makeHourlyIcons = (dataAPI) => {
-    const forecastPanel = document.querySelector('.hourly_forecast')
 
     for (const hour of dataAPI) {
-        // const weatherIcon = dataAPI.weather.icon;
-        // const weatherDescr = dataAPI.weather.description;
-        // const time = dataApi.datetime;
 
         const weatherCard = document.createElement('div');
         weatherCard.classList.add('weather_card');
-        forecastPanel.append(weatherCard);
+        hourForecastPanel.append(weatherCard);
 
-        const datetime = document.createElement('p')
-        datetime.innerText = hour.datetime;
-        weatherCard.append(datetime)
+        const datetime = document.createElement('p');
+        datetime.innerText = `${hour.datetime.substr(11)}:00`;
+
+        const weatherIcon = document.createElement('img');
+        weatherIcon.src = `https://www.weatherbit.io/static/img/icons/${hour.weather.icon}.png`;
+
+        const weatherDescr = document.createElement('p');
+        weatherDescr.innerText = hour.weather.description;
+
+        weatherCard.append(datetime, weatherIcon, weatherDescr);
     };
 };
+
+// ///////////////////////////////////////////Toggle forecast type
+const sevenDaysBtn = document.querySelector('.seven_days');
+const hourlyBtn = document.querySelector('.hours');
+const sevenDaysPanel = document.querySelector('.right');
+const hourForecastPanel = document.querySelector('.hourly_forecast')
+
+sevenDaysBtn.addEventListener('click', () => {
+    sevenDaysPanel.style.transform = 'translate(0)';
+    hourForecastPanel.style.transform = 'translate(100%)';
+});
+
+hourlyBtn.addEventListener('click', () => {
+    sevenDaysPanel.style.transform = 'translate(-200%)';
+    hourForecastPanel.style.transform = 'translate(0)';
+})
