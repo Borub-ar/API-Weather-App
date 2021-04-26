@@ -1,6 +1,8 @@
+'use strict';
+
 // //////////////////////////////////////////////////////////Aside toggle menu 
 const toggleBtn = document.querySelector('.toggle_btn');
-
+``
 toggleBtn.addEventListener('click', () => {
     const asideNav = document.querySelector('.aside_nav');
     asideNav.classList.toggle('aside_show');
@@ -13,7 +15,9 @@ const searchCity = document.querySelector('#search');
 searchBtn.addEventListener('click', async () => {
     const cityInf = await currentWeather();
     const bgPhoto = await bgImage();
-    await forecastSeven()
+    await sevenDayForecast();
+    const hForecast = await hourlyForecast();
+    makeHourlyIcons(hForecast);
 
     searchCity.value = '';
 
@@ -38,9 +42,15 @@ searchBtn.addEventListener('click', async () => {
 // //////////////Current weather in searched city - function 
 const currentWeather = async () => {
     try {
-        const config = { params: { city: searchCity.value, key: '4c1299c9ae164edd8cb6e247728e94af' } };
+        const config = {
+            params: {
+                city: searchCity.value,
+                key: '4c1299c9ae164edd8cb6e247728e94af'
+            }
+        };
+
         const res = await axios.get('http://api.weatherbit.io/v2.0/current', config);
-        resData = res.data.data[0]
+        const resData = res.data.data[0]
         return resData
     } catch (err) {
         console.log(err);
@@ -50,9 +60,16 @@ const currentWeather = async () => {
 // /////////////////Current city background image - function
 const bgImage = async () => {
     try {
-        const config = { params: { client_id: 'hpthTi3lgM1vdtMHcfvAiW-hFUjaLHYCSAtG4y-Er-I', query: searchCity.value, per_page: 1 } };
+        const config = {
+            params: {
+                client_id: 'hpthTi3lgM1vdtMHcfvAiW-hFUjaLHYCSAtG4y-Er-I',
+                query: searchCity.value,
+                per_page: 1
+            }
+        };
+
         const res = await axios.get('https://api.unsplash.com/search/photos', config);
-        resData = res.data.results[0].urls.full;
+        const resData = res.data.results[0].urls.full;
         return resData
     } catch (err) {
         console.log(err)
@@ -63,7 +80,14 @@ const bgImage = async () => {
 // ///////////////Seven days forecast 
 const sevenDaysWeth = async () => {
     try {
-        config = { params: { key: '4c1299c9ae164edd8cb6e247728e94af', days: 8, city: searchCity.value } };
+        const config = {
+            params: {
+                key: '4c1299c9ae164edd8cb6e247728e94af',
+                days: 8,
+                city: searchCity.value
+            }
+        };
+
         const res = await axios.get('http://api.weatherbit.io/v2.0/forecast/daily', config);
         return res.data.data
     } catch (e) {
@@ -71,9 +95,9 @@ const sevenDaysWeth = async () => {
     };
 };
 
-const days = document.querySelectorAll('.day');
 
-const forecastSeven = async () => {
+const sevenDayForecast = async () => {
+    const days = document.querySelectorAll('.day');
     const dayInfo = await sevenDaysWeth();
 
     for (let [index, day] of days.entries()) {
@@ -83,4 +107,39 @@ const forecastSeven = async () => {
     };
 };
 
-// //////////////////////////Information about single day from seven days forecast
+// //////////////////////////Hourly forecast in searched city - function
+const hourlyForecast = async () => {
+    try {
+        const config = {
+            params: {
+                key: '4c1299c9ae164edd8cb6e247728e94af',
+                city: searchCity.value,
+                hours: 12
+            }
+        };
+        
+        const res = await axios.get('https://api.weatherbit.io/v2.0/forecast/hourly', config);
+        console.log(res.data.data);
+        return res.data.data
+    } catch(e) {
+        console.log(e);
+    };
+};
+
+const makeHourlyIcons = (dataAPI) => {
+    const forecastPanel = document.querySelector('.hourly_forecast')
+
+    for (const hour of dataAPI) {
+        // const weatherIcon = dataAPI.weather.icon;
+        // const weatherDescr = dataAPI.weather.description;
+        // const time = dataApi.datetime;
+
+        const weatherCard = document.createElement('div');
+        weatherCard.classList.add('weather_card');
+        forecastPanel.append(weatherCard);
+
+        const datetime = document.createElement('p')
+        datetime.innerText = hour.datetime;
+        weatherCard.append(datetime)
+    };
+};
