@@ -74,7 +74,7 @@ h3 {
 
 .top__inner {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     width: clamp(1rem, 90%, 95rem);
     padding: .7rem 0;
@@ -89,34 +89,6 @@ h3 {
 .date {
     font-size: 1.7rem;
     font-weight: 200;
-}
-
-.toggle_btn {
-    position: relative;
-    display: block;
-    height: 4px;
-    width: 30px;
-    background: white;
-    border-radius: 1rem;
-}
-
-.toggle_btn::after,
-.toggle_btn::before {
-    content: '';
-    position: absolute;
-    display: block;
-    height: 4px;
-    width: 30px;
-    background: white;
-    border-radius: 1rem;
-}
-
-.toggle_btn::after {
-    top: .5rem;
-}
-
-.toggle_btn::before {
-    bottom: .5rem;
 }
 
 /*/////////////////////////////////////////////////////////////// Aside  */
@@ -201,7 +173,7 @@ h3 {
 }
 
 .info {
-    width: 30%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -216,7 +188,7 @@ h3 {
 }
 
 .temp {
-    font-size: clamp(2rem, 5vw, 5rem);
+    font-size: clamp(2rem, 4vw, 5rem);
     font-weight: 200;
 }
 
@@ -240,6 +212,7 @@ h3 {
     color: white;
     font-weight: 200;
     font-size: 1.3rem;
+    border-radius: 0 0 1rem 1rem;
 }
 
 input[type="search"] {
@@ -309,6 +282,9 @@ label[for="search"] {
     border-radius: 0 0 1rem 1rem;
     display: flex;
     overflow: hidden;
+    transform: scale(1, 0);
+    transform-origin: top;
+    transition: transform 1s ease;
 }
 
 .hourly_forecast {
@@ -324,14 +300,14 @@ label[for="search"] {
     grid-template-rows: 1fr;
     grid-template-columns: repeat(12, 1fr);
     gap: .5rem;
-    transform: translate(100%);
-    transition: transform .5s linear;
+    transform: translate(0, 100%);
+    transition: transform .9s ease-in-out;
 }
 
 .weather_card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     text-align: center;
     align-items: center;
 }
@@ -342,17 +318,17 @@ label[for="search"] {
 }
 
 .left {
-    flex: 3;
     min-width: 15rem;
-    height: 8rem;
+    height: 6.5rem;
 }
 
 .right {
     position: absolute;
     right: .5rem;
-    flex: 6;
+    top: 0.5rem;
+    width: 80%;
     display: flex;
-    transition: transform .5s linear;
+    transition: transform .9s ease-in-out;
 }
 
 .day {
@@ -365,7 +341,8 @@ label[for="search"] {
     flex-direction: column;
     align-items: center;
     flex: 1;
-    transition: box-shadow .2s linear;
+    transform: scale(0);
+    transition: box-shadow .2s linear, transform .2s ease-in;
 }
 
 .day:hover {
