@@ -29,27 +29,21 @@ h3 {
 
 /* //////////////////////////////////////////////////////////////////////// Animations  */
 
-@keyframes zoom {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.2);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
 @keyframes slide_in {
     0% {
         transform: translate(100%);
     }
-
     100% {
         transform: translate(0);
+    }
+}
+
+@keyframes slide_out {
+    0% {
+        transform: translate(0);
+    }
+    100% {
+        transform: translate(-100%);
     }
 }
 
@@ -118,13 +112,11 @@ h3 {
 }
 
 .city_photo {
-    background: url(img/eva-dang-EXdXLrZXS9Q-unsplash.jpg) center no-repeat;
+    background: url(img/egidijus-bielskis-8zBouQ1rpxw-unsplash.jpg) center no-repeat;
     background-size: cover;
     padding: 7rem 4rem;
     display: flex;
     justify-content: space-between;
-    border-radius: 1rem 1rem 0 0;
-    animation: zoom 60s infinite linear;
 }
 
 .pos_absolute,
@@ -136,12 +128,12 @@ h3 {
     left: 0;
 }
 
-.slide_right {
-    transform: translate(100%);
+.slide_in {
+    animation: slide_in 3s forwards ease-in-out;
 }
 
-.slide_in {
-    animation: slide_in 3s forwards;
+.slide_out {
+    animation: slide_out 3s forwards ease-in-out;
 }
 
 .city_photo::before {
