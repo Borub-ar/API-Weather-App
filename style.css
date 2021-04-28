@@ -7,6 +7,7 @@ body {
     font-family: 'Oswald', sans-serif;
     background: url(img/egor-myznik-yLO8daz0dzA-unsplash.jpg) center no-repeat fixed;
     background-size: cover;
+    font-weight: 200;
 }
 
 *,
@@ -87,7 +88,6 @@ h3 {
 
 .date {
     font-size: 1.7rem;
-    font-weight: 200;
 }
 
 /*////////////////////////////////////////////////////////////// Main */
@@ -114,12 +114,21 @@ h3 {
 .city_photo {
     background: url(img/egidijus-bielskis-8zBouQ1rpxw-unsplash.jpg) center no-repeat;
     background-size: cover;
+    height: 100%;
     padding: 7rem 4rem;
     display: flex;
     justify-content: space-between;
 }
 
-.pos_absolute,
+.first_slide_p {
+    position: relative;
+    z-index: 9999999;
+    font-size: clamp(3rem, 4vw, 6rem);
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+
 .slide_right {
     position: absolute;
     width: 100%;
@@ -148,21 +157,20 @@ h3 {
     border-radius: 1rem 1rem 0 0;
 }
 
-.name,
-.info {
+.city_name,
+.city_info {
     z-index: 800;
     color: white;
     text-align: center;
 }
 
-.name {
+.city_name {
     position: relative;
     width: 40%;
     font-size: 3.5rem;
-    font-weight: 200;
 }
 
-.name::before {
+.city_name::before {
     content: '';
     position: absolute;
     top: 5rem;
@@ -174,7 +182,7 @@ h3 {
     background: white;
 }
 
-.info {
+.city_info {
     width: 40%;
     display: flex;
     flex-direction: column;
@@ -183,6 +191,7 @@ h3 {
 
 .weather_descr {
     font-size: 1.3rem;
+    margin: 1rem 0;
 }
 
 .sunset {
@@ -191,7 +200,6 @@ h3 {
 
 .temp {
     font-size: clamp(2rem, 4vw, 5rem);
-    font-weight: 200;
 }
 
 .current_weather_icon {
@@ -212,7 +220,6 @@ h3 {
     text-align: center;
     padding: .7rem 0;
     color: white;
-    font-weight: 200;
     font-size: 1.3rem;
     border-radius: 0 0 1rem 1rem;
 }
@@ -229,7 +236,6 @@ input[type="search"] {
 
 label[for="search"] {
     font-size: 1.3rem;
-    font-weight: 200;
 }
 
 ::placeholder {
@@ -271,10 +277,6 @@ label[for="search"] {
 .hours:hover,
 .seven_days:hover {
     transform: scale(1.2);
-}
-
-::placeholder {
-    font-weight: 200;
 }
 
 .bottom_menu {
