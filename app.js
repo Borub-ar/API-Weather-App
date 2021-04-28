@@ -6,6 +6,7 @@ const searchCity = document.querySelector('#search');
 
 searchBtn.addEventListener('click', async () => {
     menuAnimation();
+    
     const cityInf = await currentWeather();
     // const bgPhoto = await bgImage();
 
@@ -14,6 +15,8 @@ searchBtn.addEventListener('click', async () => {
     const hForecast = await hourlyForecast();
     makeHourlyIcons(hForecast);
     cardsAnimation();
+
+    imageSlide()
     
     searchCity.value = '';
 
@@ -93,6 +96,21 @@ const currentWeather = async () => {
 //     };
 // };
 
+// ////////////////////////////////////////////////////////////////////////////Slides - background image
+
+const imageSlide = () => {
+    const cityImage = document.createElement('div');
+    const container = document.querySelector('.image_container');
+
+    cityImage.classList.add('city_photo', 'slide_right');
+    container.append(cityImage);
+
+    slideIn(cityImage);
+}
+
+const slideIn = (div) => {
+    div.classList.add('slide_in');
+}
 
 // ///////////////Seven days forecast 
 const sevenDaysWeth = async () => {
