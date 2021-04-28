@@ -6,17 +6,19 @@ const searchCity = document.querySelector('#search');
 
 searchBtn.addEventListener('click', async () => {
     menuAnimation();
+    const bg = await bgImage();
+    const hForecast = await hourlyForecast();
     
     const cityInf = await currentWeather();
-    // const bgPhoto = await bgImage();
+
 
     await sevenDayForecast();
     
-    const hForecast = await hourlyForecast();
     makeHourlyIcons(hForecast);
     cardsAnimation();
 
-    imageSlide()
+    slideOut();
+    slideIn(bg);
     
     searchCity.value = '';
 
@@ -26,7 +28,6 @@ searchBtn.addEventListener('click', async () => {
     const descr = document.querySelector('.weather_descr');
     const sunrise = document.querySelector('.sunrise_span');
     const sunset = document.querySelector('.sunset_span');
-    // const cityPhoto = document.querySelector('.city_photo');
 
     mainTemp.innerText = cityInf.temp;
     cityName.innerText = cityInf.city_name;
@@ -34,7 +35,6 @@ searchBtn.addEventListener('click', async () => {
     descr.innerText = cityInf.weather.description;
     sunrise.innerText = cityInf.sunrise;
     sunset.innerText = cityInf.sunset;
-    // cityPhoto.style.backgroundImage = `url(${bgPhoto})`;
 });
 
 // /////////////////////////////Bottom menu unfolding animation
@@ -78,39 +78,64 @@ const currentWeather = async () => {
 };
 
 // /////////////////Current city background image - function
-// const bgImage = async () => {
-//     try {
-//         const config = {
-//             params: {
-//                 client_id: 'hpthTi3lgM1vdtMHcfvAiW-hFUjaLHYCSAtG4y-Er-I',
-//                 query: searchCity.value,
-//                 per_page: 1
-//             }
-//         };
+const bgImage = async () => {
+    try {
+        const config = {
+            params: {
+                client_id: 'hpthTi3lgM1vdtMHcfvAiW-hFUjaLHYCSAtG4y-Er-I',
+                query: searchCity.value,
+                per_page: 1
+            }
+        };
 
-//         const res = await axios.get('https://api.unsplash.com/search/photos', config);
-//         const resData = res.data.results[0].urls.full;
-//         return resData
-//     } catch (err) {
-//         console.log(err)
-//     };
-// };
+        const res = await axios.get('https://api.unsplash.com/search/photos', config);
+        const resData = res.data.results[0].urls.full;
+        console.log(resData)
+        return resData
+    } catch (err) {
+        console.log(err)
+    };
+};
 
 // ////////////////////////////////////////////////////////////////////////////Slides - background image
 
-const imageSlide = () => {
+const slideIn = image => {
+
     const cityImage = document.createElement('div');
+    cityImage.style.backgroundImage = `url(${image})`
+
     const container = document.querySelector('.image_container');
 
     cityImage.classList.add('city_photo', 'slide_right');
     container.append(cityImage);
-
-    slideIn(cityImage);
+    cityImage.classList.add('slide_in')
 }
 
-const slideIn = (div) => {
-    div.classList.add('slide_in');
-}
+const slideOut = () => {
+    const slides = document.querySelectorAll('.city_photo');
+
+    for (let slide of slides) {
+        slide.classList.add('slide_out');
+    };
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ///////////////Seven days forecast 
 const sevenDaysWeth = async () => {
