@@ -34,6 +34,7 @@ h3 {
     0% {
         transform: translate(100%);
     }
+
     100% {
         transform: translate(0);
     }
@@ -43,6 +44,7 @@ h3 {
     0% {
         transform: translate(0);
     }
+
     100% {
         transform: translate(-100%);
     }
@@ -83,11 +85,12 @@ h3 {
 }
 
 .main_header {
+    font-size: clamp(1.5rem, 2.5vw, 4rem);
     font-weight: 200;
 }
 
 .date {
-    font-size: 1.7rem;
+    font-size: clamp(1.3rem, 2.3vw, 3rem);
 }
 
 /*////////////////////////////////////////////////////////////// Main */
@@ -100,7 +103,8 @@ h3 {
 }
 
 .main_section {
-    width: clamp(15em, 80vw, 90rem);
+    position: relative;
+    width: clamp(15rem, 80vw, 90rem);
     margin: 5rem 0 1rem;
 }
 
@@ -108,7 +112,7 @@ h3 {
     position: relative;
     overflow: hidden;
     border-radius: 1rem 1rem 0 0;
-    height: clamp(10rem, 55vh, 30rem);
+    height: clamp(12rem, 55vh, 30rem);
 }
 
 .city_photo {
@@ -323,7 +327,7 @@ label[for="search"] {
 
 .left {
     min-width: 15rem;
-    height: 6.5rem;
+    min-height: 6.5rem;
 }
 
 .right {
@@ -360,4 +364,58 @@ label[for="search"] {
 .icon_temp {
     color: rgb(82, 82, 82);
     font-size: clamp(1rem, 1.8vw, 2rem);
+}
+
+
+/* /////////////////////////////////////////////////////////////////Media queries */
+
+@media (max-width: 1150px) {
+    .main_section {
+        width: clamp(15em, 90vw, 90rem);
+    }
+
+    .seven_days {
+        margin: 0;
+    }
+
+    .search {
+        flex-direction: column;
+    }
+
+    label {
+        display: none;
+    }
+
+    input[type="search"] {
+        margin: .8rem 0;
+        width: 60%;
+    }
+
+    .search_button {
+        padding: .3rem 5rem;
+    }
+}
+
+@media (max-width: 650px) {
+    .main_section {
+        width: clamp(15em, 100vw, 90rem);
+    }
+
+    .top__inner {
+        flex-direction: column;
+    }
+
+    .city_photo {
+        flex-direction: column-reverse;
+        align-items: center;
+        margin-top: 2rem;
+    }
+
+    .city_name {
+        width: 100%;
+    }
+
+    input[type="search"] {
+        width: 80%;
+    }
 }
