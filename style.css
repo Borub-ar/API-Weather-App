@@ -105,23 +105,35 @@ h3 {
 .main_section {
     position: relative;
     width: clamp(15rem, 80vw, 90rem);
-    margin: 5rem 0 1rem;
+    margin: 7rem 0 2rem;
 }
 
 .image_container {
     position: relative;
     overflow: hidden;
     border-radius: 1rem 1rem 0 0;
-    height: clamp(12rem, 55vh, 30rem);
+    height: clamp(20rem, 47vh, 30rem);
 }
 
 .city_photo {
     background: url(img/egidijus-bielskis-8zBouQ1rpxw-unsplash.jpg) center no-repeat;
     background-size: cover;
     height: 100%;
-    padding: 7rem 4rem;
+    padding: 4rem 0;
     display: flex;
     justify-content: space-between;
+}
+
+.city_photo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.455);
+    filter: blur(20px);
+    border-radius: 1rem 1rem 0 0;
 }
 
 .first_slide_p {
@@ -147,18 +159,6 @@ h3 {
 
 .slide_out {
     animation: slide_out 3s forwards ease-in-out;
-}
-
-.city_photo::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.455);
-    filter: blur(20px);
-    border-radius: 1rem 1rem 0 0;
 }
 
 .city_name,
@@ -261,21 +261,20 @@ label[for="search"] {
     transform: scale(1.1);
 }
 
-.options_container {
+.seven_days,
+.hours {
     position: absolute;
-    right: 3rem;
-    display: flex;
+    bottom: .8rem;
+    cursor: pointer;
+    transition: transform .2s linear;
 }
 
 .seven_days {
-    margin-right: 1rem;
-    cursor: pointer;
-    transition: transform .2s linear;
+    right: 6rem;
 }
 
 .hours {
-    cursor: pointer;
-    transition: transform .2s linear;
+    right: 2rem;
 }
 
 .hours:hover,
@@ -285,7 +284,7 @@ label[for="search"] {
 
 .bottom_menu {
     position: relative;
-    padding: 2rem .5rem;
+    min-height: 11rem;
     background: rgba(255, 255, 255, 0.664);
     border-radius: 0 0 1rem 1rem;
     display: flex;
@@ -325,16 +324,13 @@ label[for="search"] {
     height: 4rem;
 }
 
-.left {
-    min-width: 15rem;
-    min-height: 6.5rem;
-}
-
 .right {
     position: absolute;
-    right: .5rem;
+    top: 50%;
+    left: 50%;
     top: 0.5rem;
-    width: 80%;
+    transform: translateX(-50%);
+    width: 90%;
     display: flex;
     transition: transform .9s ease-in-out;
 }
@@ -358,7 +354,7 @@ label[for="search"] {
 }
 
 .day img {
-    height: clamp(2rem, 5vw, 6rem);
+    height: 5rem;
 }
 
 .icon_temp {
@@ -392,30 +388,83 @@ label[for="search"] {
     }
 
     .search_button {
-        padding: .3rem 5rem;
+       width: clamp(5rem, 30vw, 15rem);
+    }
+
+    .bottom_menu {
+        min-height: 8.5rem;
+    }
+
+    .day img {
+        height: clamp(3.5rem, 5vw, 5rem);
     }
 }
 
 @media (max-width: 650px) {
+
     .main_section {
         width: clamp(15em, 100vw, 90rem);
+        margin: 7rem 0 0;
     }
 
     .top__inner {
         flex-direction: column;
     }
 
+    .image_container {
+        border-radius: 1rem 1rem 0 0;
+    }
+
     .city_photo {
         flex-direction: column-reverse;
         align-items: center;
-        margin-top: 2rem;
+        padding: 1rem;
+    }
+
+    .city_info {
+        width: 90%;
     }
 
     .city_name {
         width: 100%;
     }
 
+    .city_name::before {
+        display: none;
+    }
+
+    .ct_name {
+        font-size: clamp(3rem, 10vw, 6rem);
+    }
+
     input[type="search"] {
         width: 80%;
+    }
+
+    .seven_days,
+    .hours {
+        font-size: 1.1rem;
+    }
+
+    .hours {
+        right: .5rem;
+    }
+
+    .seven_days {
+        left: .4rem;
+        width: 4.5rem;
+    }
+
+    .bottom_menu {
+        border-radius: 0;
+        height: 100%;
+    }
+
+    .right {
+        flex-direction: column;
+    }
+
+    .day {
+        flex-direction: row;
     }
 }

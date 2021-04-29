@@ -192,6 +192,7 @@ const slideIn = (varImage, varInfo) => {
     rightPanel.classList.add('city_name');
 
     const name = document.createElement('p');
+    name.classList.add('ct_name');
     name.innerText = varInfo.city_name;
     rightPanel.append(name);
 
@@ -217,11 +218,11 @@ const sevenDaysPanel = document.querySelector('.right');
 const hourForecastPanel = document.querySelector('.hourly_forecast');
 
 sevenDaysBtn.addEventListener('click', () => {
-    sevenDaysPanel.style.transform = 'translate(0)';
+    sevenDaysPanel.style.transform = 'translate(-50%)';
     hourForecastPanel.style.transform = 'translate(0, 100%)';
 });
 
 hourlyBtn.addEventListener('click', () => {
-    sevenDaysPanel.style.transform = 'translate(0, 400%)';
+    sevenDaysPanel.style.transform = 'translate(-50%, 400%)';
     hourForecastPanel.style.transform = 'translate(0)';
 });
