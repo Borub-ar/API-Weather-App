@@ -457,7 +457,7 @@ label[for="search"] {
 
     .bottom_menu {
         border-radius: 0;
-        height: 100%;
+        height: 21rem;
     }
 
     .right {
@@ -466,5 +466,12 @@ label[for="search"] {
 
     .day {
         flex-direction: row;
+        border-radius: 0;
+        border-bottom: 1px solid rgb(175, 175, 175);
+    }
+
+    .day img {
+        height: 2rem;
+        margin: 0 1.3rem 0;
     }
 }
