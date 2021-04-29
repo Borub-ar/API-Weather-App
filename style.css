@@ -30,6 +30,16 @@ h3 {
 
 /* //////////////////////////////////////////////////////////////////////// Animations  */
 
+@-webkit-keyframes slide_in {
+    0% {
+        transform: translate(100%);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
 @keyframes slide_in {
     0% {
         transform: translate(100%);
@@ -37,6 +47,16 @@ h3 {
 
     100% {
         transform: translate(0);
+    }
+}
+
+@-webkit-keyframes slide_out {
+    0% {
+        transform: translate(0);
+    }
+
+    100% {
+        transform: translate(-100%);
     }
 }
 
@@ -132,7 +152,8 @@ h3 {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.455);
-    filter: blur(20px);
+    -webkit-filter: blur(20px);
+            filter: blur(20px);
     border-radius: 1rem 1rem 0 0;
 }
 
@@ -154,11 +175,13 @@ h3 {
 }
 
 .slide_in {
-    animation: slide_in 3s forwards ease-in-out;
+    -webkit-animation: slide_in 3s forwards ease-in-out;
+            animation: slide_in 3s forwards ease-in-out;
 }
 
 .slide_out {
-    animation: slide_out 3s forwards ease-in-out;
+    -webkit-animation: slide_out 3s forwards ease-in-out;
+            animation: slide_out 3s forwards ease-in-out;
 }
 
 .city_name,
@@ -242,6 +265,22 @@ label[for="search"] {
     font-size: 1.3rem;
 }
 
+::-webkit-input-placeholder {
+    color: rgb(212, 212, 212);
+}
+
+::-moz-placeholder {
+    color: rgb(212, 212, 212);
+}
+
+:-ms-input-placeholder {
+    color: rgb(212, 212, 212);
+}
+
+::-ms-input-placeholder {
+    color: rgb(212, 212, 212);
+}
+
 ::placeholder {
     color: rgb(212, 212, 212);
 }
@@ -299,14 +338,13 @@ label[for="search"] {
     top: 0;
     left: 0;
     z-index: 999999;
-    padding: 2rem .5rem;
+    padding: 1rem .5rem;
     width: 100%;
     height: 100%;
     border-radius: 0 0 1rem 1rem;
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: repeat(12, 1fr);
-    gap: .5rem;
     transform: translate(0, 100%);
     transition: transform .9s ease-in-out;
 }
@@ -317,10 +355,15 @@ label[for="search"] {
     justify-content: space-evenly;
     text-align: center;
     align-items: center;
+    border-radius: .3rem;
+    transition: box-shadow .2s linear, transform .2s ease-in;
+}
+
+.weather_card:hover {
+    box-shadow: 0px 0px 28px -4px #000000;
 }
 
 .weather_card img {
-    width: 4rem;
     height: 4rem;
 }
 
@@ -359,7 +402,7 @@ label[for="search"] {
 
 .icon_temp {
     color: rgb(82, 82, 82);
-    font-size: clamp(1rem, 1.8vw, 2rem);
+    font-size: clamp(1.3rem, 1.8vw, 2rem);
 }
 
 
@@ -391,6 +434,14 @@ label[for="search"] {
        width: clamp(5rem, 30vw, 15rem);
     }
 
+    .hourly_forecast {
+        padding: 0;
+    }
+
+    .hourly_forecast img {
+        height: clamp(2.5rem, 5vw, 6rem);
+    }
+
     .bottom_menu {
         min-height: 8.5rem;
     }
@@ -400,7 +451,7 @@ label[for="search"] {
     }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 750px) {
 
     .main_section {
         width: clamp(15em, 100vw, 90rem);
@@ -413,12 +464,16 @@ label[for="search"] {
 
     .image_container {
         border-radius: 1rem 1rem 0 0;
+        height: 80vh;
     }
 
     .city_photo {
         flex-direction: column-reverse;
         align-items: center;
-        padding: 1rem;
+    }
+
+    .first_slide_p {
+        height: 80%;
     }
 
     .city_info {
@@ -434,7 +489,8 @@ label[for="search"] {
     }
 
     .ct_name {
-        font-size: clamp(3rem, 10vw, 6rem);
+        margin-top: 8rem;
+        font-size: clamp(4rem, 15vw, 6rem);
     }
 
     input[type="search"] {
@@ -473,5 +529,10 @@ label[for="search"] {
     .day img {
         height: 2rem;
         margin: 0 1.3rem 0;
+    }
+
+    .hourly_forecast {
+        grid-template-rows: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }

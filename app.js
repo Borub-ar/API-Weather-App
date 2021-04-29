@@ -1,5 +1,19 @@
 'use strict';
 
+// ///////////////////////////////////////////////////Global variables 
+const days = document.querySelectorAll('.day');
+const sevenDaysPanel = document.querySelector('.right');
+const hourForecastPanel = document.querySelector('.hourly_forecast');
+const dateParagraph = document.querySelector('.date');
+
+// ///////////////////////////////////////////////////////Current date
+const date = new Date();
+
+const timeElapsed = Date.now();
+const today = new Date(timeElapsed);
+
+dateParagraph.innerText = today.toLocaleDateString();
+
 // ///////////////////////////////////////////////////Weather request 
 const searchBtn = document.querySelector('.search_button');
 const searchCity = document.querySelector('#search');
@@ -13,6 +27,7 @@ searchBtn.addEventListener('click', async () => {
 
     await sevenDayForecast();
 
+    hourForecastPanel.innerHTML = '';
     makeHourlyIcons(hForecast);
     cardsAnimation();
 
@@ -63,8 +78,6 @@ const sevenDayForecast = async () => {
 };
 
 // /////////////////////////Seven days forecast cards animation
-const days = document.querySelectorAll('.day');
-
 const cardsAnimation = () => {
     for (let i = 0; i < days.length; i++) {
         setTimeout(() => {
@@ -214,8 +227,6 @@ const slideOut = () => {
 // /////////////////////////////////////////////////Toggle forecast type
 const sevenDaysBtn = document.querySelector('.seven_days');
 const hourlyBtn = document.querySelector('.hours');
-const sevenDaysPanel = document.querySelector('.right');
-const hourForecastPanel = document.querySelector('.hourly_forecast');
 
 sevenDaysBtn.addEventListener('click', () => {
     sevenDaysPanel.style.transform = 'translate(-50%)';
@@ -226,3 +237,8 @@ hourlyBtn.addEventListener('click', () => {
     sevenDaysPanel.style.transform = 'translate(-50%, 400%)';
     hourForecastPanel.style.transform = 'translate(0)';
 });
+
+
+
+
+   
