@@ -1,10 +1,17 @@
 'use strict';
 
 // ///////////////////////////////////////////////////Global variables 
-const days = document.querySelectorAll('.day');
 const sevenDaysPanel = document.querySelector('.right');
+const days = document.querySelectorAll('.day');
+
 const hourForecastPanel = document.querySelector('.hourly_forecast');
+
 const dateParagraph = document.querySelector('.date');
+
+const sevenDaysBtn = document.querySelector('.seven_days');
+const hourlyBtn = document.querySelector('.hours');
+
+const menu = document.querySelector('.bottom_menu');
 
 // ///////////////////////////////////////////////////////Current date
 const date = new Date();
@@ -18,33 +25,36 @@ const searchBtn = document.querySelector('.search_button');
 const searchCity = document.querySelector('#search');
 
 searchBtn.addEventListener('click', async () => {
-    menuAnimation();
+    if (search.value) {
+        menu.style.display = 'flex';
+        menuAnimation();
 
-    const backgroundPhoto = await bgImage();
-    const cityInf = await currentWeather();
-    const hForecast = await hourlyForecast();
-
-    await sevenDayForecast();
-
-    hourForecastPanel.innerHTML = '';
-    makeHourlyIcons(hForecast);
-    cardsAnimation();
-
-    slideOut();
-    slideIn(backgroundPhoto, cityInf);
-
-    searchCity.value = '';
+        const backgroundPhoto = await bgImage();
+        const cityInf = await currentWeather();
+        const hForecast = await hourlyForecast();
+    
+        await sevenDayForecast();
+    
+        hourForecastPanel.innerHTML = '';
+        makeHourlyIcons(hForecast);
+        cardsAnimation();
+    
+        sevenDaysBtn.style.transform = `scale(1)`;
+        hourlyBtn.style.transform = `scale(1)`;
+    
+        slideOut();
+        slideIn(backgroundPhoto, cityInf);
+    
+        searchCity.value = '';
+    };
 });
 
 // /////////////////////////////Bottom menu unfolding animation
 const menuAnimation = () => {
     const searchBar = document.querySelector('.search');
-    const menu = document.querySelector('.bottom_menu');
 
-    if (search.value) {
         menu.style.transform = 'scale(1, 1)';
         searchBar.style.borderRadius = '0 0 0 0';
-    }
 };
 
 // /////////////////////////////////////////Seven days forecast 
@@ -60,6 +70,7 @@ const sevenDaysWeth = async () => {
 
         const res = await axios.get('https://api.weatherbit.io/v2.0/forecast/daily', config);
         return res.data.data
+        
     } catch (e) {
         console.log(e);
     };
@@ -98,6 +109,7 @@ const currentWeather = async () => {
         const res = await axios.get('https://api.weatherbit.io/v2.0/current', config);
         const resData = res.data.data[0];
         return resData
+
     } catch (err) {
         console.log(err);
     };
@@ -117,8 +129,10 @@ const bgImage = async () => {
         const res = await axios.get('https://api.unsplash.com/search/photos', config);
         const resData = res.data.results[0].urls.full;
         return resData
-    } catch (err) {
-        console.log(err);
+
+    } catch {
+        const rand = Math.floor(Math.random() * 5) + 1;
+        return `img/rand0${rand}.jpg`
     };
 };
 
@@ -135,6 +149,7 @@ const hourlyForecast = async () => {
 
         const res = await axios.get('https://api.weatherbit.io/v2.0/forecast/hourly', config);
         return res.data.data
+
     } catch (e) {
         console.log(e);
     };
@@ -224,9 +239,6 @@ const slideOut = () => {
 };
 
 // /////////////////////////////////////////////////Toggle forecast type
-const sevenDaysBtn = document.querySelector('.seven_days');
-const hourlyBtn = document.querySelector('.hours');
-
 sevenDaysBtn.addEventListener('click', () => {
     sevenDaysPanel.style.transform = 'translate(-50%)';
     hourForecastPanel.style.transform = 'translate(0, 100%)';

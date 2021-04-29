@@ -5,7 +5,7 @@
 body {
     margin: 0;
     font-family: 'Oswald', sans-serif;
-    background: url(img/egor-myznik-yLO8daz0dzA-unsplash.jpg) center no-repeat fixed;
+    background: url(img/egor-myznik-yLO8daz0dzA-unsplash.jpg.jpg) center no-repeat fixed;
     background-size: cover;
     font-weight: 200;
 }
@@ -261,8 +261,8 @@ input[type="search"] {
     background: rgba(255, 255, 255, 0.281);
 }
 
-label[for="search"] {
-    font-size: 1.3rem;
+label {
+    display: none;
 }
 
 ::-webkit-input-placeholder {
@@ -305,7 +305,8 @@ label[for="search"] {
     position: absolute;
     bottom: .8rem;
     cursor: pointer;
-    transition: transform .2s linear;
+    transition: transform .2s ease-in-out;
+    transform: scale(0);
 }
 
 .seven_days {
@@ -316,9 +317,23 @@ label[for="search"] {
     right: 2rem;
 }
 
-.hours:hover,
-.seven_days:hover {
-    transform: scale(1.2);
+.seven_days::before,
+.hours::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 2rem;
+    display: block;
+    width: 0;
+    height: 2px;
+    background: rgb(255, 255, 255);
+    transform: translate(-50%);
+    transition: width .2s linear;
+}
+
+.seven_days:hover::before,
+.hours:hover::before {
+    width: 100%;
 }
 
 .bottom_menu {
@@ -421,10 +436,6 @@ label[for="search"] {
         flex-direction: column;
     }
 
-    label {
-        display: none;
-    }
-
     input[type="search"] {
         margin: .8rem 0;
         width: 60%;
@@ -464,7 +475,7 @@ label[for="search"] {
 
     .image_container {
         border-radius: 0;
-        height: 80vh;
+        height: 85vh;
     }
 
     .city_photo {
@@ -503,17 +514,18 @@ label[for="search"] {
     }
 
     .hours {
-        right: .5rem;
+        right: 1rem;
     }
 
     .seven_days {
-        left: .4rem;
-        width: 4.5rem;
+        left: 1rem;
+        max-width: 4.5rem;
     }
 
     .bottom_menu {
         border-radius: 0;
         height: 21rem;
+        display: none;
     }
 
     .right {
