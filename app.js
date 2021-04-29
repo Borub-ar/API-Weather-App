@@ -8,7 +8,6 @@ const dateParagraph = document.querySelector('.date');
 
 // ///////////////////////////////////////////////////////Current date
 const date = new Date();
-
 const timeElapsed = Date.now();
 const today = new Date(timeElapsed);
 
