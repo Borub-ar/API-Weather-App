@@ -1,26 +1,22 @@
 'use strict';
 
-// ///////////////////////////////////////////////////Global variables 
-const sevenDaysPanel = document.querySelector('.right');
+// Global variables 
+const sevenDaysPanel = document.querySelector('.seven_container');
 const days = document.querySelectorAll('.day');
-
 const hourForecastPanel = document.querySelector('.hourly_forecast');
-
 const dateParagraph = document.querySelector('.date');
-
 const sevenDaysBtn = document.querySelector('.seven_days');
 const hourlyBtn = document.querySelector('.hours');
-
 const menu = document.querySelector('.bottom_menu');
 
-// ///////////////////////////////////////////////////////Current date
+// Current date
 const date = new Date();
 const timeElapsed = Date.now();
 const today = new Date(timeElapsed);
 
 dateParagraph.innerText = today.toLocaleDateString();
 
-// ///////////////////////////////////////////////////Weather request 
+// Weather request 
 const searchBtn = document.querySelector('.search_button');
 const searchCity = document.querySelector('#search');
 
@@ -49,7 +45,7 @@ searchBtn.addEventListener('click', async () => {
     };
 });
 
-// /////////////////////////////Bottom menu unfolding animation
+// Bottom menu unfolding animation
 const menuAnimation = () => {
     const searchBar = document.querySelector('.search');
 
@@ -57,7 +53,7 @@ const menuAnimation = () => {
         searchBar.style.borderRadius = '0 0 0 0';
 };
 
-// /////////////////////////////////////////Seven days forecast 
+// Seven days forecast 
 const sevenDaysWeth = async () => {
     try {
         const config = {
@@ -69,7 +65,7 @@ const sevenDaysWeth = async () => {
         };
 
         const res = await axios.get('https://api.weatherbit.io/v2.0/forecast/daily', config);
-        return res.data.data
+        return res.data.data;
         
     } catch (e) {
         console.log(e);
@@ -87,7 +83,7 @@ const sevenDayForecast = async () => {
     };
 };
 
-// /////////////////////////Seven days forecast cards animation
+// Seven days forecast cards animation
 const cardsAnimation = () => {
     for (let i = 0; i < days.length; i++) {
         setTimeout(() => {
@@ -96,7 +92,7 @@ const cardsAnimation = () => {
     };
 };
 
-// /////////////////Current weather in searched city - function 
+// Current weather in searched city - function 
 const currentWeather = async () => {
     try {
         const config = {
@@ -108,14 +104,14 @@ const currentWeather = async () => {
 
         const res = await axios.get('https://api.weatherbit.io/v2.0/current', config);
         const resData = res.data.data[0];
-        return resData
+        return resData;
 
     } catch (err) {
         console.log(err);
     };
 };
 
-// /////////////////Current city background image - function
+// Current city background image - function
 const bgImage = async () => {
     try {
         const config = {
@@ -128,15 +124,15 @@ const bgImage = async () => {
 
         const res = await axios.get('https://api.unsplash.com/search/photos', config);
         const resData = res.data.results[0].urls.full;
-        return resData
+        return resData;
 
     } catch {
         const rand = Math.floor(Math.random() * 5) + 1;
-        return `img/rand0${rand}.jpg`
+        return `img/rand0${rand}.jpg`;
     };
 };
 
-// //////////////////////////Hourly forecast in searched city - function
+// Hourly forecast in searched city - function
 const hourlyForecast = async () => {
     try {
         const config = {
@@ -148,7 +144,7 @@ const hourlyForecast = async () => {
         };
 
         const res = await axios.get('https://api.weatherbit.io/v2.0/forecast/hourly', config);
-        return res.data.data
+        return res.data.data;
 
     } catch (e) {
         console.log(e);
@@ -169,13 +165,13 @@ const makeHourlyIcons = dataAPI => {
 
         const weatherTemp = document.createElement('p');
         weatherTemp.classList.add('icon_temp');
-        weatherTemp.innerText = hour.temp;
+        weatherTemp.innerText = `${hour.temp} ºC`;
 
         weatherCard.append(datetime, weatherIcon, weatherTemp);
     };
 };
 
-// /////////////////////////////////////////////////////////Making slides - function
+// Making slides - function
 const slideIn = (varImage, varInfo) => {
     const container = document.querySelector('.image_container');
 
@@ -189,7 +185,7 @@ const slideIn = (varImage, varInfo) => {
 
     const temp = document.createElement('p');
     temp.classList.add('temp');
-    temp.innerText = `${varInfo.temp}`;
+    temp.innerText = `${varInfo.temp} ºC`;
 
     const weatherIcon = document.createElement('img');
     weatherIcon.classList.add('current_weather_icon');
@@ -238,7 +234,7 @@ const slideOut = () => {
     };
 };
 
-// /////////////////////////////////////////////////Toggle forecast type
+// Toggle forecast type
 sevenDaysBtn.addEventListener('click', () => {
     sevenDaysPanel.style.transform = 'translate(-50%)';
     hourForecastPanel.style.transform = 'translate(0, 100%)';
