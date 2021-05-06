@@ -7,8 +7,7 @@
 body {
     margin: 0;
     font-family: 'Oswald', sans-serif;
-    background: url(img/site-bg.jpg) center no-repeat fixed;
-    background-size: cover;
+    background: url(img/site-bg.jpg) center/cover no-repeat fixed;
     font-weight: 200;
 }
 
@@ -92,7 +91,7 @@ h3 {
     background: var(--dark-blue-background);
     position: fixed;
     width: 100%;
-    z-index: 99999;
+    z-index: 9999;
     box-shadow: 0px 0px 32px -4px rgb(143, 180, 228);
 }
 
@@ -113,6 +112,49 @@ h3 {
 
 .date {
     font-size: clamp(1.3rem, 2.3vw, 3rem);
+}
+
+/*////////////////////////////////////////// Pop-up information panel */
+
+.blur_layer,
+.day_info_panel {
+    position: fixed;
+    transition: background .5s ease-in-out;
+}
+
+.blur_layer {
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.342);
+    width: 100%;
+    height: 100vh;
+    -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(2px);
+}
+
+.day_info_panel {
+    top: 50%;
+    left: 50%;
+    z-index: 99999;
+    width: clamp(15rem, 20vw, 400rem);
+    height: 25rem;
+    background: rgba(255, 255, 255, 0.24);
+    transform: translate(-50%, -50%);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.single_day {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95%;
+    height: 95%;
+    background: var(--white-elements);
+    border-radius: .7rem;
+    transition: background .5s ease-in-out;
 }
 
 /*////////////////////////////////////////////////////////////// Main */
@@ -138,8 +180,7 @@ h3 {
 }
 
 .city_photo {
-    background: url(img/widget-bg.jpg) center no-repeat;
-    background-size: cover;
+    background: url(img/widget-bg.jpg) center/cover no-repeat;
     height: 100%;
     padding: 4rem 0;
     display: flex;
@@ -161,7 +202,7 @@ h3 {
 
 .first_slide_p {
     position: relative;
-    z-index: 9999999;
+    z-index: 995;
     font-size: clamp(3rem, 4vw, 6rem);
     color: var(--white-elements);
     width: 100%;
@@ -391,7 +432,7 @@ label {
     left: 50%;
     transform: translate(-50%);
     height: 100%;
-    width: 90%;
+    width: 100%;
     display: flex;
     transition: transform .9s ease-in-out;
 }
@@ -424,7 +465,6 @@ label {
     color: rgb(82, 82, 82);
     font-size: clamp(1.3rem, 1.8vw, 2rem);
 }
-
 
 /* /////////////////////////////////////////////////////////////////Media queries */
 
@@ -537,8 +577,6 @@ label {
     .seven_container {
         top: 0;
         flex-direction: column;
-        width: 100%;
-        
     }
 
     .day {

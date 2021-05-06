@@ -4,54 +4,28 @@
 const sevenDaysPanel = document.querySelector('.seven_container');
 const days = document.querySelectorAll('.day');
 const hourForecastPanel = document.querySelector('.hourly_forecast');
-const dateParagraph = document.querySelector('.date');
+const currentDate = document.querySelector('.date');
 const sevenDaysBtn = document.querySelector('.seven_days');
 const hourlyBtn = document.querySelector('.hours');
 const menu = document.querySelector('.bottom_menu');
 
-// Current date
+const blurLayer = document.querySelector('#bl_layer')
+const dayInfoPanel = document.querySelector('#inf_panel');
+const singleDayPanel = document.querySelectorAll('.s_day');
+
+// Set current date
 const date = new Date();
 const timeElapsed = Date.now();
 const today = new Date(timeElapsed);
-
-dateParagraph.innerText = today.toLocaleDateString();
-
-// Weather request 
-const searchBtn = document.querySelector('.search_button');
-const searchCity = document.querySelector('#search');
-
-searchBtn.addEventListener('click', async () => {
-    if (search.value) {
-        menu.style.display = 'flex';
-        menuAnimation();
-
-        const backgroundPhoto = await bgImage();
-        const cityInf = await currentWeather();
-        const hForecast = await hourlyForecast();
-    
-        await sevenDayForecast();
-    
-        hourForecastPanel.innerHTML = '';
-        makeHourlyIcons(hForecast);
-        cardsAnimation();
-    
-        sevenDaysBtn.style.transform = `scale(1)`;
-        hourlyBtn.style.transform = `scale(1)`;
-    
-        slideOut();
-        slideIn(backgroundPhoto, cityInf);
-    
-        searchCity.value = '';
-    };
-});
+currentDate.textContent = today.toLocaleDateString();
 
 // Bottom menu unfolding animation
 const menuAnimation = () => {
     const searchBar = document.querySelector('.search');
 
-        menu.style.transform = 'scale(1, 1)';
-        searchBar.style.borderRadius = '0 0 0 0';
-};
+    menu.style.transform = 'scale(1, 1)';
+    searchBar.style.borderRadius = '0 0 0 0';
+}
 
 // Seven days forecast 
 const sevenDaysWeth = async () => {
@@ -62,26 +36,27 @@ const sevenDaysWeth = async () => {
                 days: 8,
                 city: searchCity.value
             }
-        };
+        }
 
-        const res = await axios.get('https://api.weatherbit.io/v2.0/forecast/daily', config);
+        const apiURL = 'https://api.weatherbit.io/v2.0/forecast/daily';
+        const res = await axios.get(apiURL, config);
         return res.data.data;
-        
+
     } catch (e) {
         console.log(e);
-    };
-};
+    }
+}
 
 
 const sevenDayForecast = async () => {
     const dayInfo = await sevenDaysWeth();
 
     for (let [index, day] of days.entries()) {
-        day.children[0].innerText = dayInfo[index + 1].datetime.substr(5).replace('-', '.');
+        day.children[0].textContent = dayInfo[index + 1].datetime.substr(5).replace('-', '.');
         day.children[1].src = `https://www.weatherbit.io/static/img/icons/${dayInfo[index + 1].weather.icon}.png`;
-        day.children[2].children[0].innerText = dayInfo[index + 1].temp;
-    };
-};
+        day.children[2].children[0].textContent = dayInfo[index + 1].temp;
+    }
+}
 
 // Seven days forecast cards animation
 const cardsAnimation = () => {
@@ -89,30 +64,30 @@ const cardsAnimation = () => {
         setTimeout(() => {
             days[i].style.transform = 'scale(1)';
         }, i * 300);
-    };
-};
+    }
+}
 
 // Current weather in searched city - function 
-const currentWeather = async () => {
+const getCurrentWeather = async () => {
     try {
         const config = {
             params: {
                 city: searchCity.value,
                 key: '4c1299c9ae164edd8cb6e247728e94af'
             }
-        };
-
-        const res = await axios.get('https://api.weatherbit.io/v2.0/current', config);
+        }
+        const apiURL = 'https://api.weatherbit.io/v2.0/current';
+        const res = await axios.get(apiURL, config);
         const resData = res.data.data[0];
         return resData;
 
     } catch (err) {
         console.log(err);
-    };
-};
+    }
+}
 
 // Current city background image - function
-const bgImage = async () => {
+const getBgImage = async () => {
     try {
         const config = {
             params: {
@@ -120,20 +95,20 @@ const bgImage = async () => {
                 query: searchCity.value,
                 per_page: 1
             }
-        };
-
-        const res = await axios.get('https://api.unsplash.com/search/photos', config);
+        }
+        const apiURL = 'https://api.unsplash.com/search/photos';
+        const res = await axios.get(apiURL, config);
         const resData = res.data.results[0].urls.full;
         return resData;
 
     } catch {
         const rand = Math.floor(Math.random() * 5) + 1;
         return `img/rand0${rand}.jpg`;
-    };
-};
+    }
+}
 
 // Hourly forecast in searched city - function
-const hourlyForecast = async () => {
+const getHourlyForecast = async () => {
     try {
         const config = {
             params: {
@@ -141,15 +116,15 @@ const hourlyForecast = async () => {
                 city: searchCity.value,
                 hours: 12
             }
-        };
-
-        const res = await axios.get('https://api.weatherbit.io/v2.0/forecast/hourly', config);
+        }
+        const apiURL = 'https://api.weatherbit.io/v2.0/forecast/hourly';
+        const res = await axios.get(apiURL, config);
         return res.data.data;
 
     } catch (e) {
         console.log(e);
-    };
-};
+    }
+}
 
 const makeHourlyIcons = dataAPI => {
     for (const hour of dataAPI) {
@@ -158,20 +133,20 @@ const makeHourlyIcons = dataAPI => {
         hourForecastPanel.append(weatherCard);
 
         const datetime = document.createElement('p');
-        datetime.innerText = `${hour.datetime.substr(11)}:00`;
+        datetime.textContent = `${hour.datetime.substr(11)}:00`;
 
         const weatherIcon = document.createElement('img');
         weatherIcon.src = `https://www.weatherbit.io/static/img/icons/${hour.weather.icon}.png`;
 
         const weatherTemp = document.createElement('p');
         weatherTemp.classList.add('icon_temp');
-        weatherTemp.innerText = `${hour.temp} ºC`;
+        weatherTemp.textContent = `${hour.temp} ºC`;
 
         weatherCard.append(datetime, weatherIcon, weatherTemp);
-    };
-};
+    }
+}
 
-// Making slides - function
+// Making slides incoming sldies
 const slideIn = (varImage, varInfo) => {
     const container = document.querySelector('.image_container');
 
@@ -185,7 +160,7 @@ const slideIn = (varImage, varInfo) => {
 
     const temp = document.createElement('p');
     temp.classList.add('temp');
-    temp.innerText = `${varInfo.temp} ºC`;
+    temp.textContent = `${varInfo.temp} ºC`;
 
     const weatherIcon = document.createElement('img');
     weatherIcon.classList.add('current_weather_icon');
@@ -193,18 +168,18 @@ const slideIn = (varImage, varInfo) => {
 
     const weatherDescr = document.createElement('p');
     weatherDescr.classList.add('weather_descr');
-    weatherDescr.innerText = varInfo.weather.description;
+    weatherDescr.textContent = varInfo.weather.description;
 
     const conFlex = document.createElement('div');
     conFlex.classList.add('d_flex');
 
     const sunRise = document.createElement('p');
     sunRise.classList.add('sunrise');
-    sunRise.innerText = `Sunrise: ${varInfo.sunrise}`;
+    sunRise.textContent = `Sunrise: ${varInfo.sunrise}`;
 
     const sunSet = document.createElement('p');
     sunSet.classList.add('sunset');
-    sunSet.innerText = `Sunset: ${varInfo.sunset}`;
+    sunSet.textContent = `Sunset: ${varInfo.sunset}`;
 
     conFlex.append(sunRise, sunSet);
 
@@ -216,7 +191,7 @@ const slideIn = (varImage, varInfo) => {
 
     const name = document.createElement('p');
     name.classList.add('ct_name');
-    name.innerText = varInfo.city_name;
+    name.textContent = varInfo.city_name;
     rightPanel.append(name);
 
     // Append both panels to cityImage
@@ -229,23 +204,75 @@ const slideIn = (varImage, varInfo) => {
 const slideOut = () => {
     const slides = document.querySelectorAll('.city_photo');
 
-    for (let slide of slides) {
+    for (const slide of slides) {
         slide.classList.add('slide_out');
-    };
-};
+    }
+}
+
+// Weather request 
+const searchBtn = document.querySelector('.search_button');
+const searchCity = document.querySelector('#search');
+
+searchBtn.addEventListener('click', async () => {
+    if (search.value) {
+        menu.style.display = 'flex';
+        menuAnimation();
+
+        const backgroundPhoto = await getBgImage();
+        const cityInf = await getCurrentWeather();
+        const hForecast = await getHourlyForecast();
+
+        await sevenDayForecast();
+
+        hourForecastPanel.innerHTML = '';
+        makeHourlyIcons(hForecast);
+        cardsAnimation();
+
+        sevenDaysBtn.style.transform = `scale(1)`;
+        hourlyBtn.style.transform = `scale(1)`;
+
+        slideOut();
+        slideIn(backgroundPhoto, cityInf);
+
+        searchCity.value = '';
+    }
+})
 
 // Toggle forecast type
 sevenDaysBtn.addEventListener('click', () => {
     sevenDaysPanel.style.transform = 'translate(-50%)';
     hourForecastPanel.style.transform = 'translate(0, 100%)';
-});
+})
 
 hourlyBtn.addEventListener('click', () => {
     sevenDaysPanel.style.transform = 'translate(-50%, 400%)';
     hourForecastPanel.style.transform = 'translate(0)';
-});
+})
 
+// Show single day information panel
+const hidePanel = () => {
+    blurLayer.classList.remove('blur_layer');
+    dayInfoPanel.classList.remove('day_info_panel');
 
+    for (const singleDay of singleDayPanel) {
+        singleDay.classList.remove('single_day');
+    }
+}
 
+for (const day of days) {
+    day.addEventListener('click', () => {
+        blurLayer.classList.add('blur_layer');
+        dayInfoPanel.classList.add('day_info_panel');
 
-   
+        for (const singleDay of singleDayPanel) {
+            singleDay.classList.add('single_day');
+        }
+    })
+}
+
+blurLayer.addEventListener('click', hidePanel);
+window.addEventListener('keydown', e => {
+    if (e.code === 'Escape') {
+        hidePanel();
+    }
+})
