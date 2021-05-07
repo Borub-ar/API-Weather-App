@@ -126,23 +126,24 @@ h3 {
     top: 0;
     left: 0;
     z-index: 9999;
+    display: none;
     background: rgba(0, 0, 0, 0.342);
     width: 100%;
     height: 100vh;
     -webkit-backdrop-filter: blur(2px);
-            backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
 }
 
 .day_info_panel {
     top: 50%;
     left: 50%;
     z-index: 99999;
-    width: clamp(15rem, 20vw, 400rem);
-    height: 25rem;
-    background: rgba(255, 255, 255, 0.24);
+    width: 0;
+    height: 60vh;
+    background: rgba(0, 0, 0, 0.507);
     transform: translate(-50%, -50%);
-    border-radius: 1rem;
     overflow: hidden;
+    transition: width .5s ease;
 }
 
 .single_day {
@@ -150,11 +151,8 @@ h3 {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 95%;
+    width: 40%;
     height: 95%;
-    background: var(--white-elements);
-    border-radius: .7rem;
-    transition: background .5s ease-in-out;
 }
 
 /*////////////////////////////////////////////////////////////// Main */
@@ -200,14 +198,6 @@ h3 {
     border-radius: 1rem 1rem 0 0;
 }
 
-.first_slide_p {
-    position: relative;
-    z-index: 995;
-    font-size: clamp(3rem, 4vw, 6rem);
-    color: var(--white-elements);
-    width: 100%;
-    text-align: center;
-}
 
 .slide_right {
     position: absolute;
@@ -412,6 +402,7 @@ label {
     justify-content: space-evenly;
     text-align: center;
     align-items: center;
+    padding: .5rem 0;
     transition: box-shadow .2s linear, transform .2s ease-in;
 }
 
@@ -463,7 +454,7 @@ label {
 
 .icon_temp {
     color: rgb(82, 82, 82);
-    font-size: clamp(1.3rem, 1.8vw, 2rem);
+    font-size: clamp(1.1rem, 1.8vw, 2rem);
 }
 
 /* /////////////////////////////////////////////////////////////////Media queries */
@@ -511,7 +502,7 @@ label {
 
     .main_section {
         width: clamp(15em, 100vw, 90rem);
-        margin: 5.6rem 0 0;
+        margin: 0;
     }
 
     .top__inner {
@@ -520,17 +511,13 @@ label {
 
     .image_container {
         border-radius: 0;
-        height: 90vh;
+        height: 85vh;
     }
 
     .city_photo {
         flex-direction: column-reverse;
         align-items: center;
         padding-bottom: 9rem;
-    }
-
-    .first_slide_p {
-        height: 65%;
     }
 
     .city_info {
@@ -550,6 +537,11 @@ label {
         font-size: clamp(4rem, 15vw, 6rem);
     }
 
+    .search {
+        min-height: 15vh;
+        padding: 0 0 .4rem;
+    }
+
     input[type="search"] {
         width: 80%;
     }
@@ -564,7 +556,7 @@ label {
     }
 
     .seven_days {
-        left: 1rem;
+        left: .6rem;
         max-width: 4.5rem;
     }
 
@@ -599,5 +591,6 @@ label {
         flex-direction: row;
         border-bottom: 1px solid rgb(175, 175, 175);
         border-radius: 0;
+        padding: 0;
     }
 }

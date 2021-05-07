@@ -9,8 +9,8 @@ const sevenDaysBtn = document.querySelector('.seven_days');
 const hourlyBtn = document.querySelector('.hours');
 const menu = document.querySelector('.bottom_menu');
 
-const blurLayer = document.querySelector('#bl_layer')
-const dayInfoPanel = document.querySelector('#inf_panel');
+const blurLayer = document.querySelector('.blur_layer')
+const dayInfoPanel = document.querySelector('.day_info_panel');
 const singleDayPanel = document.querySelectorAll('.s_day');
 
 // Set current date
@@ -98,9 +98,9 @@ const getBgImage = async () => {
         }
         const apiURL = 'https://api.unsplash.com/search/photos';
         const res = await axios.get(apiURL, config);
-        const resData = res.data.results[0].urls.full;
+        const resData = res.data.results[0].urls.regular;
+        
         return resData;
-
     } catch {
         const rand = Math.floor(Math.random() * 5) + 1;
         return `img/rand0${rand}.jpg`;
@@ -213,8 +213,18 @@ const slideOut = () => {
 const searchBtn = document.querySelector('.search_button');
 const searchCity = document.querySelector('#search');
 
-searchBtn.addEventListener('click', async () => {
-    if (search.value) {
+window.addEventListener('keydown', e => {
+    if (e.code === 'Enter') {
+        makeRequest();
+    }
+})
+
+searchBtn.addEventListener('click', () => {
+    makeRequest();
+})
+
+const makeRequest = async () => {
+        if (search.value) {
         menu.style.display = 'flex';
         menuAnimation();
 
@@ -226,6 +236,7 @@ searchBtn.addEventListener('click', async () => {
 
         hourForecastPanel.innerHTML = '';
         makeHourlyIcons(hForecast);
+
         cardsAnimation();
 
         sevenDaysBtn.style.transform = `scale(1)`;
@@ -236,7 +247,7 @@ searchBtn.addEventListener('click', async () => {
 
         searchCity.value = '';
     }
-})
+}
 
 // Toggle forecast type
 sevenDaysBtn.addEventListener('click', () => {
@@ -251,8 +262,9 @@ hourlyBtn.addEventListener('click', () => {
 
 // Show single day information panel
 const hidePanel = () => {
-    blurLayer.classList.remove('blur_layer');
-    dayInfoPanel.classList.remove('day_info_panel');
+    dayInfoPanel.style.width = '0';
+    blurLayer.style.backgroundColor = 'none';
+    blurLayer.style.display = 'none';
 
     for (const singleDay of singleDayPanel) {
         singleDay.classList.remove('single_day');
@@ -261,8 +273,9 @@ const hidePanel = () => {
 
 for (const day of days) {
     day.addEventListener('click', () => {
-        blurLayer.classList.add('blur_layer');
-        dayInfoPanel.classList.add('day_info_panel');
+        blurLayer.style.display = 'block';
+        blurLayer.style.backgroundColor = 'rgba(0, 0, 0, 0.342)';
+        dayInfoPanel.style.width = '100%';
 
         for (const singleDay of singleDayPanel) {
             singleDay.classList.add('single_day');
