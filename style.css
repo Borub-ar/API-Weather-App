@@ -156,7 +156,8 @@ h3 {
     transition: transform 1s ease-in-out;
     display: flex;
     align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    padding-top: .8rem;
 }
 
 .slide_buttons {
@@ -167,19 +168,33 @@ h3 {
     display: none;
     justify-content: space-between;
     align-items: center;
-    width: 15rem;
+    width: 12rem;
 }
 
 .btn {
     cursor: pointer;
-    height: .8rem;
-    width: .8rem;
+    height: .6rem;
+    width: .6rem;
     border-radius: 50%;
     border: 1px solid var(--white-elements);
 }
 
 .btn:hover {
     background: var(--white-elements);
+    transition: background .2s ease-in-out;
+}
+
+.day_date {
+    font-size: clamp(1.2rem, 2vw, 5rem);
+}
+
+.s_day img {
+    height: clamp(5rem, 4vw, 8rem);
+}
+
+.day_temp {
+    font-size: clamp(1.4rem, 2.5vw, 6rem);
+    margin-bottom: 1rem;
 }
 
 /*////////////////////////////////////////////////////////////// Main */
@@ -571,7 +586,6 @@ label {
 
     input[type="search"] {
         width: 80%;
-        padding: .3rem;
     }
 
     .seven_days,

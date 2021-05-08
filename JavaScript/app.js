@@ -5,15 +5,16 @@ const sevenDaysPanel = document.querySelector('.seven_container');
 const days = document.querySelectorAll('.day');
 const hourForecastPanel = document.querySelector('.hourly_forecast');
 const currentDate = document.querySelector('.date');
+const menu = document.querySelector('.bottom_menu');
+
 const sevenDaysBtn = document.querySelector('.seven_days');
 const hourlyBtn = document.querySelector('.hours');
-const menu = document.querySelector('.bottom_menu');
+const slideBtns = document.querySelectorAll('.btn')
 
 const blurLayer = document.querySelector('.blur_layer')
 const dayInfoPanel = document.querySelector('.day_info_panel');
 const singleDayPanel = document.querySelectorAll('.s_day');
 const slideBtnsCon = document.querySelector('.slide_buttons');
-const slideBtns = document.querySelectorAll('.btn')
 const dayArray = document.querySelectorAll('.s_day');
 
 // Set current date
@@ -31,28 +32,21 @@ const menuAnimation = () => {
 }
 
 // Seven days forecast 
-const sevenDaysWeth = async () => {
-    try {
-        const config = {
-            params: {
-                key: '4c1299c9ae164edd8cb6e247728e94af',
-                days: 8,
-                city: searchCity.value
-            }
-        }
+const updateSingleDayInfo = (apiData) => {
+    const date = document.querySelectorAll('.day_date');
+    const iconWeather = document.querySelectorAll('.s_day img');
+    const weatherDesc = document.querySelectorAll('.day_description');
+    const temp = document.querySelectorAll('.day_temp');
 
-        const apiURL = 'https://api.weatherbit.io/v2.0/forecast/daily';
-        const res = await axios.get(apiURL, config);
-        return res.data.data;
-
-    } catch (e) {
-        console.log(e);
+    for (const [index, day] of dayArray.entries()) {
+        day
     }
 }
 
-
 const sevenDayForecast = async () => {
-    const dayInfo = await sevenDaysWeth();
+    const dayInfo = await getSevenDaysWeth();
+
+    updateSingleDayInfo()
 
     for (let [index, day] of days.entries()) {
         day.children[0].textContent = dayInfo[index + 1].datetime.substr(5).replace('-', '.');
@@ -70,65 +64,7 @@ const cardsAnimation = () => {
     }
 }
 
-// Current weather in searched city - function 
-const getCurrentWeather = async () => {
-    try {
-        const config = {
-            params: {
-                city: searchCity.value,
-                key: '4c1299c9ae164edd8cb6e247728e94af'
-            }
-        }
-        const apiURL = 'https://api.weatherbit.io/v2.0/current';
-        const res = await axios.get(apiURL, config);
-        const resData = res.data.data[0];
-        return resData;
-
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-// Current city background image - function
-const getBgImage = async () => {
-    try {
-        const config = {
-            params: {
-                client_id: 'hpthTi3lgM1vdtMHcfvAiW-hFUjaLHYCSAtG4y-Er-I',
-                query: searchCity.value,
-                per_page: 1
-            }
-        }
-        const apiURL = 'https://api.unsplash.com/search/photos';
-        const res = await axios.get(apiURL, config);
-        const resData = res.data.results[0].urls.regular;
-
-        return resData;
-    } catch {
-        const rand = Math.floor(Math.random() * 5) + 1;
-        return `img/rand0${rand}.jpg`;
-    }
-}
-
-// Hourly forecast in searched city - function
-const getHourlyForecast = async () => {
-    try {
-        const config = {
-            params: {
-                key: '4c1299c9ae164edd8cb6e247728e94af',
-                city: searchCity.value,
-                hours: 12
-            }
-        }
-        const apiURL = 'https://api.weatherbit.io/v2.0/forecast/hourly';
-        const res = await axios.get(apiURL, config);
-        return res.data.data;
-
-    } catch (e) {
-        console.log(e);
-    }
-}
-
+// Hourly forecast in searched city
 const makeHourlyIcons = dataAPI => {
     for (const hour of dataAPI) {
         const weatherCard = document.createElement('div');
@@ -149,7 +85,7 @@ const makeHourlyIcons = dataAPI => {
     }
 }
 
-// Making slides incoming sldies
+// Making slides 
 const slideIn = (varImage, varInfo) => {
     const container = document.querySelector('.image_container');
 
@@ -213,19 +149,6 @@ const slideOut = () => {
 }
 
 // Weather request 
-const searchBtn = document.querySelector('.search_button');
-const searchCity = document.querySelector('#search');
-
-window.addEventListener('keydown', e => {
-    if (e.code === 'Enter') {
-        makeRequest();
-    }
-})
-
-searchBtn.addEventListener('click', () => {
-    makeRequest();
-})
-
 const makeRequest = async () => {
     if (search.value) {
         menu.style.display = 'flex';
@@ -251,6 +174,19 @@ const makeRequest = async () => {
         searchCity.value = '';
     }
 }
+
+const searchBtn = document.querySelector('.search_button');
+const searchCity = document.querySelector('#search');
+
+window.addEventListener('keydown', e => {
+    if (e.code === 'Enter') {
+        makeRequest();
+    }
+})
+
+searchBtn.addEventListener('click', () => {
+    makeRequest();
+})
 
 // Toggle forecast type
 sevenDaysBtn.addEventListener('click', () => {
