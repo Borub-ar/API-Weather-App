@@ -15,7 +15,6 @@ const blurLayer = document.querySelector('.blur_layer')
 const dayInfoPanel = document.querySelector('.day_info_panel');
 const singleDayPanel = document.querySelectorAll('.s_day');
 const slideBtnsCon = document.querySelector('.slide_buttons');
-const dayArray = document.querySelectorAll('.s_day');
 
 // Set current date
 const date = new Date();
@@ -28,27 +27,48 @@ const menuAnimation = () => {
     const searchBar = document.querySelector('.search');
 
     menu.style.transform = 'scale(1, 1)';
-    searchBar.style.borderRadius = '0 0 0 0';
+    searchBar.style.borderRadius = '0';
 }
 
 // Seven days forecast 
 const updateSingleDayInfo = (apiData) => {
-    const date = document.querySelectorAll('.day_date');
-    const iconWeather = document.querySelectorAll('.s_day img');
-    const weatherDesc = document.querySelectorAll('.day_description');
-    const temp = document.querySelectorAll('.day_temp');
+    const ulDayInfo = document.querySelectorAll('.ul_single_day')
 
-    for (const [index, day] of dayArray.entries()) {
-        day
+    for (const [index, day] of ulDayInfo.entries()) {
+        day.children[0].textContent = apiData[index + 1].datetime.substr(5).replace('-', '.');
+        day.children[1].children[0].src = `https://www.weatherbit.io/static/img/icons/${apiData[index + 1].weather.icon}.png`;
+        day.children[2].textContent = apiData[index + 1].weather.description;
+        day.children[3].textContent = `${apiData[index + 1].temp} ºC`;
+        day.children[4].children[0].textContent = apiData[index + 1].clouds;
+        day.children[5].children[0].textContent = apiData[index + 1].vis;
+        day.children[6].children[0].textContent = apiData[index + 1].wind_cdir_full;
+        day.children[7].children[0].textContent = apiData[index + 1].wind_spd;
+        day.children[8].children[0].textContent = apiData[index + 1].pres;
+        day.children[9].children[0].textContent = apiData[index + 1].low_temp;
+        day.children[10].children[0].textContent = apiData[index + 1].high_temp;
+        day.children[11].children[0].textContent = apiData[index + 1].snow_depth;
     }
+}
+
+// Single day slide animation
+for (const [index, day] of singleDayPanel.entries()) {
+    day.style.left = `${index * 100}%`;
+}
+
+for (const [index, btn] of slideBtns.entries()) {
+    btn.addEventListener('click', () => {
+        for (const day of singleDayPanel) {
+            day.style.transform = `translate(-${index * 100}%)`;
+        }
+    })
 }
 
 const sevenDayForecast = async () => {
     const dayInfo = await getSevenDaysWeth();
 
-    updateSingleDayInfo()
+    updateSingleDayInfo(dayInfo)
 
-    for (let [index, day] of days.entries()) {
+    for (const [index, day] of days.entries()) {
         day.children[0].textContent = dayInfo[index + 1].datetime.substr(5).replace('-', '.');
         day.children[1].src = `https://www.weatherbit.io/static/img/icons/${dayInfo[index + 1].weather.icon}.png`;
         day.children[2].children[0].textContent = dayInfo[index + 1].temp;
@@ -157,8 +177,8 @@ const makeRequest = async () => {
         const backgroundPhoto = await getBgImage();
         const cityInf = await getCurrentWeather();
         const hForecast = await getHourlyForecast();
-
         await sevenDayForecast();
+
 
         hourForecastPanel.innerHTML = '';
         makeHourlyIcons(hForecast);
@@ -232,16 +252,3 @@ window.addEventListener('keydown', e => {
         hidePanel();
     }
 })
-
-// Single day slide animation
-for (const [index, day] of dayArray.entries()) {
-    day.style.left = `${index * 100}%`;
-}
-
-for (const [index, btn] of slideBtns.entries()) {
-    btn.addEventListener('click', () => {
-        for (const day of singleDayPanel) {
-            day.style.transform = `translate(-${index * 100}%)`;
-        }
-    })
-}

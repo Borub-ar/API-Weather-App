@@ -30,6 +30,51 @@ h3 {
 }
 
 /* //////////////////////////////////////////////////////////////////////// Animations  */
+@-webkit-keyframes header_anim {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes header_anim {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@-webkit-keyframes widget_anim {
+    0% {
+        opacity: 0;
+        transform: translateY(30%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes widget_anim {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
 
 @-webkit-keyframes slide_in {
     0% {
@@ -93,6 +138,8 @@ h3 {
     width: 100%;
     z-index: 9999;
     box-shadow: 0px 0px 32px -4px rgb(143, 180, 228);
+    -webkit-animation: header_anim 1.2s ease-in-out .5s backwards;
+    animation: header_anim 1.2s ease-in-out .5s backwards;
 }
 
 .top__inner {
@@ -140,7 +187,7 @@ h3 {
     z-index: 99999;
     overflow: hidden;
     width: 0;
-    height: 65vh;
+    height: 70vh;
     background: rgba(0, 0, 0, 0.507);
     transform: translate(-50%, -50%);
     transition: width .5s ease;
@@ -151,13 +198,14 @@ h3 {
     top: 0;
     left: 0;
     width: 100%;
-    height: 85%;
-    color: white;
+    height: 59vh;
+    margin-top: 1rem;
+    color: var(--white-elements);
     transition: transform 1s ease-in-out;
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
-    padding-top: .8rem;
 }
 
 .slide_buttons {
@@ -184,6 +232,13 @@ h3 {
     transition: background .2s ease-in-out;
 }
 
+.ul_single_day {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
 .day_date {
     font-size: clamp(1.2rem, 2vw, 5rem);
 }
@@ -194,7 +249,11 @@ h3 {
 
 .day_temp {
     font-size: clamp(1.4rem, 2.5vw, 6rem);
-    margin-bottom: 1rem;
+    margin-bottom: .3rem;
+}
+
+.detale_inf {
+    font-size: clamp(.9rem, 1vw, 2rem);
 }
 
 /*////////////////////////////////////////////////////////////// Main */
@@ -210,6 +269,8 @@ h3 {
     position: relative;
     width: clamp(15rem, 80vw, 90rem);
     margin: 7rem 0 2rem;
+    -webkit-animation: widget_anim 2s backwards;
+    animation: widget_anim 2s backwards;
 }
 
 .image_container {
@@ -500,7 +561,6 @@ label {
 }
 
 /* /////////////////////////////////////////////////////////////////Media queries */
-
 @media (max-width: 1150px) {
     .main_section {
         width: clamp(15em, 90vw, 90rem);
@@ -636,3 +696,39 @@ label {
         padding: 0;
     }
 }
+
+@media (max-height: 585px) {
+    .top_bar {
+        display: none;
+    }
+
+    .single_day {
+        margin: 0;
+    }
+
+    .slide_buttons {
+        bottom: 1rem;
+    }
+
+    .city_photo {
+        padding: 1rem 0;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .weather_descr {
+        margin: .3rem 0;
+    }
+
+    .ct_name {
+        margin: 0;
+    }
+
+    .ul_single_day {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 95%;
+    }
+}
+
