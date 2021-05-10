@@ -697,7 +697,7 @@ label {
     }
 }
 
-@media (max-height: 585px) {
+@media (orientation: landscape) and (max-width: 750px) {
     .top_bar {
         display: none;
     }
@@ -708,6 +708,10 @@ label {
 
     .slide_buttons {
         bottom: 1rem;
+    }
+
+    .image_container {
+        height: 100vh;
     }
 
     .city_photo {
