@@ -16,23 +16,36 @@ const dayInfoPanel = document.querySelector('.day_info_panel');
 const singleDayPanel = document.querySelectorAll('.s_day');
 const slideBtnsCon = document.querySelector('.slide_buttons');
 
+
+
+
+
+
 // Set current date
 const date = new Date();
 const timeElapsed = Date.now();
 const today = new Date(timeElapsed);
 currentDate.textContent = today.toLocaleDateString();
 
+
+
+
+
+
 // Bottom menu unfolding animation
 const menuAnimation = () => {
     const searchBar = document.querySelector('.search');
 
-    menu.style.transform = 'scale(1, 1)';
+    menu.style.transform = 'scale(1)';
     searchBar.style.borderRadius = '0';
 }
 
+
+
+
 // Seven days forecast 
 const updateSingleDayInfo = (apiData) => {
-    const ulDayInfo = document.querySelectorAll('.ul_single_day')
+    const ulDayInfo = document.querySelectorAll('.ul_single_day');
 
     for (const [index, day] of ulDayInfo.entries()) {
         day.children[0].textContent = apiData[index + 1].datetime.substr(5).replace('-', '.');
@@ -50,18 +63,9 @@ const updateSingleDayInfo = (apiData) => {
     }
 }
 
-// Single day slide animation
-for (const [index, day] of singleDayPanel.entries()) {
-    day.style.left = `${index * 100}%`;
-}
 
-for (const [index, btn] of slideBtns.entries()) {
-    btn.addEventListener('click', () => {
-        for (const day of singleDayPanel) {
-            day.style.transform = `translate(-${index * 100}%)`;
-        }
-    })
-}
+
+
 
 const sevenDayForecast = async () => {
     const dayInfo = await getSevenDaysWeth();
@@ -75,6 +79,10 @@ const sevenDayForecast = async () => {
     }
 }
 
+
+
+
+
 // Seven days forecast cards animation
 const cardsAnimation = () => {
     for (let i = 0; i < days.length; i++) {
@@ -83,6 +91,10 @@ const cardsAnimation = () => {
         }, i * 300);
     }
 }
+
+
+
+
 
 // Hourly forecast in searched city
 const makeHourlyIcons = dataAPI => {
@@ -104,6 +116,10 @@ const makeHourlyIcons = dataAPI => {
         weatherCard.append(datetime, weatherIcon, weatherTemp);
     }
 }
+
+
+
+
 
 // Making slides 
 const slideIn = (varImage, varInfo) => {
@@ -160,15 +176,29 @@ const slideIn = (varImage, varInfo) => {
     cityImage.classList.add('slide_in');
 };
 
+
+
+
+
+
+
 const slideOut = () => {
     const slides = document.querySelectorAll('.city_photo');
-
-    for (const slide of slides) {
-        slide.classList.add('slide_out');
-    }
+    for (const slide of slides) slide.classList.add('slide_out');
 }
 
+
+
+
+
+
+
+
+
 // Weather request 
+const searchCity = document.querySelector('#search');
+const searchBtn = document.querySelector('.search_button');
+
 const makeRequest = async () => {
     if (search.value) {
         menu.style.display = 'flex';
@@ -178,7 +208,6 @@ const makeRequest = async () => {
         const cityInf = await getCurrentWeather();
         const hForecast = await getHourlyForecast();
         await sevenDayForecast();
-
 
         hourForecastPanel.innerHTML = '';
         makeHourlyIcons(hForecast);
@@ -195,18 +224,22 @@ const makeRequest = async () => {
     }
 }
 
-const searchBtn = document.querySelector('.search_button');
-const searchCity = document.querySelector('#search');
-
 window.addEventListener('keydown', e => {
-    if (e.code === 'Enter') {
-        makeRequest();
-    }
+    e.code === 'Enter' && makeRequest();
 })
 
 searchBtn.addEventListener('click', () => {
     makeRequest();
 })
+
+
+
+
+
+
+
+
+
 
 // Toggle forecast type
 sevenDaysBtn.addEventListener('click', () => {
@@ -219,36 +252,118 @@ hourlyBtn.addEventListener('click', () => {
     hourForecastPanel.style.transform = 'translate(0)';
 })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Show / hide - single day information panel
-const showPanel = () => {
+const showPanel = (cardIndex) => {
     blurLayer.style.display = 'block';
     blurLayer.style.backgroundColor = 'rgba(0, 0, 0, 0.342)';
     dayInfoPanel.style.width = '100%';
     slideBtnsCon.style.display = 'flex';
 
+    // Moving to chosen day
     for (const singleDay of singleDayPanel) {
         singleDay.classList.add('single_day');
+        singleDay.style.transform = `translate(-${cardIndex * 100}%)`;
     }
 }
+
 
 const hidePanel = () => {
     dayInfoPanel.style.width = '0';
-    blurLayer.style.backgroundColor = 'none';
     blurLayer.style.display = 'none';
     slideBtnsCon.style.display = 'none';
+}
 
-    for (const singleDay of singleDayPanel) {
-        singleDay.classList.remove('single_day');
+
+// Positioning slides
+for (const [index, day] of singleDayPanel.entries()) day.style.left = `${index * 100}%`;
+
+
+// Slide key left right moving
+// Add click listener to seven days panel
+// show panel
+
+let currentSlidePosition;
+
+for (const [index, day] of days.entries()) {
+    day.addEventListener('click', () => {
+        showPanel(index);
+        currentSlidePosition = index * 100;
+    })
+}
+
+// Single day slide animation #1
+window.addEventListener('keydown', e => {
+    if (e.code === 'ArrowLeft') {
+        if (currentSlidePosition > 0) currentSlidePosition -= 100;
+
+        for (const day of singleDayPanel) {
+            day.style.transform = `translate(-${currentSlidePosition}%)`;
+        }
     }
-}
 
-for (const day of days) {
-    day.addEventListener('click', showPanel)
-}
+    if (e.code === 'ArrowRight') {
+        if (currentSlidePosition < 600) currentSlidePosition += 100;
 
+        for (const day of singleDayPanel) {
+            day.style.transform = `translate(-${currentSlidePosition}%)`;
+        }
+    }
+})
+
+// Single day slide animation #2
+for (const [index, btn] of slideBtns.entries()) {
+    btn.addEventListener('click', () => {
+        for (const day of singleDayPanel) {
+            day.style.transform = `translate(-${index * 100}%)`;
+            currentSlidePosition = index * 100;
+        }
+    })
+}
+// Single day slide animation #3
+const slideBtnLeft = document.querySelector('.slide_left_btn');
+const slideBtnRight = document.querySelector('.slide_right_btn');
+
+// To musi być zamienione w funkcje ponieważ się powtarza ze strzałkami
+slideBtnLeft.addEventListener('click', () => {
+    if (currentSlidePosition > 0) currentSlidePosition -= 100;
+
+    for (const day of singleDayPanel) {
+        day.style.transform = `translate(-${currentSlidePosition}%)`;
+    }
+})
+
+slideBtnRight.addEventListener('click', () => {
+    if (currentSlidePosition < 600) currentSlidePosition += 100;
+
+    for (const day of singleDayPanel) {
+        day.style.transform = `translate(-${currentSlidePosition}%)`;
+    }
+})
+
+
+
+
+// hide pop up panel
 blurLayer.addEventListener('click', hidePanel);
 window.addEventListener('keydown', e => {
-    if (e.code === 'Escape') {
-        hidePanel();
-    }
+    e.code === 'Escape' && hidePanel();
 })

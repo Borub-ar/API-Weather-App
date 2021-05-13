@@ -9,11 +9,10 @@ const getSevenDaysWeth = async () => {
         }
         const apiURL = 'https://api.weatherbit.io/v2.0/forecast/daily';
         const res = await axios.get(apiURL, config);
-        console.log(res.data.data)
         return res.data.data;
 
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -30,8 +29,8 @@ const getCurrentWeather = async () => {
         const resData = res.data.data[0];
         return resData;
 
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -68,7 +67,7 @@ const getHourlyForecast = async () => {
         const res = await axios.get(apiURL, config);
         return res.data.data;
 
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        console.log(error);
     }
 }
