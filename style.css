@@ -421,7 +421,7 @@ label {
     cursor: pointer;
     transition: transform .2s ease-in-out;
     transform: scale(0);
-    font-size: clamp(1.2rem, 2vw, 1.4rem);
+    font-size: 1.1rem;
 }
 
 .seven_days {
@@ -623,11 +623,6 @@ label {
         width: 80%;
     }
 
-    .seven_days,
-    .hours {
-        font-size: 1.1rem;
-    }
-
     .hours {
         right: 1rem;
     }
@@ -684,6 +679,43 @@ label {
     .single_day {
         min-height: 0;
         top: 10%;
+    }
+
+    .slide_buttons {
+        bottom: 1rem;
+    }
+
+    .image_container {
+        height: 100vh;
+    }
+
+    .city_photo {
+        padding: 1rem 0;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .weather_descr {
+        margin: .3rem 0;
+    }
+
+    .ct_name {
+        margin: 0;
+    }
+}
+
+@media (max-height: 420px) {
+    .day_info_panel {
+        height: clamp(320px, 60vh, 350px);
+    }
+
+    .single_day {
+        min-height: 0;
+        top: 10%;
+    }
+
+    .slide_buttons {
+        bottom: 1rem;
     }
 
     .ul_single_day {
@@ -758,27 +790,4 @@ label {
         grid-column: 3/5;
         grid-row: 6/7;
     }
-
-    .slide_buttons {
-        bottom: 1rem;
-    }
-
-    .image_container {
-        height: 100vh;
-    }
-
-    .city_photo {
-        padding: 1rem 0;
-        flex-direction: row;
-        align-items: center;
-    }
-
-    .weather_descr {
-        margin: .3rem 0;
-    }
-
-    .ct_name {
-        margin: 0;
-    }
 }
-
