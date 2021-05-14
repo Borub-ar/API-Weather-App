@@ -16,6 +16,10 @@ const dayInfoPanel = document.querySelector('.day_info_panel');
 const singleDayPanel = document.querySelectorAll('.s_day');
 const slideBtnsCon = document.querySelector('.slide_buttons');
 
+const errorMessage = document.querySelector('.error_message');
+
+
+
 
 
 
@@ -91,9 +95,6 @@ const cardsAnimation = () => {
         }, i * 300);
     }
 }
-
-
-
 
 
 // Hourly forecast in searched city
@@ -189,7 +190,10 @@ const slideOut = () => {
 
 
 
-
+const hideErrorMessage = () => {
+        errorMessage.style.transform = 'translate(-50%, 100%)';
+        errorMessage.style.opacity = '0';
+}
 
 
 
@@ -198,27 +202,33 @@ const slideOut = () => {
 // Weather request 
 const searchCity = document.querySelector('#search');
 const searchBtn = document.querySelector('.search_button');
-
+        
 const makeRequest = async () => {
     if (search.value) {
-        menu.style.display = 'flex';
-        menuAnimation();
-
-        const backgroundPhoto = await getBgImage();
         const cityInf = await getCurrentWeather();
-        const hForecast = await getHourlyForecast();
-        await sevenDayForecast();
 
-        hourForecastPanel.innerHTML = '';
-        makeHourlyIcons(hForecast);
+        if (cityInf) {
 
-        cardsAnimation();
+            hideErrorMessage();
 
-        sevenDaysBtn.style.transform = `scale(1)`;
-        hourlyBtn.style.transform = `scale(1)`;
-
-        slideOut();
-        slideIn(backgroundPhoto, cityInf);
+            menu.style.display = 'flex';
+            menuAnimation();
+    
+            const backgroundPhoto = await getBgImage();
+            const hForecast = await getHourlyForecast();
+            await sevenDayForecast();
+    
+            hourForecastPanel.innerHTML = '';
+            makeHourlyIcons(hForecast);
+    
+            cardsAnimation();
+    
+            sevenDaysBtn.style.transform = `scale(1)`;
+            hourlyBtn.style.transform = `scale(1)`;
+    
+            slideOut();
+            slideIn(backgroundPhoto, cityInf);
+        }
 
         searchCity.value = '';
     }
@@ -273,10 +283,17 @@ hourlyBtn.addEventListener('click', () => {
 
 // Show / hide - single day information panel
 const showPanel = (cardIndex) => {
+    const panel = document.querySelector('.day_info_panel');
+
     blurLayer.style.display = 'block';
     blurLayer.style.backgroundColor = 'rgba(0, 0, 0, 0.342)';
     dayInfoPanel.style.width = '100%';
     slideBtnsCon.style.display = 'flex';
+
+    for (const child of panel.children) {
+        child.style.opacity = 1;
+        child.style.transition = `opacity .2s ease-in-out, transform 1s ease-in-out`;
+    }
 
     // Moving to chosen day
     for (const singleDay of singleDayPanel) {
@@ -287,6 +304,12 @@ const showPanel = (cardIndex) => {
 
 
 const hidePanel = () => {
+    const panel = document.querySelector('.day_info_panel');
+    
+    for (const child of panel.children) {
+        child.style.opacity = 0;
+    }
+
     dayInfoPanel.style.width = '0';
     blurLayer.style.display = 'none';
     slideBtnsCon.style.display = 'none';
@@ -362,6 +385,9 @@ slideBtnRight.addEventListener('click', () => {
 
 
 // hide pop up panel
+const closeBtn = document.querySelector('.close_btn')
+
+closeBtn.addEventListener('click', hidePanel)
 blurLayer.addEventListener('click', hidePanel);
 window.addEventListener('keydown', e => {
     e.code === 'Escape' && hidePanel();

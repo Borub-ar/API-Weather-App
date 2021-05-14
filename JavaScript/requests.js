@@ -31,6 +31,9 @@ const getCurrentWeather = async () => {
 
     } catch (error) {
         console.log(error);
+
+        errorMessage.style.transform = 'translate(-50%, -30%)'
+        errorMessage.style.opacity = '1'
     }
 }
 
