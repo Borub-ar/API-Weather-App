@@ -292,7 +292,6 @@ const hidePanel = () => {
     slideBtnsCon.style.display = 'none';
 }
 
-
 // Positioning slides
 for (const [index, day] of singleDayPanel.entries()) day.style.left = `${index * 100}%`;
 
@@ -338,7 +337,7 @@ for (const [index, btn] of slideBtns.entries()) {
         }
     })
 }
-// Single day slide animation #3
+// Single day slide animation #3 
 const slideBtnLeft = document.querySelector('.slide_left_btn');
 const slideBtnRight = document.querySelector('.slide_right_btn');
 

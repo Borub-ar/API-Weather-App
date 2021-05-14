@@ -138,23 +138,20 @@ h1 {
 .day_info_panel {
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
+    transition: width .5s ease;
     z-index: 99999;
     overflow: hidden;
     width: 0;
-    height: 65vh;
-    min-height: 378px;
+    height: clamp(420px, 65vh, 488px);
     background: rgba(0, 0, 0, 0.507);
-    transform: translate(-50%, -50%);
-    transition: width .5s ease;
 }
 
 .single_day {
     position: absolute;
-    top: 0;
+    top: 5%;
     left: 0;
     width: 100%;
-    min-height: 59vh;
-    margin-top: .3rem;
     color: var(--white-elements);
     display: flex;
     align-items: center;
@@ -216,6 +213,7 @@ h1 {
     padding: 0;
     margin: 0;
     text-align: center;
+    max-width: 600px;
 }
 
 .day_date {
@@ -228,7 +226,7 @@ h1 {
 }
 
 .day_temp {
-    font-size: clamp(1.5rem, 5vw, 2.3rem);
+    font-size: 2rem;
     margin-bottom: .3rem;
 }
 
@@ -368,7 +366,7 @@ h1 {
 }
 
 input[type="search"] {
-    margin: 0 2rem;
+    margin: 0 1.3rem;
     width: clamp(10rem, 30%, 30rem);
     padding: .4rem;
     border-radius: .4rem;
@@ -423,14 +421,15 @@ label {
     cursor: pointer;
     transition: transform .2s ease-in-out;
     transform: scale(0);
+    font-size: clamp(1.2rem, 2vw, 1.4rem);
 }
 
 .seven_days {
-    right: 6rem;
+    right: 4.5rem;
 }
 
 .hours {
-    right: 2rem;
+    right: 1rem;
 }
 
 .seven_days::before,
@@ -489,7 +488,7 @@ label {
     transition: box-shadow .2s linear, transform .2s ease-in;
 }
 
-.weather_card:nth-child(2n - 1) {
+.weather_card:nth-of-type(2n - 1) {
     background-color: var(--dark-card-icon);
 }
 
@@ -523,7 +522,7 @@ label {
     transition: box-shadow .2s linear, transform .2s ease-in;
 }
 
-.day:nth-child(2n - 1) {
+.day:nth-of-type(2n - 1) {
     background: var(--dark-card-icon);
 }
 
@@ -544,10 +543,6 @@ label {
 @media (max-width: 1150px) {
     .main_section {
         width: clamp(15em, 90vw, 90rem);
-    }
-
-    .seven_days {
-        margin: 0;
     }
 
     .search {
@@ -677,90 +672,91 @@ label {
     }
 }
 
-@media (orientation: landscape) and (max-height: 650px) {
+@media (orientation: landscape) and (max-height: 750px) and (max-width: 750px) {
     .top_bar {
         display: none;
     }
 
     .day_info_panel {
-        min-height: 242px;
+        height: clamp(320px, 60vh, 350px);
     }
 
     .single_day {
-        height: 40%;
         min-height: 0;
-        top: 20%;
-        left: 50%;
+        top: 10%;
     }
 
     .ul_single_day {
+        width: 100%;
         display: grid;
         grid-template-columns: repeat(4, auto);
-        grid-template-rows: repeat(8, auto);
-        column-gap: 1rem;
-        text-align: left;
+        grid-template-rows: repeat(6, auto);
     }
 
     .day_date {
-        display: flex;
-        align-items: center;
+        font-size: 2rem;
+        text-align: right;
         grid-column: 1/2;
-        grid-row: 1/12;
-    }
-
-    .ul_single_day img {
-        grid-column: 2/3;
-        grid-row: 1/6;
-    }
-
-    .detale_weather {
-        grid-column: 2/3;
-        grid-row: 6/12;
-    }
-
-    .day_temp {
-        grid-column: 3/4;
-        grid-row: 1/12;
-    }
-
-    .detale_inf:nth-child(1) {
-        grid-column: 4/5;
         grid-row: 1/2;
     }
 
-    .detale_inf:nth-child(2) {
-        grid-column: 4/5;
-        grid-row: 2/3;
+    .ul_single_day img {
+        grid-column: 2/4;
+        grid-row: 1/2;
+        position: relative;
+        right: -45%
     }
 
-    .detale_inf:nth-child(3) {
+    .detale_weather {
+        grid-column: 1/5;
+        grid-row: 2/3;
+        margin-bottom: .5rem;
+    }
+
+    .day_temp {
         grid-column: 4/5;
+        grid-row: 1/2;
+        text-align: left;
+    }
+
+    .ul_single_day li:nth-of-type(5) {
+        grid-column: 1/3;
         grid-row: 3/4;
     }
 
-    .detale_inf:nth-child(4) {
-        grid-column: 4/5;
+    .ul_single_day li:nth-of-type(6) {
+        grid-column: 1/3;
         grid-row: 4/5;
     }
 
-    .detale_inf:nth-child(5) {
-        grid-column: 4/5;
+    .ul_single_day li:nth-of-type(7) {
+        grid-column: 1/3;
         grid-row: 5/6;
     }
 
-    .detale_inf:nth-child(6) {
-        grid-column: 4/5;
-        grid-row: 7/8;
+    .ul_single_day li:nth-of-type(8) {
+        grid-column: 1/3;
+        grid-row: 6/7;
     }
 
-    .detale_inf:nth-child(7) {
-        grid-column: 4/5;
-        grid-row: 8/9;
+    .ul_single_day li:nth-of-type(9) {
+        grid-column: 3/5;
+        grid-row: 3/4;
     }
 
-    .detale_inf:nth-child(8) {
-        grid-column: 4/5;
-        grid-row: 9/10;
+    .ul_single_day li:nth-of-type(10) {
+        grid-column: 3/5;
+        grid-row: 4/5;
+    }
+
+    .ul_single_day li:nth-of-type(11) {
+        grid-column: 3/5;
+        grid-row: 5/6;
+    }
+
+    .ul_single_day li:nth-of-type(12) {
+        grid-column: 3/5;
+        grid-row: 6/7;
     }
 
     .slide_buttons {
