@@ -1,4 +1,4 @@
-const getSevenDaysWeth = async () => {
+const getSevenDaysWeather = async () => {
     try {
         const config = {
             params: {
@@ -11,10 +11,11 @@ const getSevenDaysWeth = async () => {
         const res = await axios.get(apiURL, config);
         return res.data.data;
 
-    } catch (error) {
-        console.log(error);
+    } catch (err) {
+        console.log(err);
     }
 }
+
 
 const getCurrentWeather = async () => {
     try {
@@ -29,13 +30,14 @@ const getCurrentWeather = async () => {
         const resData = res.data.data[0];
         return resData;
 
-    } catch (error) {
-        console.log(error);
+    } catch (err) {
+        console.log(err);
 
         errorMessage.style.transform = 'translate(-50%, -30%)'
         errorMessage.style.opacity = '1'
     }
 }
+
 
 const getBgImage = async () => {
     try {
@@ -57,6 +59,7 @@ const getBgImage = async () => {
     }
 }
 
+
 const getHourlyForecast = async () => {
     try {
         const config = {
@@ -70,7 +73,7 @@ const getHourlyForecast = async () => {
         const res = await axios.get(apiURL, config);
         return res.data.data;
 
-    } catch (error) {
-        console.log(error);
+    } catch (err) {
+        console.log(err);
     }
 }

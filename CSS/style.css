@@ -7,8 +7,9 @@
 body {
     margin: 0;
     font-family: 'Oswald', sans-serif;
-    background: url(img/site-bg.jpg) center/cover no-repeat fixed;
+    background: url(../img/site-bg.jpg) center/cover no-repeat fixed;
     font-weight: 200;
+    overflow: hidden;
 }
 
 *,
@@ -27,7 +28,28 @@ h1 {
     margin: 0;
 }
 
+label {
+    display: none;
+}
+
+
+
+
+
+
 /* //////////////////////////////////////////////////////////////////////// Animations  */
+@-webkit-keyframes header_anim {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @keyframes header_anim {
     0% {
         opacity: 0;
@@ -37,6 +59,16 @@ h1 {
     100% {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@-webkit-keyframes widget_anim {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
     }
 }
 
@@ -50,6 +82,16 @@ h1 {
     }
 }
 
+@-webkit-keyframes slide_in {
+    0% {
+        transform: translate(100%);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
 @keyframes slide_in {
     0% {
         transform: translate(100%);
@@ -57,6 +99,16 @@ h1 {
 
     100% {
         transform: translate(0);
+    }
+}
+
+@-webkit-keyframes slide_out {
+    0% {
+        transform: translate(0);
+    }
+
+    100% {
+        transform: translate(-100%);
     }
 }
 
@@ -70,13 +122,15 @@ h1 {
     }
 }
 
-@keyframes zoom {
+@-webkit-keyframes zoom {
     0% {
         transform: scale(1);
     }
+
     25% {
         transform: scale(1.1);
     }
+
     50% {
         transform: scale(1);
     }
@@ -86,8 +140,32 @@ h1 {
     }
 }
 
-/*///////////////////////////////////////////////////////////////////////// Utilities  */
+@keyframes zoom {
+    0% {
+        transform: scale(1);
+    }
 
+    25% {
+        transform: scale(1.1);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+
+
+
+
+
+
+/*//////////////////////////////////////////////////////////////////////// Utilities  */
 .bold_txt {
     font-weight: 700;
 }
@@ -100,8 +178,24 @@ h1 {
     display: none;
 }
 
-/*/////////////////////////////////////////////////////////////////// Top Bar / Header */
+.slide_in {
+    -webkit-animation: slide_in 3s forwards ease-in-out;
+    animation: slide_in 3s forwards ease-in-out;
+}
 
+.slide_out {
+    -webkit-animation: slide_out 3s forwards ease-in-out;
+    animation: slide_out 3s forwards ease-in-out;
+}
+
+
+
+
+
+
+
+
+/*/////////////////////////////////////////////////////////////////// Header */
 .top_bar {
     background: var(--dark-blue-background);
     position: fixed;
@@ -112,7 +206,7 @@ h1 {
     animation: header_anim 1.2s ease-in-out .5s backwards;
 }
 
-.top__inner {
+.top_bar_inner {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -129,12 +223,19 @@ h1 {
 
 .date {
     font-size: clamp(1.3rem, 2.3vw, 3rem);
+    font-weight: 700;
 }
 
-/*////////////////////////////////////////// Pop-up information panel */
 
+
+
+
+
+
+
+/*////////////////////////////////////////// Carousel with single day detale info */
 .blur_layer,
-.day_info_panel {
+.slides_panel {
     position: fixed;
     transition: background .5s ease-in-out;
 }
@@ -151,7 +252,7 @@ h1 {
     backdrop-filter: blur(2px);
 }
 
-.day_info_panel {
+.slides_panel {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -200,7 +301,7 @@ h1 {
     cursor: pointer;
 }
 
-.btn {
+.slide_btn {
     cursor: pointer;
     height: .6rem;
     width: .6rem;
@@ -210,7 +311,7 @@ h1 {
 
 }
 
-.btn:hover {
+.slide_btn:hover {
     background: var(--white-elements);
     transition: background .2s ease-in-out;
 }
@@ -239,7 +340,7 @@ h1 {
 
 }
 
-.ul_single_day {
+.single_slide_informations {
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -252,11 +353,11 @@ h1 {
 }
 
 
-.s_day img {
+.single_slide img {
     height: clamp(3rem, 4vw, 5rem);
 }
 
-.day_temp {
+.slide_day_temp {
     font-size: 2rem;
     margin-bottom: .3rem;
 }
@@ -265,8 +366,14 @@ h1 {
     font-size: .9rem;
 }
 
-/*////////////////////////////////////////////////////////////// Main */
 
+
+
+
+
+
+
+/*////////////////////////////////////////////////////////////// Main */
 .wrapper {
     min-height: 100vh;
     display: flex;
@@ -274,7 +381,7 @@ h1 {
     align-items: center;
 }
 
-.main_section {
+.widget_container {
     position: relative;
     width: clamp(15rem, 80vw, 90rem);
     margin: 7rem 0 2rem;
@@ -301,13 +408,13 @@ h1 {
     width: 30%;
     padding: 1rem 2rem;
     background: rgb(238, 217, 177);
-    border-radius: 1rem;   
-    transition: transform 1s ease-in-out, opacity 1s ease-in-out; 
+    border-radius: 1rem;
+    transition: transform 1s ease-in-out, opacity 1s ease-in-out;
     border: 2px solid rgb(255, 255, 255);
 }
 
 .city_photo {
-    background: url(img/widget-bg.jpg) center/cover no-repeat;
+    background: url(../img/widget-bg.jpg) center/cover no-repeat;
     height: 100%;
     padding: 4rem 0;
     display: flex;
@@ -321,12 +428,11 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.363);
-    -webkit-filter: blur(20px);
+    background-color: rgba(0, 0, 0, 0.445);
+    -webkit-filter: blur(15px);
     filter: blur(20px);
     border-radius: 1rem 1rem 0 0;
 }
-
 
 .slide_right {
     position: absolute;
@@ -334,16 +440,6 @@ h1 {
     height: 100%;
     top: 0;
     left: 0;
-}
-
-.slide_in {
-    -webkit-animation: slide_in 3s forwards ease-in-out;
-    animation: slide_in 3s forwards ease-in-out;
-}
-
-.slide_out {
-    -webkit-animation: slide_out 3s forwards ease-in-out;
-    animation: slide_out 3s forwards ease-in-out;
 }
 
 .city_name,
@@ -396,11 +492,18 @@ h1 {
     width: 4rem;
 }
 
+
+
+
+
+
+
+
 .bottom_screen {
     background: rgb(255, 255, 255);
 }
 
-.search {
+.search_bar {
     position: relative;
     background-color: var(--dark-blue-background);
     display: flex;
@@ -421,10 +524,6 @@ input[type="search"] {
     color: var(--white-elements);
     border: 1px solid rgba(255, 255, 255, 0.459);
     background: rgba(255, 255, 255, 0.281);
-}
-
-label {
-    display: none;
 }
 
 ::-webkit-input-placeholder {
@@ -462,8 +561,8 @@ label {
     transform: scale(1.1);
 }
 
-.seven_days,
-.hours {
+.seven_days_switch,
+.hours_switch {
     position: absolute;
     bottom: .8rem;
     cursor: pointer;
@@ -472,16 +571,16 @@ label {
     font-size: 1.1rem;
 }
 
-.seven_days {
+.seven_days_switch {
     right: 4.5rem;
 }
 
-.hours {
+.hours_switch {
     right: 1rem;
 }
 
-.seven_days::before,
-.hours::before {
+.seven_days_switch::before,
+.hours_switch::before {
     content: '';
     position: absolute;
     left: 50%;
@@ -494,10 +593,17 @@ label {
     transition: width .2s linear;
 }
 
-.seven_days:hover::before,
-.hours:hover::before {
+.seven_days_switch:hover::before,
+.hours_switch:hover::before {
     width: 100%;
 }
+
+
+
+
+
+
+
 
 .bottom_menu {
     position: relative;
@@ -536,10 +642,6 @@ label {
     transition: box-shadow .2s linear, transform .2s ease-in;
 }
 
-.weather_card:nth-of-type(2n - 1) {
-    background-color: var(--dark-card-icon);
-}
-
 .weather_card:hover {
     box-shadow: 0px 0px 28px -4px #000000;
 }
@@ -548,7 +650,7 @@ label {
     height: 4rem;
 }
 
-.seven_container {
+.seven_days_container {
     position: absolute;
     left: 50%;
     transform: translate(-50%);
@@ -570,7 +672,8 @@ label {
     transition: box-shadow .2s linear, transform .2s ease-in;
 }
 
-.day:nth-of-type(2n - 1) {
+.day:nth-of-type(2n - 1),
+.weather_card:nth-of-type(2n - 1) {
     background: var(--dark-card-icon);
 }
 
@@ -582,18 +685,25 @@ label {
     height: 5rem;
 }
 
-.icon_temp {
+.day_temp {
     color: rgb(82, 82, 82);
     font-size: clamp(1.1rem, 1.8vw, 2rem);
 }
 
+
+
+
+
+
+
+
 /* /////////////////////////////////////////////////////////////////Media queries */
 @media (max-width: 1150px) {
-    .main_section {
+    .widget_container {
         width: clamp(15em, 90vw, 90rem);
     }
 
-    .search {
+    .search_bar {
         flex-direction: column;
     }
 
@@ -606,6 +716,10 @@ label {
         width: clamp(5rem, 30vw, 15rem);
     }
 
+    .bottom_menu {
+        min-height: 8.5rem;
+    }
+
     .hourly_forecast {
         padding: 0;
     }
@@ -614,18 +728,25 @@ label {
         height: clamp(2.5rem, 5vw, 6rem);
     }
 
-    .bottom_menu {
-        min-height: 8.5rem;
-    }
-
     .day img {
         height: clamp(3.5rem, 5vw, 5rem);
     }
 }
 
+
+
+
+
+
+
+
 @media (max-width: 750px) {
 
-    .main_section {
+    body {
+        overflow: auto;
+    }
+
+    .widget_container {
         width: clamp(15em, 100vw, 90rem);
         margin: 0;
     }
@@ -634,7 +755,7 @@ label {
         width: 80%;
     }
 
-    .top__inner {
+    .top_bar_inner {
         flex-direction: column;
     }
 
@@ -646,7 +767,7 @@ label {
     .city_photo {
         flex-direction: column-reverse;
         align-items: center;
-        padding-bottom: 1.5rem;
+        padding-bottom: 2.5rem;
     }
 
     .city_info {
@@ -666,7 +787,7 @@ label {
         font-size: clamp(4rem, 15vw, 6rem);
     }
 
-    .search {
+    .search_bar {
         min-height: 15vh;
         padding: 0 0 .4rem;
     }
@@ -675,11 +796,11 @@ label {
         width: 80%;
     }
 
-    .hours {
+    .hours_switch {
         right: 1rem;
     }
 
-    .seven_days {
+    .seven_days_switch {
         left: .6rem;
         max-width: 4.5rem;
     }
@@ -690,7 +811,7 @@ label {
         display: none;
     }
 
-    .seven_container {
+    .seven_days_container {
         top: 0;
         flex-direction: column;
     }
@@ -719,6 +840,13 @@ label {
     }
 }
 
+
+
+
+
+
+
+
 @media (orientation: landscape) and (max-height: 750px) and (max-width: 750px) {
 
     .top_bar {
@@ -729,7 +857,7 @@ label {
         padding-right: .7rem;
     }
 
-    .day_info_panel {
+    .slides_panel {
         height: clamp(320px, 60vh, 350px);
     }
 
@@ -767,10 +895,27 @@ label {
     }
 }
 
-@media (max-height: 420px),
-(max-width: 750px) {
 
-    .day_info_panel {
+
+
+
+
+
+@media (max-height: 680px) {
+    body {
+        overflow: auto;
+    }
+}
+
+
+
+
+
+
+
+@media (max-height: 600px) {
+
+    .slides_panel {
         height: clamp(320px, 60vh, 350px);
     }
 
@@ -784,12 +929,12 @@ label {
     }
 
     .close_btn {
-        bottom: 4rem;
+        bottom: 2.5rem;
         right: 50%;
         transform: translateX(50%);
     }
 
-    .ul_single_day {
+    .single_slide_informations {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(4, auto);
@@ -803,61 +948,61 @@ label {
         grid-row: 1/2;
     }
 
-    .ul_single_day img {
-        grid-column: 2/4;
-        grid-row: 1/2;
-        position: relative;
-        right: -45%
-    }
-
     .detale_weather {
         grid-column: 1/5;
         grid-row: 2/3;
         margin-bottom: .5rem;
     }
 
-    .day_temp {
+    .slide_day_temp {
         grid-column: 4/5;
         grid-row: 1/2;
         text-align: left;
     }
 
-    .ul_single_day li:nth-of-type(5) {
+    .single_slide_informations li:nth-of-type(2) {
+        grid-column: 2/4;
+        grid-row: 1/2;
+        display: flex;
+        justify-content: center;
+    }
+
+    .single_slide_informations li:nth-of-type(5) {
         grid-column: 1/3;
         grid-row: 3/4;
     }
 
-    .ul_single_day li:nth-of-type(6) {
+    .single_slide_informations li:nth-of-type(6) {
         grid-column: 1/3;
         grid-row: 4/5;
     }
 
-    .ul_single_day li:nth-of-type(7) {
+    .single_slide_informations li:nth-of-type(7) {
         grid-column: 1/3;
         grid-row: 5/6;
     }
 
-    .ul_single_day li:nth-of-type(8) {
+    .single_slide_informations li:nth-of-type(8) {
         grid-column: 1/3;
         grid-row: 6/7;
     }
 
-    .ul_single_day li:nth-of-type(9) {
+    .single_slide_informations li:nth-of-type(9) {
         grid-column: 3/5;
         grid-row: 3/4;
     }
 
-    .ul_single_day li:nth-of-type(10) {
+    .single_slide_informations li:nth-of-type(10) {
         grid-column: 3/5;
         grid-row: 4/5;
     }
 
-    .ul_single_day li:nth-of-type(11) {
+    .single_slide_informations li:nth-of-type(11) {
         grid-column: 3/5;
         grid-row: 5/6;
     }
 
-    .ul_single_day li:nth-of-type(12) {
+    .single_slide_informations li:nth-of-type(12) {
         grid-column: 3/5;
         grid-row: 6/7;
     }

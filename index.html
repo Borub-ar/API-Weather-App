@@ -9,7 +9,7 @@
     <title>API Weather Aplication</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="CSS/style.css">
 
     <script src="https://kit.fontawesome.com/5789656d95.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -18,15 +18,15 @@
 <body>
     <!-- Header -->
     <header class="top_bar">
-        <div class="top__inner">
-            <h1 class="main_header"><span class="bold_txt">Simple Weather</span> App</h1>
+        <div class="top_bar_inner">
+            <h1 class="main_header"><span class="bold_txt">JavaScript</span> Weather App</h1>
             <p class="date"></p>
         </div>
     </header>
 
     <!-- Main section -->
     <main class="wrapper">
-        <div class="main_section">
+        <div class="widget_container">
             <div class="image_container">
                 <div class="error_message">
                     <p>Please enter a valid city name!</p>
@@ -34,207 +34,208 @@
                 <div class="city_photo"></div>
             </div>
 
-            <div class="search">
-                <p class="seven_days">Seven Days</p>
-                <p class="hours">Hourly</p>
+            <!-- Search bar -->
+            <div class="search_bar">
+                <p class="seven_days_switch">Seven Days</p>
+                <p class="hours_switch">Hourly</p>
 
-                <label for="search">Enter city name</label>
-                <input type="search" id="search" placeholder="City name">
+                <label for="search_input">Enter city name</label>
+                <input type="search" id="search_input" placeholder="City name">
                 <button class="search_button">Search</button>
             </div>
 
+            <!-- Bottom part of widget -->
             <div class="bottom_menu">
                 <div class="hourly_forecast"></div>
 
-                <div class="seven_container">
+                <div class="seven_days_container">
                     <div class="day">
                         <p>Date</p>
-                        <img src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="Temperature Icon">
-                        <p class="icon_temp"><span>Temp</span> ºC</p>
+                        <img src="#" alt="Temperature Icon">
+                        <p class="day_temp"><span>Temp</span> ºC</p>
                     </div>
 
                     <div class="day">
                         <p>Date</p>
-                        <img src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="Temperature Icon">
-                        <p class="icon_temp"><span>Temp</span> ºC</p>
+                        <img src="#" alt="Temperature Icon">
+                        <p class="day_temp"><span>Temp</span> ºC</p>
                     </div>
 
                     <div class="day">
                         <p>Date</p>
-                        <img src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="Temperature Icon">
-                        <p class="icon_temp"><span>Temp</span> ºC</p>
+                        <img src="#" alt="Temperature Icon">
+                        <p class="day_temp"><span>Temp</span> ºC</p>
                     </div>
 
                     <div class="day">
                         <p>Date</p>
-                        <img src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="Temperature Icon">
-                        <p class="icon_temp"><span>Temp</span> ºC</p>
+                        <img src="#" alt="Temperature Icon">
+                        <p class="day_temp"><span>Temp</span> ºC</p>
                     </div>
 
                     <div class="day">
                         <p>Date</p>
-                        <img src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="Temperature Icon">
-                        <p class="icon_temp"><span>Temp</span> ºC</p>
+                        <img src="#" alt="Temperature Icon">
+                        <p class="day_temp"><span>Temp</span> ºC</p>
                     </div>
 
                     <div class="day">
                         <p>Date</p>
-                        <img src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="Temperature Icon">
-                        <p class="icon_temp"><span>Temp</span> ºC</p>
+                        <img src="#" alt="Temperature Icon">
+                        <p class="day_temp"><span>Temp</span> ºC</p>
                     </div>
 
                     <div class="day">
                         <p>Date</p>
-                        <img src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="Temperature Icon">
-                        <p class="icon_temp"><span>Temp</span> ºC</p>
+                        <img src="#" alt="Temperature Icon">
+                        <p class="day_temp"><span>Temp</span> ºC</p>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Carousel with single day detale info -->
+        <div class="blur_layer"></div>
+        <div class="slides_panel">
+            <button class="close_btn"><i class="fas fa-times"></i></button>
+
+            <div class="slide_buttons">
+                <button class="slide_left_btn"><i class="fas fa-arrow-left"></i></button>
+                <div class="slide_btn"></div>
+                <div class="slide_btn"></div>
+                <div class="slide_btn"></div>
+                <div class="slide_btn"></div>
+                <div class="slide_btn"></div>
+                <div class="slide_btn"></div>
+                <div class="slide_btn"></div>
+                <button class="slide_right_btn"><i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <div class="single_slide">
+                <ul class="single_slide_informations">
+                    <li class="day_date"></li>
+                    <li><img src="" alt=""></li>
+                    <li class="detale_weather">Weather description</li>
+                    <li class="slide_day_temp"><span></span>ºC</li>
+                    <li>Cloud coverage: <span></span>%</li>
+                    <li>Visibility: <span></span> km</li>
+                    <li>Wind direction: <span></span></li>
+                    <li>Wind speed: <span></span> m/s</li>
+                    <li>Preasure: <span></span> mb</li>
+                    <li>Min. temp: <span></span> ºC</li>
+                    <li>Max. temp: <span></span> ºC</li>
+                    <li>Snow deph: <span></span> mm</li>
+                </ul>
+            </div>
+
+            <div class="single_slide">
+                <ul class="single_slide_informations">
+                    <li class="day_date"></li>
+                    <li><img src="" alt=""></li>
+                    <li class="detale_weather">Weather description</li>
+                    <li class="slide_day_temp"><span></span>ºC</li>
+                    <li>Cloud coverage: <span></span>%</li>
+                    <li>Visibility: <span></span> km</li>
+                    <li>Wind direction: <span></span></li>
+                    <li>Wind speed: <span></span> m/s</li>
+                    <li>Preasure: <span></span> mb</li>
+                    <li>Min. temp: <span></span> ºC</li>
+                    <li>Max. temp: <span></span> ºC</li>
+                    <li>Snow deph: <span></span> mm</li>
+                </ul>
+            </div>
+
+            <div class="single_slide">
+                <ul class="single_slide_informations">
+                    <li class="day_date"></li>
+                    <li><img src="" alt=""></li>
+                    <li class="detale_weather">Weather description</li>
+                    <li class="slide_day_temp"><span></span>ºC</li>
+                    <li>Cloud coverage: <span></span>%</li>
+                    <li>Visibility: <span></span> km</li>
+                    <li>Wind direction: <span></span></li>
+                    <li>Wind speed: <span></span> m/s</li>
+                    <li>Preasure: <span></span> mb</li>
+                    <li>Min. temp: <span></span> ºC</li>
+                    <li>Max. temp: <span></span> ºC</li>
+                    <li>Snow deph: <span></span> mm</li>
+                </ul>
+            </div>
+
+            <div class="single_slide">
+                <ul class="single_slide_informations">
+                    <li class="day_date"></li>
+                    <li><img src="" alt=""></li>
+                    <li class="detale_weather">Weather description</li>
+                    <li class="slide_day_temp"><span></span>ºC</li>
+                    <li>Cloud coverage: <span></span>%</li>
+                    <li>Visibility: <span></span> km</li>
+                    <li>Wind direction: <span></span></li>
+                    <li>Wind speed: <span></span> m/s</li>
+                    <li>Preasure: <span></span> mb</li>
+                    <li>Min. temp: <span></span> ºC</li>
+                    <li>Max. temp: <span></span> ºC</li>
+                    <li>Snow deph: <span></span> mm</li>
+                </ul>
+            </div>
+
+            <div class="single_slide">
+                <ul class="single_slide_informations">
+                    <li class="day_date"></li>
+                    <li><img src="" alt=""></li>
+                    <li class="detale_weather">Weather description</li>
+                    <li class="slide_day_temp"><span></span>ºC</li>
+                    <li>Cloud coverage: <span></span>%</li>
+                    <li>Visibility: <span></span> km</li>
+                    <li>Wind direction: <span></span></li>
+                    <li>Wind speed: <span></span> m/s</li>
+                    <li>Preasure: <span></span> mb</li>
+                    <li>Min. temp: <span></span> ºC</li>
+                    <li>Max. temp: <span></span> ºC</li>
+                    <li>Snow deph: <span></span> mm</li>
+                </ul>
+            </div>
+
+            <div class="single_slide">
+                <ul class="single_slide_informations">
+                    <li class="day_date"></li>
+                    <li><img src="" alt=""></li>
+                    <li class="detale_weather">Weather description</li>
+                    <li class="slide_day_temp"><span></span>ºC</li>
+                    <li>Cloud coverage: <span></span>%</li>
+                    <li>Visibility: <span></span> km</li>
+                    <li>Wind direction: <span></span></li>
+                    <li>Wind speed: <span></span> m/s</li>
+                    <li>Preasure: <span></span> mb</li>
+                    <li>Min. temp: <span></span> ºC</li>
+                    <li>Max. temp: <span></span> ºC</li>
+                    <li>Snow deph: <span></span> mm</li>
+                </ul>
+            </div>
+
+            <div class="single_slide">
+                <ul class="single_slide_informations">
+                    <li class="day_date"></li>
+                    <li><img src="" alt=""></li>
+                    <li class="detale_weather">Weather description</li>
+                    <li class="slide_day_temp"><span></span>ºC</li>
+                    <li>Cloud coverage: <span></span>%</li>
+                    <li>Visibility: <span></span> km</li>
+                    <li>Wind direction: <span></span></li>
+                    <li>Wind speed: <span></span> m/s</li>
+                    <li>Preasure: <span></span> mb</li>
+                    <li>Min. temp: <span></span> ºC</li>
+                    <li>Max. temp: <span></span> ºC</li>
+                    <li>Snow deph: <span></span> mm</li>
+                </ul>
+            </div>
+        </div>
     </main>
 
-    <div class="blur_layer"></div>
-    <div class="day_info_panel">
-        <button class="close_btn"><i class="fas fa-times"></i></button>
 
-        
-
-
-
-        <div class="slide_buttons">
-            <button class="slide_left_btn"><i class="fas fa-arrow-left"></i></button>
-            <div class="btn"></div>
-            <div class="btn"></div>
-            <div class="btn"></div>
-            <div class="btn"></div>
-            <div class="btn"></div>
-            <div class="btn"></div>
-            <div class="btn"></div>
-            <button class="slide_right_btn"><i class="fas fa-arrow-right"></i></button>
-        </div>
-
-        <div class="s_day">
-            <ul class="ul_single_day">
-                <li class="day_date"></li>
-                <li><img src="" alt=""></li>
-                <li class="detale_weather">Weather description</li>
-                <li class="day_temp"><span></span>ºC</li>
-                <li>Cloud coverage: <span></span>%</li>
-                <li>Visibility: <span></span> km</li>
-                <li>Wind direction: <span></span></li>
-                <li>Wind speed: <span></span> m/s</li>
-                <li>Preasure: <span></span> mb</li>
-                <li>Min. temp: <span></span> ºC</li>
-                <li>Max. temp: <span></span> ºC</li>
-                <li>Snow deph: <span></span> mm</li>
-            </ul>
-        </div>
-
-        <div class="s_day">
-            <ul class="ul_single_day">
-                <li class="day_date"></li>
-                <li><img src="" alt=""></li>
-                <li class="detale_weather">Weather description</li>
-                <li class="day_temp"><span></span>ºC</li>
-                <li>Cloud coverage: <span></span>%</li>
-                <li>Visibility: <span></span> km</li>
-                <li>Wind direction: <span></span></li>
-                <li>Wind speed: <span></span> m/s</li>
-                <li>Preasure: <span></span> mb</li>
-                <li>Min. temp: <span></span> ºC</li>
-                <li>Max. temp: <span></span> ºC</li>
-                <li>Snow deph: <span></span> mm</li>
-            </ul>
-        </div>
-
-        <div class="s_day">
-            <ul class="ul_single_day">
-                <li class="day_date"></li>
-                <li><img src="" alt=""></li>
-                <li class="detale_weather">Weather description</li>
-                <li class="day_temp"><span></span>ºC</li>
-                <li>Cloud coverage: <span></span>%</li>
-                <li>Visibility: <span></span> km</li>
-                <li>Wind direction: <span></span></li>
-                <li>Wind speed: <span></span> m/s</li>
-                <li>Preasure: <span></span> mb</li>
-                <li>Min. temp: <span></span> ºC</li>
-                <li>Max. temp: <span></span> ºC</li>
-                <li>Snow deph: <span></span> mm</li>
-            </ul>
-        </div>
-
-        <div class="s_day">
-            <ul class="ul_single_day">
-                <li class="day_date"></li>
-                <li><img src="" alt=""></li>
-                <li class="detale_weather">Weather description</li>
-                <li class="day_temp"><span></span>ºC</li>
-                <li>Cloud coverage: <span></span>%</li>
-                <li>Visibility: <span></span> km</li>
-                <li>Wind direction: <span></span></li>
-                <li>Wind speed: <span></span> m/s</li>
-                <li>Preasure: <span></span> mb</li>
-                <li>Min. temp: <span></span> ºC</li>
-                <li>Max. temp: <span></span> ºC</li>
-                <li>Snow deph: <span></span> mm</li>
-            </ul>
-        </div>
-
-        <div class="s_day">
-            <ul class="ul_single_day">
-                <li class="day_date"></li>
-                <li><img src="" alt=""></li>
-                <li class="detale_weather">Weather description</li>
-                <li class="day_temp"><span></span>ºC</li>
-                <li>Cloud coverage: <span></span>%</li>
-                <li>Visibility: <span></span> km</li>
-                <li>Wind direction: <span></span></li>
-                <li>Wind speed: <span></span> m/s</li>
-                <li>Preasure: <span></span> mb</li>
-                <li>Min. temp: <span></span> ºC</li>
-                <li>Max. temp: <span></span> ºC</li>
-                <li>Snow deph: <span></span> mm</li>
-            </ul>
-        </div>
-
-        <div class="s_day">
-            <ul class="ul_single_day">
-                <li class="day_date"></li>
-                <li><img src="" alt=""></li>
-                <li class="detale_weather">Weather description</li>
-                <li class="day_temp"><span></span>ºC</li>
-                <li>Cloud coverage: <span></span>%</li>
-                <li>Visibility: <span></span> km</li>
-                <li>Wind direction: <span></span></li>
-                <li>Wind speed: <span></span> m/s</li>
-                <li>Preasure: <span></span> mb</li>
-                <li>Min. temp: <span></span> ºC</li>
-                <li>Max. temp: <span></span> ºC</li>
-                <li>Snow deph: <span></span> mm</li>
-            </ul>
-        </div>
-
-        <div class="s_day">
-            <ul class="ul_single_day">
-                <li class="day_date"></li>
-                <li><img src="" alt=""></li>
-                <li class="detale_weather">Weather description</li>
-                <li class="day_temp"><span></span>ºC</li>
-                <li>Cloud coverage: <span></span>%</li>
-                <li>Visibility: <span></span> km</li>
-                <li>Wind direction: <span></span></li>
-                <li>Wind speed: <span></span> m/s</li>
-                <li>Preasure: <span></span> mb</li>
-                <li>Min. temp: <span></span> ºC</li>
-                <li>Max. temp: <span></span> ºC</li>
-                <li>Snow deph: <span></span> mm</li>
-            </ul>
-        </div>
-    </div>
-
-    <script src="JavaScript/requests.js"></script>
+    <script src="JavaScript/API-requests.js"></script>
     <script src="JavaScript/app.js"></script>
+    <script src="JavaScript/carousel.js"></script>
 </body>
 
 </html>

@@ -1,25 +1,26 @@
 'use strict';
 
 // Global variables 
-const sevenDaysPanel = document.querySelector('.seven_container');
+const currentDate = document.querySelector('.date');
+
+const sevenDaysPanel = document.querySelector('.seven_days_container');
 const days = document.querySelectorAll('.day');
 const hourForecastPanel = document.querySelector('.hourly_forecast');
-const currentDate = document.querySelector('.date');
 const menu = document.querySelector('.bottom_menu');
 
-const sevenDaysBtn = document.querySelector('.seven_days');
-const hourlyBtn = document.querySelector('.hours');
-const slideBtns = document.querySelectorAll('.btn')
+const searchCity = document.querySelector('#search_input');
+const searchBtn = document.querySelector('.search_button');
+
+const sevenDaysBtn = document.querySelector('.seven_days_switch');
+const hourlyBtn = document.querySelector('.hours_switch');
+const slideBtns = document.querySelectorAll('.slide_btn')
 
 const blurLayer = document.querySelector('.blur_layer')
-const dayInfoPanel = document.querySelector('.day_info_panel');
-const singleDayPanel = document.querySelectorAll('.s_day');
-const slideBtnsCon = document.querySelector('.slide_buttons');
+const slidesPanel = document.querySelector('.slides_panel');
+const slides = document.querySelectorAll('.single_slide');
+const slideBtnsBox = document.querySelector('.slide_buttons');
 
 const errorMessage = document.querySelector('.error_message');
-
-
-
 
 
 
@@ -34,11 +35,9 @@ currentDate.textContent = today.toLocaleDateString();
 
 
 
-
-
 // Bottom menu unfolding animation
 const menuAnimation = () => {
-    const searchBar = document.querySelector('.search');
+    const searchBar = document.querySelector('.search_bar');
 
     menu.style.transform = 'scale(1)';
     searchBar.style.borderRadius = '0';
@@ -46,10 +45,9 @@ const menuAnimation = () => {
 
 
 
-
 // Seven days forecast 
 const updateSingleDayInfo = (apiData) => {
-    const ulDayInfo = document.querySelectorAll('.ul_single_day');
+    const ulDayInfo = document.querySelectorAll('.single_slide_informations');
 
     for (const [index, day] of ulDayInfo.entries()) {
         day.children[0].textContent = apiData[index + 1].datetime.substr(5).replace('-', '.');
@@ -69,21 +67,19 @@ const updateSingleDayInfo = (apiData) => {
 
 
 
-
-
 const sevenDayForecast = async () => {
-    const dayInfo = await getSevenDaysWeth();
-
+    const dayInfo = await getSevenDaysWeather();
     updateSingleDayInfo(dayInfo)
 
     for (const [index, day] of days.entries()) {
-        day.children[0].textContent = dayInfo[index + 1].datetime.substr(5).replace('-', '.');
+        const dateTimeData = dayInfo[index + 1].datetime.substr(5).replace('-', '.')
+        const dateTime = dateTimeData.startsWith(0) ? dateTimeData.substr(1) : dateTimeData
+
+        day.children[0].textContent = dateTime;
         day.children[1].src = `https://www.weatherbit.io/static/img/icons/${dayInfo[index + 1].weather.icon}.png`;
         day.children[2].children[0].textContent = dayInfo[index + 1].temp;
     }
 }
-
-
 
 
 
@@ -95,6 +91,7 @@ const cardsAnimation = () => {
         }, i * 300);
     }
 }
+
 
 
 // Hourly forecast in searched city
@@ -111,7 +108,7 @@ const makeHourlyIcons = dataAPI => {
         weatherIcon.src = `https://www.weatherbit.io/static/img/icons/${hour.weather.icon}.png`;
 
         const weatherTemp = document.createElement('p');
-        weatherTemp.classList.add('icon_temp');
+        weatherTemp.classList.add('day_temp');
         weatherTemp.textContent = `${hour.temp} ºC`;
 
         weatherCard.append(datetime, weatherIcon, weatherTemp);
@@ -120,68 +117,60 @@ const makeHourlyIcons = dataAPI => {
 
 
 
-
-
 // Making slides 
-const slideIn = (varImage, varInfo) => {
+const slideIn = (APICityPhoto, APICityInfo) => {
     const container = document.querySelector('.image_container');
 
     const cityImage = document.createElement('div');
-    cityImage.style.backgroundImage = `url(${varImage})`;
+    cityImage.style.backgroundImage = `url(${APICityPhoto})`;
     cityImage.classList.add('city_photo', 'slide_right');
 
-    // Left panel
+    // Left side
     const leftPanel = document.createElement('div');
     leftPanel.classList.add('city_info');
 
     const temp = document.createElement('p');
     temp.classList.add('temp');
-    temp.textContent = `${varInfo.temp} ºC`;
+    temp.textContent = `${APICityInfo.temp} ºC`;
 
     const weatherIcon = document.createElement('img');
     weatherIcon.classList.add('current_weather_icon');
-    weatherIcon.src = `https://www.weatherbit.io/static/img/icons/${varInfo.weather.icon}.png`;
+    weatherIcon.src = `https://www.weatherbit.io/static/img/icons/${APICityInfo.weather.icon}.png`;
 
     const weatherDescr = document.createElement('p');
     weatherDescr.classList.add('weather_descr');
-    weatherDescr.textContent = varInfo.weather.description;
+    weatherDescr.textContent = APICityInfo.weather.description;
 
     const conFlex = document.createElement('div');
     conFlex.classList.add('d_flex');
 
     const sunRise = document.createElement('p');
     sunRise.classList.add('sunrise');
-    sunRise.textContent = `Sunrise: ${varInfo.sunrise}`;
+    sunRise.textContent = `Sunrise: ${APICityInfo.sunrise}`;
 
     const sunSet = document.createElement('p');
     sunSet.classList.add('sunset');
-    sunSet.textContent = `Sunset: ${varInfo.sunset}`;
+    sunSet.textContent = `Sunset: ${APICityInfo.sunset}`;
 
     conFlex.append(sunRise, sunSet);
 
     leftPanel.append(temp, weatherIcon, weatherDescr, conFlex);
 
-    // Right panel 
+    // Right side 
     const rightPanel = document.createElement('div');
     rightPanel.classList.add('city_name');
 
     const name = document.createElement('p');
     name.classList.add('ct_name');
-    name.textContent = varInfo.city_name;
+    name.textContent = APICityInfo.city_name;
     rightPanel.append(name);
 
-    // Append both panels to cityImage
+    // Append both sides to cityImage
     cityImage.append(leftPanel, rightPanel);
 
     container.append(cityImage);
     cityImage.classList.add('slide_in');
 };
-
-
-
-
-
-
 
 const slideOut = () => {
     const slides = document.querySelectorAll('.city_photo');
@@ -197,14 +186,11 @@ const hideErrorMessage = () => {
 
 
 
-
-
 // Weather request 
-const searchCity = document.querySelector('#search');
-const searchBtn = document.querySelector('.search_button');
+
         
 const makeRequest = async () => {
-    if (search.value) {
+    if (searchCity.value) {
         const cityInf = await getCurrentWeather();
 
         if (cityInf) {
@@ -244,13 +230,6 @@ searchBtn.addEventListener('click', () => {
 
 
 
-
-
-
-
-
-
-
 // Toggle forecast type
 sevenDaysBtn.addEventListener('click', () => {
     sevenDaysPanel.style.transform = 'translate(-50%)';
@@ -281,114 +260,3 @@ hourlyBtn.addEventListener('click', () => {
 
 
 
-// Show / hide - single day information panel
-const showPanel = (cardIndex) => {
-    const panel = document.querySelector('.day_info_panel');
-
-    blurLayer.style.display = 'block';
-    blurLayer.style.backgroundColor = 'rgba(0, 0, 0, 0.342)';
-    dayInfoPanel.style.width = '100%';
-    slideBtnsCon.style.display = 'flex';
-
-    for (const child of panel.children) {
-        child.style.opacity = 1;
-        child.style.transition = `opacity .2s ease-in-out, transform 1s ease-in-out`;
-    }
-
-    // Moving to chosen day
-    for (const singleDay of singleDayPanel) {
-        singleDay.classList.add('single_day');
-        singleDay.style.transform = `translate(-${cardIndex * 100}%)`;
-    }
-}
-
-
-const hidePanel = () => {
-    const panel = document.querySelector('.day_info_panel');
-    
-    for (const child of panel.children) {
-        child.style.opacity = 0;
-    }
-
-    dayInfoPanel.style.width = '0';
-    blurLayer.style.display = 'none';
-    slideBtnsCon.style.display = 'none';
-}
-
-// Positioning slides
-for (const [index, day] of singleDayPanel.entries()) day.style.left = `${index * 100}%`;
-
-
-// Slide key left right moving
-// Add click listener to seven days panel
-// show panel
-
-let currentSlidePosition;
-
-for (const [index, day] of days.entries()) {
-    day.addEventListener('click', () => {
-        showPanel(index);
-        currentSlidePosition = index * 100;
-    })
-}
-
-// Single day slide animation #1
-window.addEventListener('keydown', e => {
-    if (e.code === 'ArrowLeft') {
-        if (currentSlidePosition > 0) currentSlidePosition -= 100;
-
-        for (const day of singleDayPanel) {
-            day.style.transform = `translate(-${currentSlidePosition}%)`;
-        }
-    }
-
-    if (e.code === 'ArrowRight') {
-        if (currentSlidePosition < 600) currentSlidePosition += 100;
-
-        for (const day of singleDayPanel) {
-            day.style.transform = `translate(-${currentSlidePosition}%)`;
-        }
-    }
-})
-
-// Single day slide animation #2
-for (const [index, btn] of slideBtns.entries()) {
-    btn.addEventListener('click', () => {
-        for (const day of singleDayPanel) {
-            day.style.transform = `translate(-${index * 100}%)`;
-            currentSlidePosition = index * 100;
-        }
-    })
-}
-// Single day slide animation #3 
-const slideBtnLeft = document.querySelector('.slide_left_btn');
-const slideBtnRight = document.querySelector('.slide_right_btn');
-
-// To musi być zamienione w funkcje ponieważ się powtarza ze strzałkami
-slideBtnLeft.addEventListener('click', () => {
-    if (currentSlidePosition > 0) currentSlidePosition -= 100;
-
-    for (const day of singleDayPanel) {
-        day.style.transform = `translate(-${currentSlidePosition}%)`;
-    }
-})
-
-slideBtnRight.addEventListener('click', () => {
-    if (currentSlidePosition < 600) currentSlidePosition += 100;
-
-    for (const day of singleDayPanel) {
-        day.style.transform = `translate(-${currentSlidePosition}%)`;
-    }
-})
-
-
-
-
-// hide pop up panel
-const closeBtn = document.querySelector('.close_btn')
-
-closeBtn.addEventListener('click', hidePanel)
-blurLayer.addEventListener('click', hidePanel);
-window.addEventListener('keydown', e => {
-    e.code === 'Escape' && hidePanel();
-})
