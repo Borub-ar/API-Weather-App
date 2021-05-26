@@ -1,3 +1,5 @@
+'use strict';
+
 const getSevenDaysWeather = async () => {
     try {
         const config = {
@@ -32,9 +34,7 @@ const getCurrentWeather = async () => {
 
     } catch (err) {
         console.log(err);
-
-        errorMessage.style.transform = 'translate(-50%, -30%)'
-        errorMessage.style.opacity = '1'
+        showErrorMessage();
     }
 }
 

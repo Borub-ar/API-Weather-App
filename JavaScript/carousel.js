@@ -1,11 +1,39 @@
+'use strict';
+
+const blurLayer = document.querySelector('.blur_layer')
+const slidesPanel = document.querySelector('.slides_panel');
+const slides = document.querySelectorAll('.single_slide');
+const slideBtnsBox = document.querySelector('.slide_buttons');
+const slideBtns = document.querySelectorAll('.slide_btn')
+
+
 // Positioning slides
 for (const [index, slide] of slides.entries()) slide.style.left = `${index * 100}%`;
 
 
+// Update slides informations
+const updateDetaleInfo = (apiData) => {
+    const slideInfo = document.querySelectorAll('.single_slide_informations');
+
+    for (const [index, day] of slideInfo.entries()) {
+        day.children[0].textContent = apiData[index + 1].datetime.substr(5).replace('-', '.');
+        day.children[1].children[0].src = `https://www.weatherbit.io/static/img/icons/${apiData[index + 1].weather.icon}.png`;
+        day.children[2].textContent = apiData[index + 1].weather.description;
+        day.children[3].textContent = `${apiData[index + 1].temp} ºC`;
+        day.children[4].children[0].textContent = apiData[index + 1].clouds;
+        day.children[5].children[0].textContent = apiData[index + 1].vis;
+        day.children[6].children[0].textContent = apiData[index + 1].wind_cdir_full;
+        day.children[7].children[0].textContent = apiData[index + 1].wind_spd;
+        day.children[8].children[0].textContent = apiData[index + 1].pres;
+        day.children[9].children[0].textContent = apiData[index + 1].low_temp;
+        day.children[10].children[0].textContent = apiData[index + 1].high_temp;
+        day.children[11].children[0].textContent = apiData[index + 1].snow_depth;
+    }
+}
+
 
 // Show / hide - single day information panel
 const showPanel = (cardIndex) => {
-    // const panel = document.querySelector('.day_info_panel');
 
     blurLayer.style.display = 'block';
     blurLayer.style.backgroundColor = 'rgba(0, 0, 0, 0.342)';
@@ -25,10 +53,7 @@ const showPanel = (cardIndex) => {
 }
 
 
-
 const hidePanel = () => {
-    // const panel = document.querySelector('.day_info_panel');
-
     for (const child of slidesPanel.children) {
         child.style.opacity = 0;
     }
@@ -37,7 +62,6 @@ const hidePanel = () => {
     blurLayer.style.display = 'none';
     slideBtnsBox.style.display = 'none';
 }
-
 
 
 const moveSlideLeft = () => {
@@ -57,7 +81,6 @@ const moveSlideRight = () => {
 }
 
 
-
 let currentSlidePosition;
 
 // Add event listener to seven days forecast cards / click = show Panel
@@ -69,17 +92,12 @@ for (const [index, day] of days.entries()) {
 }
 
 
-
 // Single day slide animation #1
 window.addEventListener('keydown', e => {
-    if (e.code === 'ArrowLeft') {
-        moveSlideLeft();
-    }
-
-    if (e.code === 'ArrowRight') {
-        moveSlideRight();
-    }
+    if (e.code === 'ArrowLeft') moveSlideLeft();
+    if (e.code === 'ArrowRight')  moveSlideRight();
 })
+
 
 // Single day slide animation #2
 for (const [index, btn] of slideBtns.entries()) {
@@ -91,24 +109,19 @@ for (const [index, btn] of slideBtns.entries()) {
     })
 }
 
+
 // Single day slide animation #3 
 const slideBtnLeft = document.querySelector('.slide_left_btn');
 const slideBtnRight = document.querySelector('.slide_right_btn');
 
-slideBtnLeft.addEventListener('click', () => {
-    moveSlideLeft();
-})
-
-slideBtnRight.addEventListener('click', () => {
-    moveSlideRight();
-})
+slideBtnLeft.addEventListener('click', moveSlideLeft);
+slideBtnRight.addEventListener('click', moveSlideRight);
 
 
-
-// hide pop up panel
+// hide information panel
 const closeBtn = document.querySelector('.close_btn')
-
 closeBtn.addEventListener('click', hidePanel)
+
 blurLayer.addEventListener('click', hidePanel);
 window.addEventListener('keydown', e => {
     e.code === 'Escape' && hidePanel();

@@ -413,6 +413,16 @@ label {
     border: 2px solid rgb(255, 255, 255);
 }
 
+.show_error {
+    transform: translate(-50%, -30%);
+    opacity: 1;
+}
+
+.hide_error {
+    opacity: 0;
+    transform: translate(-50%, 100%);
+}
+
 .city_photo {
     background: url(../img/widget-bg.jpg) center/cover no-repeat;
     height: 100%;
@@ -737,9 +747,6 @@ input[type="search"] {
 
 
 
-
-
-
 @media (max-width: 750px) {
 
     body {
@@ -844,9 +851,6 @@ input[type="search"] {
 
 
 
-
-
-
 @media (orientation: landscape) and (max-height: 750px) and (max-width: 750px) {
 
     .top_bar {
@@ -898,17 +902,11 @@ input[type="search"] {
 
 
 
-
-
-
 @media (max-height: 680px) {
     body {
         overflow: auto;
     }
 }
-
-
-
 
 
 

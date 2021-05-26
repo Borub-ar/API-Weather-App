@@ -2,29 +2,15 @@
 
 // Global variables 
 const currentDate = document.querySelector('.date');
-
+const searchCity = document.querySelector('#search_input');
+const searchBtn = document.querySelector('.search_button');
+const errorMessage = document.querySelector('.error_message');
 const sevenDaysPanel = document.querySelector('.seven_days_container');
 const days = document.querySelectorAll('.day');
 const hourForecastPanel = document.querySelector('.hourly_forecast');
 const menu = document.querySelector('.bottom_menu');
-
-const searchCity = document.querySelector('#search_input');
-const searchBtn = document.querySelector('.search_button');
-
 const sevenDaysBtn = document.querySelector('.seven_days_switch');
 const hourlyBtn = document.querySelector('.hours_switch');
-const slideBtns = document.querySelectorAll('.slide_btn')
-
-const blurLayer = document.querySelector('.blur_layer')
-const slidesPanel = document.querySelector('.slides_panel');
-const slides = document.querySelectorAll('.single_slide');
-const slideBtnsBox = document.querySelector('.slide_buttons');
-
-const errorMessage = document.querySelector('.error_message');
-
-
-
-
 
 // Set current date
 const date = new Date();
@@ -33,58 +19,30 @@ const today = new Date(timeElapsed);
 currentDate.textContent = today.toLocaleDateString();
 
 
-
-
 // Bottom menu unfolding animation
-const menuAnimation = () => {
+const expandMenu = () => {
     const searchBar = document.querySelector('.search_bar');
 
+    menu.style.display = 'flex';
     menu.style.transform = 'scale(1)';
     searchBar.style.borderRadius = '0';
 }
 
 
-
-// Seven days forecast 
-const updateSingleDayInfo = (apiData) => {
-    const ulDayInfo = document.querySelectorAll('.single_slide_informations');
-
-    for (const [index, day] of ulDayInfo.entries()) {
-        day.children[0].textContent = apiData[index + 1].datetime.substr(5).replace('-', '.');
-        day.children[1].children[0].src = `https://www.weatherbit.io/static/img/icons/${apiData[index + 1].weather.icon}.png`;
-        day.children[2].textContent = apiData[index + 1].weather.description;
-        day.children[3].textContent = `${apiData[index + 1].temp} ºC`;
-        day.children[4].children[0].textContent = apiData[index + 1].clouds;
-        day.children[5].children[0].textContent = apiData[index + 1].vis;
-        day.children[6].children[0].textContent = apiData[index + 1].wind_cdir_full;
-        day.children[7].children[0].textContent = apiData[index + 1].wind_spd;
-        day.children[8].children[0].textContent = apiData[index + 1].pres;
-        day.children[9].children[0].textContent = apiData[index + 1].low_temp;
-        day.children[10].children[0].textContent = apiData[index + 1].high_temp;
-        day.children[11].children[0].textContent = apiData[index + 1].snow_depth;
-    }
-}
-
-
-
-const sevenDayForecast = async () => {
-    const dayInfo = await getSevenDaysWeather();
-    updateSingleDayInfo(dayInfo)
-
+const sevenDayForecast = async (APIData) => {
     for (const [index, day] of days.entries()) {
-        const dateTimeData = dayInfo[index + 1].datetime.substr(5).replace('-', '.')
-        const dateTime = dateTimeData.startsWith(0) ? dateTimeData.substr(1) : dateTimeData
+        const dateTimeData = APIData[index + 1].datetime.substr(5).replace('-', '.');
+        const dateTime = dateTimeData.startsWith(0) ? dateTimeData.substr(1) : dateTimeData;
 
         day.children[0].textContent = dateTime;
-        day.children[1].src = `https://www.weatherbit.io/static/img/icons/${dayInfo[index + 1].weather.icon}.png`;
-        day.children[2].children[0].textContent = dayInfo[index + 1].temp;
+        day.children[1].src = `https://www.weatherbit.io/static/img/icons/${APIData[index + 1].weather.icon}.png`;
+        day.children[2].children[0].textContent = APIData[index + 1].temp;
     }
 }
-
 
 
 // Seven days forecast cards animation
-const cardsAnimation = () => {
+const showSevenDaysIcon = () => {
     for (let i = 0; i < days.length; i++) {
         setTimeout(() => {
             days[i].style.transform = 'scale(1)';
@@ -92,10 +50,10 @@ const cardsAnimation = () => {
     }
 }
 
-
-
 // Hourly forecast in searched city
 const makeHourlyIcons = dataAPI => {
+    hourForecastPanel.innerHTML = '';
+
     for (const hour of dataAPI) {
         const weatherCard = document.createElement('div');
         weatherCard.classList.add('weather_card');
@@ -115,10 +73,8 @@ const makeHourlyIcons = dataAPI => {
     }
 }
 
-
-
 // Making slides 
-const slideIn = (APICityPhoto, APICityInfo) => {
+const makeSlide = (APICityPhoto, APICityInfo) => {
     const container = document.querySelector('.image_container');
 
     const cityImage = document.createElement('div');
@@ -172,48 +128,49 @@ const slideIn = (APICityPhoto, APICityInfo) => {
     cityImage.classList.add('slide_in');
 };
 
-const slideOut = () => {
+const showButtons = () => {
+    sevenDaysBtn.style.transform = `scale(1)`;
+    hourlyBtn.style.transform = `scale(1)`;
+}
+
+const pushSlidesLeft = () => {
     const slides = document.querySelectorAll('.city_photo');
     for (const slide of slides) slide.classList.add('slide_out');
 }
 
-
+const showErrorMessage = () => {
+    errorMessage.classList.remove('hide_error');
+    errorMessage.classList.add('show_error');
+} 
 
 const hideErrorMessage = () => {
-        errorMessage.style.transform = 'translate(-50%, 100%)';
-        errorMessage.style.opacity = '0';
+        errorMessage.classList.remove('show_error');
+        errorMessage.classList.add('hide_error');
 }
 
-
-
 // Weather request 
-
-        
 const makeRequest = async () => {
     if (searchCity.value) {
-        const cityInf = await getCurrentWeather();
+        const currentWeather = await getCurrentWeather();
 
-        if (cityInf) {
-
+        if (currentWeather) {
             hideErrorMessage();
-
-            menu.style.display = 'flex';
-            menuAnimation();
+            expandMenu();
     
             const backgroundPhoto = await getBgImage();
-            const hForecast = await getHourlyForecast();
-            await sevenDayForecast();
+            const hourlyForecast = await getHourlyForecast();
+            const sevenForecast = await getSevenDaysWeather();
+            
+            sevenDayForecast(sevenForecast);
+            updateDetaleInfo(sevenForecast);
+
+            makeHourlyIcons(hourlyForecast);
     
-            hourForecastPanel.innerHTML = '';
-            makeHourlyIcons(hForecast);
+            showSevenDaysIcon();
+            showButtons();
     
-            cardsAnimation();
-    
-            sevenDaysBtn.style.transform = `scale(1)`;
-            hourlyBtn.style.transform = `scale(1)`;
-    
-            slideOut();
-            slideIn(backgroundPhoto, cityInf);
+            pushSlidesLeft();
+            makeSlide(backgroundPhoto, currentWeather);
         }
 
         searchCity.value = '';
@@ -224,10 +181,7 @@ window.addEventListener('keydown', e => {
     e.code === 'Enter' && makeRequest();
 })
 
-searchBtn.addEventListener('click', () => {
-    makeRequest();
-})
-
+searchBtn.addEventListener('click', makeRequest);
 
 
 // Toggle forecast type
