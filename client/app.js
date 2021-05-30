@@ -55,21 +55,15 @@ const makeHourlyIcons = dataAPI => {
     hourForecastPanel.innerHTML = '';
 
     for (const hour of dataAPI) {
-        const weatherCard = document.createElement('div');
-        weatherCard.classList.add('weather_card');
-        hourForecastPanel.append(weatherCard);
+        const html = `
+        <div class="weather_card">
+            <p>${hour.datetime.substr(11)}:00</p>
+            <img src="https://www.weatherbit.io/static/img/icons/${hour.weather.icon}.png">
+            <p class="day_temp">${hour.temp} ºC</p>
+        </div>        
+        `
 
-        const datetime = document.createElement('p');
-        datetime.textContent = `${hour.datetime.substr(11)}:00`;
-
-        const weatherIcon = document.createElement('img');
-        weatherIcon.src = `https://www.weatherbit.io/static/img/icons/${hour.weather.icon}.png`;
-
-        const weatherTemp = document.createElement('p');
-        weatherTemp.classList.add('day_temp');
-        weatherTemp.textContent = `${hour.temp} ºC`;
-
-        weatherCard.append(datetime, weatherIcon, weatherTemp);
+        hourForecastPanel.insertAdjacentHTML('beforeend', html)
     }
 }
 
@@ -77,55 +71,25 @@ const makeHourlyIcons = dataAPI => {
 const makeSlide = (APICityPhoto, APICityInfo) => {
     const container = document.querySelector('.image_container');
 
-    const cityImage = document.createElement('div');
-    cityImage.style.backgroundImage = `url(${APICityPhoto})`;
-    cityImage.classList.add('city_photo', 'slide_right');
+    const html = `
+    <div class="city_photo slide_right slide_in" style="background-image: url(${APICityPhoto})">
+        <div class="city_info">
+            <p class="temp">${APICityInfo.temp} ºC</p>
+            <img class="current_weather_icon" src="https://www.weatherbit.io/static/img/icons/${APICityInfo.weather.icon}.png">
+            <p class="weather_descr">${APICityInfo.weather.description}</p>
+            <div class="d_flex">
+                <p class="sunrise">Sunrise: ${APICityInfo.sunrise}</p>
+                <p class="sunset">Sunrise: ${APICityInfo.sunset}</p>
+            </div>
+        </div>
 
-    // Left side
-    const leftPanel = document.createElement('div');
-    leftPanel.classList.add('city_info');
+        <div class="city_name">
+            <p class="ct_name">${APICityInfo.city_name}</p>
+        </div>
+    </div>
+    `;
 
-    const temp = document.createElement('p');
-    temp.classList.add('temp');
-    temp.textContent = `${APICityInfo.temp} ºC`;
-
-    const weatherIcon = document.createElement('img');
-    weatherIcon.classList.add('current_weather_icon');
-    weatherIcon.src = `https://www.weatherbit.io/static/img/icons/${APICityInfo.weather.icon}.png`;
-
-    const weatherDescr = document.createElement('p');
-    weatherDescr.classList.add('weather_descr');
-    weatherDescr.textContent = APICityInfo.weather.description;
-
-    const conFlex = document.createElement('div');
-    conFlex.classList.add('d_flex');
-
-    const sunRise = document.createElement('p');
-    sunRise.classList.add('sunrise');
-    sunRise.textContent = `Sunrise: ${APICityInfo.sunrise}`;
-
-    const sunSet = document.createElement('p');
-    sunSet.classList.add('sunset');
-    sunSet.textContent = `Sunset: ${APICityInfo.sunset}`;
-
-    conFlex.append(sunRise, sunSet);
-
-    leftPanel.append(temp, weatherIcon, weatherDescr, conFlex);
-
-    // Right side 
-    const rightPanel = document.createElement('div');
-    rightPanel.classList.add('city_name');
-
-    const name = document.createElement('p');
-    name.classList.add('ct_name');
-    name.textContent = APICityInfo.city_name;
-    rightPanel.append(name);
-
-    // Append both sides to cityImage
-    cityImage.append(leftPanel, rightPanel);
-
-    container.append(cityImage);
-    cityImage.classList.add('slide_in');
+    container.insertAdjacentHTML('beforeend', html)
 };
 
 const showButtons = () => {
@@ -174,6 +138,7 @@ const makeRequest = async () => {
         }
 
         searchCity.value = '';
+        searchCity.blur();
     }
 }
 

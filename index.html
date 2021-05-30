@@ -9,11 +9,16 @@
     <title>API Weather Aplication</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="styles/style.css">
     <link rel="icon" href="https://freepngimg.com/thumb/weather/23527-3-weather.png">
 
-    <script src="https://kit.fontawesome.com/5789656d95.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <script src="https://kit.fontawesome.com/5789656d95.js" crossorigin="anonymous" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+    
+    <script src="client/API-requests.js" defer></script>
+    <script src="client/app.js" defer></script>
+    <script src="client/carousel.js" defer></script>
 </head>
 
 <body>
@@ -113,10 +118,10 @@
             </div>
 
             <div class="single_slide">
-                <ul class="single_slide_informations">
+                <ul class="single_slide_info">
                     <li class="day_date"></li>
                     <li><img src="" alt=""></li>
-                    <li class="detale_weather">Weather description</li>
+                    <li class="detale_weather"></li>
                     <li class="slide_day_temp"><span></span>ºC</li>
                     <li>Cloud coverage: <span></span>%</li>
                     <li>Visibility: <span></span> km</li>
@@ -130,10 +135,10 @@
             </div>
 
             <div class="single_slide">
-                <ul class="single_slide_informations">
+                <ul class="single_slide_info">
                     <li class="day_date"></li>
                     <li><img src="" alt=""></li>
-                    <li class="detale_weather">Weather description</li>
+                    <li class="detale_weather"></li>
                     <li class="slide_day_temp"><span></span>ºC</li>
                     <li>Cloud coverage: <span></span>%</li>
                     <li>Visibility: <span></span> km</li>
@@ -147,10 +152,10 @@
             </div>
 
             <div class="single_slide">
-                <ul class="single_slide_informations">
+                <ul class="single_slide_info">
                     <li class="day_date"></li>
                     <li><img src="" alt=""></li>
-                    <li class="detale_weather">Weather description</li>
+                    <li class="detale_weather"></li>
                     <li class="slide_day_temp"><span></span>ºC</li>
                     <li>Cloud coverage: <span></span>%</li>
                     <li>Visibility: <span></span> km</li>
@@ -164,10 +169,10 @@
             </div>
 
             <div class="single_slide">
-                <ul class="single_slide_informations">
+                <ul class="single_slide_info">
                     <li class="day_date"></li>
                     <li><img src="" alt=""></li>
-                    <li class="detale_weather">Weather description</li>
+                    <li class="detale_weather"></li>
                     <li class="slide_day_temp"><span></span>ºC</li>
                     <li>Cloud coverage: <span></span>%</li>
                     <li>Visibility: <span></span> km</li>
@@ -181,10 +186,10 @@
             </div>
 
             <div class="single_slide">
-                <ul class="single_slide_informations">
+                <ul class="single_slide_info">
                     <li class="day_date"></li>
                     <li><img src="" alt=""></li>
-                    <li class="detale_weather">Weather description</li>
+                    <li class="detale_weather"></li>
                     <li class="slide_day_temp"><span></span>ºC</li>
                     <li>Cloud coverage: <span></span>%</li>
                     <li>Visibility: <span></span> km</li>
@@ -198,27 +203,27 @@
             </div>
 
             <div class="single_slide">
-                <ul class="single_slide_informations">
+                <ul class="single_slide_info">
                     <li class="day_date"></li>
                     <li><img src="" alt=""></li>
-                    <li clafooter__social-iconss="detale_weather">Weather description</li>
+                    <li class="detale_weather"></li>
                     <li class="slide_day_temp"><span></span>ºC</li>
                     <li>Cloud coverage: <span></span>%</li>
                     <li>Visibility: <span></span> km</li>
                     <li>Wind direction: <span></span></li>
                     <li>Wind speed: <span></span> m/s</li>
                     <li>Preasure: <span></span> mb</li>
-                    <li>Min. temp: <span></span> ºC</li>
+                    <li>Min. temp: <span></span> ºC</li>as
                     <li>Max. temp: <span></span> ºC</li>
                     <li>Snow deph: <span></span> mm</li>
                 </ul>
             </div>
 
             <div class="single_slide">
-                <ul class="single_slide_informations">
+                <ul class="single_slide_info">
                     <li class="day_date"></li>
                     <li><img src="" alt=""></li>
-                    <li class="detale_weather">Weather description</li>
+                    <li class="detale_weather"></li>
                     <li class="slide_day_temp"><span></span>ºC</li>
                     <li>Cloud coverage: <span></span>%</li>
                     <li>Visibility: <span></span> km</li>
@@ -232,11 +237,6 @@
             </div>
         </div>
     </main>
-
-
-    <script src="JavaScript/API-requests.js"></script>
-    <script src="JavaScript/app.js"></script>
-    <script src="JavaScript/carousel.js"></script>
 </body>
 
 </html>

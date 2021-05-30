@@ -1,10 +1,15 @@
 'use strict';
 
+const APIkeys = new Map([
+    ['weather', '4c1299c9ae164edd8cb6e247728e94af'],
+    ['background', 'hpthTi3lgM1vdtMHcfvAiW-hFUjaLHYCSAtG4y-Er-I']
+])
+
 const getSevenDaysWeather = async () => {
     try {
         const config = {
             params: {
-                key: '4c1299c9ae164edd8cb6e247728e94af',
+                key: APIkeys.get('weather'),
                 days: 8,
                 city: searchCity.value
             }
@@ -24,7 +29,7 @@ const getCurrentWeather = async () => {
         const config = {
             params: {
                 city: searchCity.value,
-                key: '4c1299c9ae164edd8cb6e247728e94af'
+                key: APIkeys.get('weather')
             }
         }
         const apiURL = 'https://api.weatherbit.io/v2.0/current';
@@ -38,12 +43,29 @@ const getCurrentWeather = async () => {
     }
 }
 
+const getHourlyForecast = async () => {
+    try {
+        const config = {
+            params: {
+                key: APIkeys.get('weather'),
+                city: searchCity.value,
+                hours: 12
+            }
+        }
+        const apiURL = 'https://api.weatherbit.io/v2.0/forecast/hourly';
+        const res = await axios.get(apiURL, config);
+        return res.data.data;
+
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 const getBgImage = async () => {
     try {
         const config = {
             params: {
-                client_id: 'hpthTi3lgM1vdtMHcfvAiW-hFUjaLHYCSAtG4y-Er-I',
+                client_id: APIkeys.get('background'),
                 query: searchCity.value,
                 per_page: 1
             }
@@ -60,20 +82,3 @@ const getBgImage = async () => {
 }
 
 
-const getHourlyForecast = async () => {
-    try {
-        const config = {
-            params: {
-                key: '4c1299c9ae164edd8cb6e247728e94af',
-                city: searchCity.value,
-                hours: 12
-            }
-        }
-        const apiURL = 'https://api.weatherbit.io/v2.0/forecast/hourly';
-        const res = await axios.get(apiURL, config);
-        return res.data.data;
-
-    } catch (err) {
-        console.log(err);
-    }
-}

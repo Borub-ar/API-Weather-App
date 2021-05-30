@@ -13,7 +13,7 @@ for (const [index, slide] of slides.entries()) slide.style.left = `${index * 100
 
 // Update slides informations
 const updateDetaleInfo = (apiData) => {
-    const slideInfo = document.querySelectorAll('.single_slide_informations');
+    const slideInfo = document.querySelectorAll('.single_slide_info');
 
     for (const [index, day] of slideInfo.entries()) {
         day.children[0].textContent = apiData[index + 1].datetime.substr(5).replace('-', '.');
