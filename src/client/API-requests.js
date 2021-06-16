@@ -1,7 +1,7 @@
 'use strict';
 
 const APIkeys = new Map([
-    ['weather', '4c1299c9ae164edd8cb6e247728e94af'],
+    ['weather', '7b835c2940c54d0b916bf5c670d41860'],
     ['background', 'hpthTi3lgM1vdtMHcfvAiW-hFUjaLHYCSAtG4y-Er-I']
 ])
 
@@ -22,7 +22,6 @@ const getSevenDaysWeather = async () => {
         console.log(err);
     }
 }
-
 
 const getCurrentWeather = async () => {
     try {
@@ -47,8 +46,8 @@ const getHourlyForecast = async () => {
     try {
         const config = {
             params: {
-                key: APIkeys.get('weather'),
                 city: searchCity.value,
+                key: APIkeys.get('weather'),
                 hours: 12
             }
         }

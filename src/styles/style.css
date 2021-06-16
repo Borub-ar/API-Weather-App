@@ -158,7 +158,35 @@ label {
     }
 }
 
+@-webkit-keyframes wave {
+    0% {
+        transform: translateY(0);
+    }
 
+    20% {
+        transform: translateY(-20px);
+    }
+
+    40%,
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes wave {
+    0% {
+        transform: translateY(0);
+    }
+
+    20% {
+        transform: translateY(-20px);
+    }
+
+    40%,
+    100% {
+        transform: translateY(0);
+    }
+}
 
 
 
@@ -299,6 +327,11 @@ label {
     font-size: clamp(2rem, 4vw, 3rem);
     color: var(--white-elements);
     cursor: pointer;
+    transition: transform 2s ease;
+}
+
+.close_btn:hover {
+    transform: rotate(360deg);
 }
 
 .slide_btn {
@@ -308,7 +341,10 @@ label {
     border-radius: 50%;
     border: 1px solid var(--white-elements);
     margin-left: .5rem;
+}
 
+.slide_btn_active {
+    background-color: white;
 }
 
 .slide_btn:hover {
@@ -394,6 +430,33 @@ label {
     overflow: hidden;
     border-radius: 1rem 1rem 0 0;
     height: clamp(20rem, 47vh, 30rem);
+}
+
+.notification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(3rem, 3vw, 5rem);
+}
+
+.not_letter {
+    position: relative;
+    color: white;
+    -webkit-animation: wave infinite 2s;
+    animation: wave infinite 2s;
+    -webkit-animation-delay: calc(0.05s * var(--i));
+    animation-delay: calc(0.05s * var(--i));
+    transition: opacity 2s ease;
+}
+
+.not_letter:nth-of-type(5),
+.not_letter:nth-of-type(9) {
+    margin-right: .5rem;
 }
 
 .error_message {
@@ -887,7 +950,6 @@ input[type="search"] {
     .close_btn {
         bottom: 4rem;
         right: 50%;
-        transform: translateX(50%);
     }
 
     .weather_descr {
@@ -930,6 +992,10 @@ input[type="search"] {
         bottom: 2.5rem;
         right: 50%;
         transform: translateX(50%);
+    }
+
+    .close_btn:hover {
+        transform: none;
     }
 
     .single_slide_info {

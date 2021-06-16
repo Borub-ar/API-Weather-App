@@ -1,9 +1,7 @@
 'use strict';
 
-// Global variables 
 const currentDate = document.querySelector('.date');
 const searchCity = document.querySelector('#search_input');
-const searchBtn = document.querySelector('.search_button');
 const errorMessage = document.querySelector('.error_message');
 const sevenDaysPanel = document.querySelector('.seven_days_container');
 const days = document.querySelectorAll('.day');
@@ -11,13 +9,13 @@ const hourForecastPanel = document.querySelector('.hourly_forecast');
 const menu = document.querySelector('.bottom_menu');
 const sevenDaysBtn = document.querySelector('.seven_days_switch');
 const hourlyBtn = document.querySelector('.hours_switch');
+const notLetters = document.querySelectorAll('.not_letter')
 
 // Set current date
 const date = new Date();
 const timeElapsed = Date.now();
 const today = new Date(timeElapsed);
 currentDate.textContent = today.toLocaleDateString();
-
 
 // Bottom menu unfolding animation
 const expandMenu = () => {
@@ -27,7 +25,6 @@ const expandMenu = () => {
     menu.style.transform = 'scale(1)';
     searchBar.style.borderRadius = '0';
 }
-
 
 const sevenDayForecast = async (APIData) => {
     for (const [index, day] of days.entries()) {
@@ -40,6 +37,11 @@ const sevenDayForecast = async (APIData) => {
     }
 }
 
+const removeNotification = () => {
+    notLetters.forEach(lett => {
+        lett.style.opacity = '0';
+    })
+}
 
 // Seven days forecast cards animation
 const showSevenDaysIcon = () => {
@@ -105,48 +107,50 @@ const pushSlidesLeft = () => {
 const showErrorMessage = () => {
     errorMessage.classList.remove('hide_error');
     errorMessage.classList.add('show_error');
-} 
+}
 
 const hideErrorMessage = () => {
-        errorMessage.classList.remove('show_error');
-        errorMessage.classList.add('hide_error');
+    errorMessage.classList.remove('show_error');
+    errorMessage.classList.add('hide_error');
 }
 
 // Weather request 
 const makeRequest = async () => {
-    if (searchCity.value) {
-        const currentWeather = await getCurrentWeather();
-
-        if (currentWeather) {
-            hideErrorMessage();
-            expandMenu();
+    if (!searchCity.value) return
     
-            const backgroundPhoto = await getBgImage();
-            const hourlyForecast = await getHourlyForecast();
-            const sevenForecast = await getSevenDaysWeather();
-            
-            sevenDayForecast(sevenForecast);
-            updateDetaleInfo(sevenForecast);
+    const currentWeather = await getCurrentWeather();
 
-            makeHourlyIcons(hourlyForecast);
-    
-            showSevenDaysIcon();
-            showButtons();
-    
-            pushSlidesLeft();
-            makeSlide(backgroundPhoto, currentWeather);
-        }
+    if (!currentWeather) return
 
-        searchCity.value = '';
-        searchCity.blur();
-    }
+    removeNotification();
+    hideErrorMessage();
+    expandMenu();
+
+    const backgroundPhoto = await getBgImage();
+    const hourlyForecast = await getHourlyForecast();
+    const sevenForecast = await getSevenDaysWeather();
+
+    sevenDayForecast(sevenForecast);
+    updateDetaleInfo(sevenForecast);
+
+    makeHourlyIcons(hourlyForecast);
+
+    showSevenDaysIcon();
+    showButtons();
+
+    pushSlidesLeft();
+    makeSlide(backgroundPhoto, currentWeather);
+
+    searchCity.value = '';
+    searchCity.blur();
+
 }
 
 window.addEventListener('keydown', e => {
     e.code === 'Enter' && makeRequest();
 })
 
-searchBtn.addEventListener('click', makeRequest);
+document.querySelector('.search_button').addEventListener('click', makeRequest);
 
 
 // Toggle forecast type
@@ -159,23 +163,3 @@ hourlyBtn.addEventListener('click', () => {
     sevenDaysPanel.style.transform = 'translate(-50%, 400%)';
     hourForecastPanel.style.transform = 'translate(0)';
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
