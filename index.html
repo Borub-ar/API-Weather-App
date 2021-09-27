@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Simple Web Weather Application" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <title>API Weather Aplication</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./src/styles/style.css" />
+    <link rel="icon" href="https://freepngimg.com/thumb/weather/23527-3-weather.png" />
+    <script src="https://kit.fontawesome.com/5789656d95.js" crossorigin="anonymous" defer></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+
+    <script src="./src/client/API-requests.js" defer></script>
+    <script src="./src/client/app.js" defer></script>
+    <script src="./src/client/carousel.js" defer></script>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="top_bar">
+      <div class="top_bar_inner">
+        <h1 class="main_header"><span class="bold_txt">JavaScript</span> Weather App</h1>
+        <p class="date"></p>
+      </div>
+      `
+    </header>
+
+    <!-- Main section -->
+    <main class="wrapper">
+      <div class="widget_container">
+        <div class="image_container">
+          <!-- Animated notification -->
+          <div class="notification">
+            <span class="not_letter" style="--i: 1">E</span>
+            <span class="not_letter" style="--i: 2">n</span>
+            <span class="not_letter" style="--i: 3">t</span>
+            <span class="not_letter" style="--i: 4">e</span>
+            <span class="not_letter" style="--i: 5">r</span>
+            <span class="not_letter" style="--i: 6">C</span>
+            <span class="not_letter" style="--i: 7">i</span>
+            <span class="not_letter" style="--i: 8">t</span>
+            <span class="not_letter" style="--i: 9">y</span>
+            <span class="not_letter" style="--i: 10">N</span>
+            <span class="not_letter" style="--i: 11">a</span>
+            <span class="not_letter" style="--i: 12">m</span>
+            <span class="not_letter" style="--i: 13">e</span>
+          </div>
+
+          <div class="error_message">
+            <p>Please enter a valid city name!</p>
+          </div>
+          <div class="city_photo"></div>
+        </div>
+
+        <!-- Search bar -->
+        <div class="search_bar">
+          <p class="seven_days_switch">Seven Days</p>
+          <p class="hours_switch">Hourly</p>
+
+          <label for="search_input">Enter city name</label>
+          <input type="search" id="search_input" placeholder="City name" />
+          <button class="search_button">Search</button>
+        </div>
+
+        <!-- Bottom part of widget -->
+        <div class="bottom_menu">
+          <div class="hourly_forecast"></div>
+
+          <div class="seven_days_container">
+           <!-- <div class="day">
+              <p>date</p>
+              <img src="#" alt="Temperature Icon" />
+              <p class="day_temp"><span>temp</span> ºC</p>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Carousel with single day detale info -->
+      <div class="blur_layer"></div>
+      <div class="slides_panel">
+        <button class="close_btn"><i class="fas fa-times"></i></button>
+
+        <div class="slide_buttons">
+          <button class="slide_left_btn"><i class="fas fa-arrow-left"></i></button>
+          <div class="slide_btn" data-slide="0"></div>
+          <div class="slide_btn" data-slide="1"></div>
+          <div class="slide_btn" data-slide="2"></div>
+          <div class="slide_btn" data-slide="3"></div>
+          <div class="slide_btn" data-slide="4"></div>
+          <div class="slide_btn" data-slide="5"></div>
+          <div class="slide_btn" data-slide="6"></div>
+          <button class="slide_right_btn"><i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="single_slide">
+          <ul class="single_slide_info">
+            <li class="day_date"></li>
+            <li><img src="" alt="" /></li>
+            <li class="detale_weather"></li>
+            <li class="slide_day_temp"><span></span>ºC</li>
+            <li>Cloud coverage: <span></span>%</li>
+            <li>Visibility: <span></span> km</li>
+            <li>Wind direction: <span></span></li>
+            <li>Wind speed: <span></span> m/s</li>
+            <li>Preasure: <span></span> mb</li>
+            <li>Min. temp: <span></span> ºC</li>
+            <li>Max. temp: <span></span> ºC</li>
+            <li>Snow deph: <span></span> mm</li>
+          </ul>
+        </div>
+
+        <div class="single_slide">
+          <ul class="single_slide_info">
+            <li class="day_date"></li>
+            <li><img src="" alt="" /></li>
+            <li class="detale_weather"></li>
+            <li class="slide_day_temp"><span></span>ºC</li>
+            <li>Cloud coverage: <span></span>%</li>
+            <li>Visibility: <span></span> km</li>
+            <li>Wind direction: <span></span></li>
+            <li>Wind speed: <span></span> m/s</li>
+            <li>Preasure: <span></span> mb</li>
+            <li>Min. temp: <span></span> ºC</li>
+            <li>Max. temp: <span></span> ºC</li>
+            <li>Snow deph: <span></span> mm</li>
+          </ul>
+        </div>
+
+        <div class="single_slide">
+          <ul class="single_slide_info">
+            <li class="day_date"></li>
+            <li><img src="" alt="" /></li>
+            <li class="detale_weather"></li>
+            <li class="slide_day_temp"><span></span>ºC</li>
+            <li>Cloud coverage: <span></span>%</li>
+            <li>Visibility: <span></span> km</li>
+            <li>Wind direction: <span></span></li>
+            <li>Wind speed: <span></span> m/s</li>
+            <li>Preasure: <span></span> mb</li>
+            <li>Min. temp: <span></span> ºC</li>
+            <li>Max. temp: <span></span> ºC</li>
+            <li>Snow deph: <span></span> mm</li>
+          </ul>
+        </div>
+
+        <div class="single_slide">
+          <ul class="single_slide_info">
+            <li class="day_date"></li>
+            <li><img src="" alt="" /></li>
+            <li class="detale_weather"></li>
+            <li class="slide_day_temp"><span></span>ºC</li>
+            <li>Cloud coverage: <span></span>%</li>
+            <li>Visibility: <span></span> km</li>
+            <li>Wind direction: <span></span></li>
+            <li>Wind speed: <span></span> m/s</li>
+            <li>Preasure: <span></span> mb</li>
+            <li>Min. temp: <span></span> ºC</li>
+            <li>Max. temp: <span></span> ºC</li>
+            <li>Snow deph: <span></span> mm</li>
+          </ul>
+        </div>
+
+        <div class="single_slide">
+          <ul class="single_slide_info">
+            <li class="day_date"></li>
+            <li><img src="" alt="" /></li>
+            <li class="detale_weather"></li>
+            <li class="slide_day_temp"><span></span>ºC</li>
+            <li>Cloud coverage: <span></span>%</li>
+            <li>Visibility: <span></span> km</li>
+            <li>Wind direction: <span></span></li>
+            <li>Wind speed: <span></span> m/s</li>
+            <li>Preasure: <span></span> mb</li>
+            <li>Min. temp: <span></span> ºC</li>
+            <li>Max. temp: <span></span> ºC</li>
+            <li>Snow deph: <span></span> mm</li>
+          </ul>
+        </div>
+
+        <div class="single_slide">
+          <ul class="single_slide_info">
+            <li class="day_date"></li>
+            <li><img src="" alt="" /></li>
+            <li class="detale_weather"></li>
+            <li class="slide_day_temp"><span></span>ºC</li>
+            <li>Cloud coverage: <span></span>%</li>
+            <li>Visibility: <span></span> km</li>
+            <li>Wind direction: <span></span></li>
+            <li>Wind speed: <span></span> m/s</li>
+            <li>Preasure: <span></span> mb</li>
+            <li>Min. temp: <span></span> ºC</li>
+            <li>Max. temp: <span></span> ºC</li>
+            <li>Snow deph: <span></span> mm</li>
+          </ul>
+        </div>
+
+        <div class="single_slide">
+          <ul class="single_slide_info">
+            <li class="day_date"></li>
+            <li><img src="" alt="" /></li>
+            <li class="detale_weather"></li>
+            <li class="slide_day_temp"><span></span>ºC</li>
+            <li>Cloud coverage: <span></span>%</li>
+            <li>Visibility: <span></span> km</li>
+            <li>Wind direction: <span></span></li>
+            <li>Wind speed: <span></span> m/s</li>
+            <li>Preasure: <span></span> mb</li>
+            <li>Min. temp: <span></span> ºC</li>
+            <li>Max. temp: <span></span> ºC</li>
+            <li>Snow deph: <span></span> mm</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
