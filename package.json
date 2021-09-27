@@ -1,0 +1,28 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "![Project Image](Readme-img/app-screen1.png)\r ![Project Image](Readme-img/app-screen2.png)",
+  "default": "index.html",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Borub-ar/Weather-App.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Borub-ar/Weather-App/issues"
+  },
+  "homepage": "https://github.com/Borub-ar/Weather-App#readme",
+  "dependencies": {
+    "axios": "^0.21.4",
+    "core-js": "^3.18.1",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "devDependencies": {
+    "parcel": "^2.0.0-rc.0"
+  }
+}
