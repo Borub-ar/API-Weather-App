@@ -5,35 +5,43 @@ const slideBtnsBox = document.querySelector('.slide_buttons');
 const slideBtns = document.querySelectorAll('.slide_btn');
 const closeBtn = document.querySelector('.close_btn');
 
-
-// Positioning slides
 const positionSlides = () => {
   slides.forEach((slide, i) => (slide.style.left = `${i * 100}%`));
 };
 
 positionSlides();
 
-// Update slides informations
-const updateDetaleInfo = apiData => {
-  const slideInfo = document.querySelectorAll('.single_slide_info');
+const updateDetaleInfo = APIData => {
+  slidesPanel.innerHTML = '';
 
-  slideInfo.forEach((day, i) => {
-    day.children[0].textContent = apiData[i + 1].datetime.substr(5).replace('-', '.');
-    day.children[1].children[0].src = `https://www.weatherbit.io/static/img/icons/${apiData[i + 1].weather.icon}.png`;
-    day.children[2].textContent = apiData[i + 1].weather.description;
-    day.children[3].textContent = `${apiData[i + 1].temp} ºC`;
-    day.children[4].children[0].textContent = apiData[i + 1].clouds;
-    day.children[5].children[0].textContent = apiData[i + 1].vis;
-    day.children[6].children[0].textContent = apiData[i + 1].wind_cdir_full;
-    day.children[7].children[0].textContent = apiData[i + 1].wind_spd;
-    day.children[8].children[0].textContent = apiData[i + 1].pres;
-    day.children[9].children[0].textContent = apiData[i + 1].low_temp;
-    day.children[10].children[0].textContent = apiData[i + 1].high_temp;
-    day.children[11].children[0].textContent = apiData[i + 1].snow_depth;
+  APIData.forEach((day, i) => {
+    if (i === 0) return;
+    const dateTime = day.datetime.substr(5).replace('-', '.');
+    const weatherIcon = `https://www.weatherbit.io/static/img/icons/${day.weather.icon}.png`;
+
+    const html = `
+        <div class="single_slide">
+          <ul class="single_slide_info">
+            <li class="day_date">${dateTime}</li>
+            <li><img src="${weatherIcon}" alt="weather icon" /></li>
+            <li class="detale_weather">${day.weather.description}</li>
+            <li class="slide_day_temp"><span>${day.temp}</span>ºC</li>
+            <li>Cloud coverage: <span>${day.clouds}</span>%</li>
+            <li>Visibility: <span>${day.vis}</span> km</li>
+            <li>Wind direction: <span>${day.wind_cdir_full}</span></li>
+            <li>Wind speed: <span>${day.wind_spd}</span> m/s</li>
+            <li>Preasure: <span>${day.pres}</span> mb</li>
+            <li>Min. temp: <span>${day.low_temp}</span> ºC</li>
+            <li>Max. temp: <span>${day.high_temp}</span> ºC</li>
+            <li>Snow deph: <span>${day.snow_depth}</span> mm</li>
+          </ul>
+        </div>
+    `;
+
+    slidesPanel.insertAdjacentHTML('beforeend', html);
   });
 };
 
-// Show / hide - single day information panel
 const showPanel = cardIndex => {
   blurLayer.style.display = 'block';
   blurLayer.style.backgroundColor = 'rgba(0, 0, 0, 0.342)';
@@ -91,14 +99,14 @@ const moveSlideRight = () => {
 let currentSlidePosition;
 
 // Add event listener to seven days forecast cards / click = show Panel
-for (const [index, day] of days.entries()) {
-  day.addEventListener('click', () => {
-    showPanel(index);
-    currentSlidePosition = index * 100;
+// for (const [index, day] of days.entries()) {
+//   day.addEventListener('click', () => {
+//     showPanel(index);
+//     currentSlidePosition = index * 100;
 
-    setActiveBtn(index * 100);
-  });
-}
+//     setActiveBtn(index * 100);
+//   });
+// }
 
 // Single day slide animation #1
 window.addEventListener('keydown', e => {

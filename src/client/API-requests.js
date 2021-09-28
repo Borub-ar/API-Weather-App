@@ -3,7 +3,7 @@ const APIkeys = new Map([
   ['background', 'hpthTi3lgM1vdtMHcfvAiW-hFUjaLHYCSAtG4y-Er-I'],
 ]);
 
-const getSevenDaysWeather = async () => {
+export const getSevenDaysWeather = async () => {
   try {
     const config = {
       params: {
@@ -20,7 +20,7 @@ const getSevenDaysWeather = async () => {
   }
 };
 
-const getCurrentWeather = async () => {
+export const getCurrentWeather = async () => {
   try {
     const config = {
       params: {
@@ -38,7 +38,7 @@ const getCurrentWeather = async () => {
   }
 };
 
-const getHourlyForecast = async () => {
+export const getHourlyForecast = async () => {
   try {
     const config = {
       params: {
@@ -56,7 +56,7 @@ const getHourlyForecast = async () => {
   }
 };
 
-const getBgImage = async () => {
+export const getBgImage = async () => {
   try {
     const config = {
       params: {
@@ -75,3 +75,4 @@ const getBgImage = async () => {
     return `img/rand0${rand}.jpg`;
   }
 };
+
