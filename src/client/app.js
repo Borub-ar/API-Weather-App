@@ -1,11 +1,8 @@
 'use strict';
 
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-import axios from 'axios';
-
 const currentDate = document.querySelector('.date');
 const searchCity = document.querySelector('#search_input');
+const searchBtn = document.querySelector('.search_button');
 const errorMessage = document.querySelector('.error_message');
 const sevenDaysPanel = document.querySelector('.seven_days_container');
 const hourForecastPanel = document.querySelector('.hourly_forecast');
@@ -13,22 +10,19 @@ const menu = document.querySelector('.bottom_menu');
 const sevenDaysBtn = document.querySelector('.seven_days_switch');
 const hourlyBtn = document.querySelector('.hours_switch');
 const notLetters = document.querySelectorAll('.not_letter');
-///////
 const blurLayer = document.querySelector('.blur_layer');
-const slidesPanel = document.querySelector('.slides_panel');
 const slides = document.querySelectorAll('.single_slide');
+const slidesPanel = document.querySelector('.slides_panel');
 const slideBtnsBox = document.querySelector('.slide_buttons');
 const slideBtns = document.querySelectorAll('.slide_btn');
 const closeBtn = document.querySelector('.close_btn');
-
-
 
 const APIkeys = new Map([
   ['weather', '6dab4492661c4890874829ab94d23fed'],
   ['background', 'hpthTi3lgM1vdtMHcfvAiW-hFUjaLHYCSAtG4y-Er-I'],
 ]);
 
-export const getSevenDaysWeather = async () => {
+const getWeekWeather = async () => {
   try {
     const config = {
       params: {
@@ -45,7 +39,7 @@ export const getSevenDaysWeather = async () => {
   }
 };
 
-export const getCurrentWeather = async () => {
+const getCurrentWeather = async () => {
   try {
     const config = {
       params: {
@@ -63,25 +57,23 @@ export const getCurrentWeather = async () => {
   }
 };
 
-export const getHourlyForecast = async () => {
+const getMinuteForecast = async () => {
   try {
     const config = {
       params: {
         city: searchCity.value,
         key: APIkeys.get('weather'),
-        hours: 12,
       },
     };
-    const apiURL = 'https://api.weatherbit.io/v2.0/forecast/hourly';
+    const apiURL = 'https://api.weatherbit.io/v2.0/forecast/minutely';
     const res = await axios.get(apiURL, config);
-    console.log(res.data.data);
     return res.data.data;
   } catch (err) {
     console.log(err);
   }
 };
 
-export const getBgImage = async () => {
+const getBgImage = async () => {
   try {
     const config = {
       params: {
@@ -93,7 +85,6 @@ export const getBgImage = async () => {
     const apiURL = 'https://api.unsplash.com/search/photos';
     const res = await axios.get(apiURL, config);
     const resData = res.data.results[0].urls.regular;
-
     return resData;
   } catch {
     const rand = Math.floor(Math.random() * 5) + 1;
@@ -101,37 +92,12 @@ export const getBgImage = async () => {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Set current date
 const date = new Date();
 const timeElapsed = Date.now();
 const today = new Date(timeElapsed);
 currentDate.textContent = today.toLocaleDateString();
 
-const expandMenu = () => {
-  const searchBar = document.querySelector('.search_bar');
-  menu.style.display = 'flex';
-  menu.style.transform = 'scale(1)';
-  searchBar.style.borderRadius = '0';
-};
-
-// Making slides
 const makeSlide = (APICityPhoto, APICityInfo) => {
   const container = document.querySelector('.image_container');
 
@@ -155,35 +121,7 @@ const makeSlide = (APICityPhoto, APICityInfo) => {
   container.insertAdjacentHTML('beforeend', html);
 };
 
-const handleWeekForecast = APIData => {
-  sevenDaysPanel.innerHTML = '';
-
-  APIData.forEach((day, i) => {
-    if (i === 0) return;
-    const dateTimeData = day.datetime.substr(5).replace('-', '.');
-    const dateTime = dateTimeData.startsWith(0) ? dateTimeData.substr(1) : dateTimeData;
-    const imgSource = `https://www.weatherbit.io/static/img/icons/${day.weather.icon}.png`;
-
-    const html = `
-            <div class="day">
-              <p>${dateTime}</p>
-              <img src="${imgSource}" alt="Temperature Icon" />
-              <p class="day_temp"><span>${day.temp}</span> ºC</p>
-            </div>
-      `;
-    sevenDaysPanel.insertAdjacentHTML('beforeend', html);
-  });
-  showSevenDaysIcon();
-};
-
-const removeNotification = () => {
-  notLetters.forEach(lett => {
-    lett.style.opacity = '0';
-  });
-};
-
-// Seven days forecast cards animation
-const showSevenDaysIcon = () => {
+const showWeekIcons = () => {
   const days = document.querySelectorAll('.day');
 
   for (let i = 0; i < days.length; i++) {
@@ -193,23 +131,54 @@ const showSevenDaysIcon = () => {
   }
 };
 
-// Hourly forecast in searched city
-// const makeHourlyIcons = dataAPI => {
-//   hourForecastPanel.innerHTML = '';
-//   dataAPI.forEach(hour => {
-//     const html = `
-//         <div class="weather_card">
-//             <p>${hour.datetime.substr(11)}:00</p>
-//             <img src="https://www.weatherbit.io/static/img/icons/${hour.weather.icon}.png">
-//             <p class="day_temp">${hour.temp} ºC</p>
-//         </div>        
-//         `;
+const handleWeekForecast = APIData => {
+  sevenDaysPanel.innerHTML = '';
 
-//     hourForecastPanel.insertAdjacentHTML('beforeend', html);
-//   });
-// };
+  APIData.forEach((day, i) => {
+    if (i === 0) return;
+    const dateTimeData = day.datetime.substr(5).replace('-', '.');
+    const dateTime = dateTimeData.startsWith(0) ? dateTimeData.substr(1) : dateTimeData;
 
+    const html = `
+            <div class="day">
+              <p>${dateTime}</p>
+              <img src="https://www.weatherbit.io/static/img/icons/${day.weather.icon}.png" alt="Temperature Icon" />
+              <p class="day_temp"><span>${day.temp}</span> ºC</p>
+            </div>
+      `;
+    sevenDaysPanel.insertAdjacentHTML('beforeend', html);
+  });
+  showWeekIcons();
+};
 
+const handleMinuteIcons = dataAPI => {
+  hourForecastPanel.innerHTML = '';
+  dataAPI.forEach((hour, i) => {
+    if (i % 5 !== 0) return;
+
+    const html = `
+        <div class="weather_card">
+            <p>${hour.timestamp_utc.slice(11, 16)}:00</p>
+            <p class="day_temp">${hour.temp} ºC</p>
+        </div>        
+        `;
+
+    hourForecastPanel.insertAdjacentHTML('beforeend', html);
+  });
+};
+
+const removeNotification = () => {
+  notLetters.forEach(lett => {
+    lett.style.opacity = '0';
+  });
+};
+
+const expandMenu = () => {
+  const searchBar = document.querySelector('.search_bar');
+  menu.style.display = 'flex';
+  menu.style.transform = 'scale(1)';
+  searchBar.style.borderRadius = '0';
+};
 
 const showButtons = () => {
   sevenDaysBtn.style.transform = `scale(1)`;
@@ -231,39 +200,42 @@ const hideErrorMessage = () => {
   errorMessage.classList.add('hide_error');
 };
 
-// Weather request
-const makeRequest = async () => {
-  if (!searchCity.value) return;
+const handleRequests = async () => {
+  try {
+    if (!searchCity.value) return;
+    const currentWeather = await getCurrentWeather();
+    if (!currentWeather) return;
 
-  const currentWeather = await getCurrentWeather();
+    removeNotification();
+    hideErrorMessage();
+    expandMenu();
 
-  if (!currentWeather) return;
+    const [bgImage, weekForecast, minuteForecast] = await Promise.all([
+      getBgImage(),
+      getWeekWeather(),
+      getMinuteForecast(),
+    ]);
 
-  removeNotification();
-  hideErrorMessage();
-  expandMenu();
+    handleWeekForecast(weekForecast);
+    handleCarousel(weekForecast);
 
-  const backgroundPhoto = await getBgImage();
-  // const hourlyForecast = await getHourlyForecast();
-  const sevenForecast = await getSevenDaysWeather();
+    handleMinuteIcons(minuteForecast);
+    showButtons();
+    pushSlidesLeft();
+    makeSlide(bgImage, currentWeather);
 
-  handleWeekForecast(sevenForecast);
-  updateDetaleInfo(sevenForecast);
-
-  // makeHourlyIcons(hourlyForecast);
-  showButtons();
-  pushSlidesLeft();
-  makeSlide(backgroundPhoto, currentWeather);
-
-  searchCity.value = '';
-  searchCity.blur();
+    searchCity.value = '';
+    searchCity.blur();
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 window.addEventListener('keydown', e => {
-  e.code === 'Enter' && makeRequest();
+  e.code === 'Enter' && handleRequests();
 });
 
-document.querySelector('.search_button').addEventListener('click', makeRequest);
+searchBtn.addEventListener('click', handleRequests);
 
 // Toggle forecast type
 sevenDaysBtn.addEventListener('click', () => {
@@ -300,15 +272,9 @@ hourlyBtn.addEventListener('click', () => {
 
 
 
-const positionSlides = () => {
-  slides.forEach((slide, i) => (slide.style.left = `${i * 100}%`));
-};
 
-positionSlides();
 
-const updateDetaleInfo = APIData => {
-  slidesPanel.innerHTML = '';
-
+const renderInfoList = APIData => {
   APIData.forEach((day, i) => {
     if (i === 0) return;
     const dateTime = day.datetime.substr(5).replace('-', '.');
@@ -335,6 +301,17 @@ const updateDetaleInfo = APIData => {
 
     slidesPanel.insertAdjacentHTML('beforeend', html);
   });
+};
+
+const positionSlides = () => {
+  slides.forEach((slide, i) => (slide.style.left = `${i * 100}%`));
+};
+
+const handleCarousel = APIData => {
+  slidesPanel.innerHTML = '';
+  renderInfoList(APIData);
+  positionSlides();
+  addBtnsListener();
 };
 
 const showPanel = cardIndex => {
@@ -394,14 +371,18 @@ const moveSlideRight = () => {
 let currentSlidePosition;
 
 // Add event listener to seven days forecast cards / click = show Panel
-// for (const [index, day] of days.entries()) {
-//   day.addEventListener('click', () => {
-//     showPanel(index);
-//     currentSlidePosition = index * 100;
+const addBtnsListener = () => {
+  const days = document.querySelectorAll('.day');
 
-//     setActiveBtn(index * 100);
-//   });
-// }
+  for (const [index, day] of days.entries()) {
+    day.addEventListener('click', () => {
+      showPanel(index);
+      currentSlidePosition = index * 100;
+
+      setActiveBtn(index * 100);
+    });
+  }
+};
 
 // Single day slide animation #1
 window.addEventListener('keydown', e => {
@@ -442,10 +423,3 @@ blurLayer.addEventListener('click', hidePanel);
 window.addEventListener('keydown', e => {
   e.code === 'Escape' && hidePanel();
 });
-
-
-
-
-
-
-
