@@ -33,18 +33,6 @@ label {
 }
 
 /* //////////////////////////////////////////////////////////////////////// Animations  */
-@-webkit-keyframes header_anim {
-  0% {
-    opacity: 0;
-    transform: translateY(-100%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes header_anim {
   0% {
     opacity: 0;
@@ -54,16 +42,6 @@ label {
   100% {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@-webkit-keyframes widget_anim {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
   }
 }
 
@@ -77,16 +55,6 @@ label {
   }
 }
 
-@-webkit-keyframes slide_in {
-  0% {
-    transform: translate(100%);
-  }
-
-  100% {
-    transform: translate(0);
-  }
-}
-
 @keyframes slide_in {
   0% {
     transform: translate(100%);
@@ -97,16 +65,6 @@ label {
   }
 }
 
-@-webkit-keyframes slide_out {
-  0% {
-    transform: translate(0);
-  }
-
-  100% {
-    transform: translate(-100%);
-  }
-}
-
 @keyframes slide_out {
   0% {
     transform: translate(0);
@@ -114,24 +72,6 @@ label {
 
   100% {
     transform: translate(-100%);
-  }
-}
-
-@-webkit-keyframes zoom {
-  0% {
-    transform: scale(1);
-  }
-
-  25% {
-    transform: scale(1.1);
-  }
-
-  50% {
-    transform: scale(1);
-  }
-
-  100% {
-    transform: scale(1);
   }
 }
 
@@ -150,21 +90,6 @@ label {
 
   100% {
     transform: scale(1);
-  }
-}
-
-@-webkit-keyframes wave {
-  0% {
-    transform: translateY(0);
-  }
-
-  20% {
-    transform: translateY(-20px);
-  }
-
-  40%,
-  100% {
-    transform: translateY(0);
   }
 }
 
@@ -560,22 +485,6 @@ input[type='search'] {
   color: var(--white-elements);
   border: 1px solid rgba(255, 255, 255, 0.459);
   background: rgba(255, 255, 255, 0.281);
-}
-
-::-webkit-input-placeholder {
-  color: rgb(212, 212, 212);
-}
-
-::-moz-placeholder {
-  color: rgb(212, 212, 212);
-}
-
-:-ms-input-placeholder {
-  color: rgb(212, 212, 212);
-}
-
-::-ms-input-placeholder {
-  color: rgb(212, 212, 212);
 }
 
 ::placeholder {
