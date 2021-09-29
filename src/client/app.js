@@ -11,11 +11,13 @@ const sevenDaysBtn = document.querySelector('.seven_days_switch');
 const hourlyBtn = document.querySelector('.hours_switch');
 const notLetters = document.querySelectorAll('.not_letter');
 const blurLayer = document.querySelector('.blur_layer');
-const slides = document.querySelectorAll('.single_slide');
 const slidesPanel = document.querySelector('.slides_panel');
 const slideBtnsBox = document.querySelector('.slide_buttons');
 const slideBtns = document.querySelectorAll('.slide_btn');
 const closeBtn = document.querySelector('.close_btn');
+const slideBtnLeft = document.querySelector('.slide_left_btn');
+const slideBtnRight = document.querySelector('.slide_right_btn');
+let slides;
 
 const APIkeys = new Map([
   ['weather', '6dab4492661c4890874829ab94d23fed'],
@@ -218,8 +220,8 @@ const handleRequests = async () => {
 
     handleWeekForecast(weekForecast);
     handleCarousel(weekForecast);
-
     handleMinuteIcons(minuteForecast);
+
     showButtons();
     pushSlidesLeft();
     makeSlide(bgImage, currentWeather);
@@ -248,32 +250,7 @@ hourlyBtn.addEventListener('click', () => {
   hourForecastPanel.style.transform = 'translate(0)';
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Carousel
 const renderInfoList = APIData => {
   APIData.forEach((day, i) => {
     if (i === 0) return;
@@ -298,7 +275,6 @@ const renderInfoList = APIData => {
           </ul>
         </div>
     `;
-
     slidesPanel.insertAdjacentHTML('beforeend', html);
   });
 };
@@ -308,10 +284,17 @@ const positionSlides = () => {
 };
 
 const handleCarousel = APIData => {
-  slidesPanel.innerHTML = '';
+  if (slides) slides.forEach(slide => slide.remove());
   renderInfoList(APIData);
+  slides = document.querySelectorAll('.single_slide');
   positionSlides();
   addBtnsListener();
+};
+
+const moveToChosenSlide = cardIndex => {
+  for (const slide of slides) {
+    slide.style.transform = `translate(-${cardIndex * 100}%)`;
+  }
 };
 
 const showPanel = cardIndex => {
@@ -320,24 +303,18 @@ const showPanel = cardIndex => {
   slidesPanel.style.width = '100%';
   slideBtnsBox.style.display = 'flex';
 
-  for (const child of slidesPanel.children) {
-    if (!child.classList.contains('close_btn')) {
-      child.style.transition = `opacity .2s ease-in-out, transform 1s ease-in-out`;
+  [...slidesPanel.children].forEach(el => {
+    if (!el.classList.contains('close_btn')) {
+      el.style.transition = 'transform 1.3s ease-in-out';
     }
-    child.style.opacity = 1;
-  }
+    el.style.opacity = 1;
+  });
 
-  // Moving to chosen day
-  for (const slide of slides) {
-    slide.classList.add('single_day');
-    slide.style.transform = `translate(-${cardIndex * 100}%)`;
-  }
+  moveToChosenSlide(cardIndex);
 };
 
 const hidePanel = () => {
-  for (const child of slidesPanel.children) {
-    child.style.opacity = 0;
-  }
+  [...slidesPanel.children].forEach(el => (el.style.opacity = 0));
 
   slidesPanel.style.width = '0';
   blurLayer.style.display = 'none';
@@ -384,14 +361,16 @@ const addBtnsListener = () => {
   }
 };
 
-// Single day slide animation #1
+//Slide animation #1
 window.addEventListener('keydown', e => {
   if (e.code === 'ArrowLeft') moveSlideLeft();
   if (e.code === 'ArrowRight') moveSlideRight();
 });
 
-// Single day slide animation #2
+//Slide animation #2
 slideBtnsBox.addEventListener('click', e => {
+  const slides = document.querySelectorAll('.single_slide');
+
   if (e.target.classList.contains('slide_btn')) {
     slides.forEach(s => {
       s.style.transform = `translate(-${e.target.dataset.slide * 100}%)`;
@@ -410,14 +389,9 @@ const setActiveBtn = position => {
   slideBtns[position / 100].classList.add('slide_btn_active');
 };
 
-// Single day slide animation #3
-const slideBtnLeft = document.querySelector('.slide_left_btn');
-const slideBtnRight = document.querySelector('.slide_right_btn');
-
 slideBtnLeft.addEventListener('click', moveSlideLeft);
 slideBtnRight.addEventListener('click', moveSlideRight);
 
-// hide information panel
 closeBtn.addEventListener('click', hidePanel);
 blurLayer.addEventListener('click', hidePanel);
 window.addEventListener('keydown', e => {
