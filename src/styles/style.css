@@ -33,6 +33,17 @@ label {
 }
 
 /* //////////////////////////////////////////////////////////////////////// Animations  */
+@-webkit-keyframes header_anim {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 @keyframes header_anim {
   0% {
     opacity: 0;
@@ -42,6 +53,16 @@ label {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes widget_anim {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
 
@@ -55,6 +76,16 @@ label {
   }
 }
 
+@-webkit-keyframes slide_in {
+  0% {
+    transform: translate(100%);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
 @keyframes slide_in {
   0% {
     transform: translate(100%);
@@ -65,6 +96,16 @@ label {
   }
 }
 
+@-webkit-keyframes slide_out {
+  0% {
+    transform: translate(0);
+  }
+
+  100% {
+    transform: translate(-100%);
+  }
+}
+
 @keyframes slide_out {
   0% {
     transform: translate(0);
@@ -72,6 +113,24 @@ label {
 
   100% {
     transform: translate(-100%);
+  }
+}
+
+@-webkit-keyframes zoom {
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.1);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
 
@@ -90,6 +149,21 @@ label {
 
   100% {
     transform: scale(1);
+  }
+}
+
+@-webkit-keyframes wave {
+  0% {
+    transform: translateY(0);
+  }
+
+  20% {
+    transform: translateY(-20px);
+  }
+
+  40%,
+  100% {
+    transform: translateY(0);
   }
 }
 
@@ -488,6 +562,22 @@ input[type='search'] {
   background: rgba(255, 255, 255, 0.281);
 }
 
+::-webkit-input-placeholder {
+  color: rgb(212, 212, 212);
+}
+
+::-moz-placeholder {
+  color: rgb(212, 212, 212);
+}
+
+:-ms-input-placeholder {
+  color: rgb(212, 212, 212);
+}
+
+::-ms-input-placeholder {
+  color: rgb(212, 212, 212);
+}
+
 ::placeholder {
   color: rgb(212, 212, 212);
 }
@@ -679,8 +769,13 @@ input[type='search'] {
     width: 80%;
   }
 
+  .main_header {
+    margin-right: 1.4rem;
+    font-size: clamp(1rem, 2.2vw, 3rem);
+  }
+
   .top_bar_inner {
-    flex-direction: column;
+    justify-content: space-between;
   }
 
   .image_container {
@@ -708,7 +803,7 @@ input[type='search'] {
 
   .ct_name {
     margin-top: 8rem;
-    font-size: clamp(4rem, 15vw, 6rem);
+    font-size: clamp(3rem, 9vw, 6rem);
   }
 
   .search_bar {
@@ -771,6 +866,7 @@ input[type='search'] {
 
   .ct_name {
     padding-right: 0.7rem;
+        margin: 0;
   }
 
   .slides_panel {
@@ -804,10 +900,6 @@ input[type='search'] {
   .weather_descr {
     margin: 0.3rem 0;
   }
-
-  .ct_name {
-    margin: 0;
-  }
 }
 
 @media (max-height: 680px) {
@@ -831,9 +923,10 @@ input[type='search'] {
   }
 
   .close_btn {
-    bottom: 2.5rem;
+    top: .5rem;
     right: 50%;
     transform: translateX(50%);
+    transition: transform 9999s;
   }
 
   .close_btn:hover {

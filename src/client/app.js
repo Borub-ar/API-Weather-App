@@ -1,5 +1,10 @@
 'use strict';
 
+import 'regenerator-runtime';
+import 'core-js';
+import axios from 'axios';
+
+const container = document.querySelector('.image_container');
 const currentDate = document.querySelector('.date');
 const searchCity = document.querySelector('#search_input');
 const searchBtn = document.querySelector('.search_button');
@@ -20,7 +25,7 @@ const slideBtnRight = document.querySelector('.slide_right_btn');
 let slides;
 
 const APIkeys = new Map([
-  ['weather', '6dab4492661c4890874829ab94d23fed'],
+  ['weather', 'aa865ec31c16480c9458e1274ca03961'],
   ['background', 'hpthTi3lgM1vdtMHcfvAiW-hFUjaLHYCSAtG4y-Er-I'],
 ]);
 
@@ -33,11 +38,11 @@ const getWeekWeather = async () => {
         city: searchCity.value,
       },
     };
-    const apiURL = 'https://api.weatherbit.io/v2.0/forecast/daily';
-    const res = await axios.get(apiURL, config);
+    const APIurl = 'https://api.weatherbit.io/v2.0/forecast/daily';
+    const res = await axios.get(APIurl, config);
     return res.data.data;
   } catch (err) {
-    console.log(err);
+    alert(err.message);
   }
 };
 
@@ -49,12 +54,12 @@ const getCurrentWeather = async () => {
         key: APIkeys.get('weather'),
       },
     };
-    const apiURL = 'https://api.weatherbit.io/v2.0/current';
-    const res = await axios.get(apiURL, config);
+    const APIurl = 'https://api.weatherbit.io/v2.0/current';
+    const res = await axios.get(APIurl, config);
     const resData = res.data.data[0];
     return resData;
-  } catch (err) {
-    console.log(err);
+  } catch(err) {
+    console.log(err)
     showErrorMessage();
   }
 };
@@ -67,11 +72,29 @@ const getMinuteForecast = async () => {
         key: APIkeys.get('weather'),
       },
     };
-    const apiURL = 'https://api.weatherbit.io/v2.0/forecast/minutely';
-    const res = await axios.get(apiURL, config);
+    const APIurl = 'https://api.weatherbit.io/v2.0/forecast/minutely';
+    const res = await axios.get(APIurl, config);
     return res.data.data;
   } catch (err) {
-    console.log(err);
+    alert(err.message);
+  }
+};
+
+const getDefaultWeatherImg = async () => {
+  try {
+    const config = {
+      params: {
+        client_id: APIkeys.get('background'),
+        query: 'weather',
+        per_page: 1,
+        orientation: 'landscape',
+      },
+    };
+    const APIurl = 'https://api.unsplash.com/photos/random';
+    const res = await axios.get(APIurl, config);
+    return res.data.urls.regular;
+  } catch (err) {
+    alert(err);
   }
 };
 
@@ -84,25 +107,21 @@ const getBgImage = async () => {
         per_page: 1,
       },
     };
-    const apiURL = 'https://api.unsplash.com/search/photos';
-    const res = await axios.get(apiURL, config);
+    const APIurl = 'https://api.unsplash.com/search/photos';
+    const res = await axios.get(APIurl, config);
     const resData = res.data.results[0].urls.regular;
     return resData;
   } catch {
-    const rand = Math.floor(Math.random() * 5) + 1;
-    return `img/rand0${rand}.jpg`;
+    return await getDefaultWeatherImg();
   }
 };
 
 // Set current date
-const date = new Date();
 const timeElapsed = Date.now();
 const today = new Date(timeElapsed);
 currentDate.textContent = today.toLocaleDateString();
 
-const makeSlide = (APICityPhoto, APICityInfo) => {
-  const container = document.querySelector('.image_container');
-
+const makeSlide = async (APICityPhoto, APICityInfo) => {
   const html = `
     <div class="city_photo slide_right slide_in" style="background-image: url(${APICityPhoto})">
         <div class="city_info">
@@ -160,7 +179,7 @@ const handleMinuteIcons = dataAPI => {
 
     const html = `
         <div class="weather_card">
-            <p>${hour.timestamp_utc.slice(11, 16)}:00</p>
+            <p>${hour.timestamp_utc.slice(11, 16)}</p>
             <p class="day_temp">${hour.temp} ºC</p>
         </div>        
         `;
@@ -224,12 +243,12 @@ const handleRequests = async () => {
 
     showButtons();
     pushSlidesLeft();
-    makeSlide(bgImage, currentWeather);
+    await makeSlide(bgImage, currentWeather);
 
     searchCity.value = '';
     searchCity.blur();
   } catch (err) {
-    console.log(err);
+    alert(err.message);
   }
 };
 
