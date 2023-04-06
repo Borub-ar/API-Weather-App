@@ -58,8 +58,8 @@ const getCurrentWeather = async () => {
     const res = await axios.get(APIurl, config);
     const resData = res.data.data[0];
     return resData;
-  } catch(err) {
-    console.log(err)
+  } catch (err) {
+    console.log(err);
     showErrorMessage();
   }
 };

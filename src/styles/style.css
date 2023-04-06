@@ -866,7 +866,7 @@ input[type='search'] {
 
   .ct_name {
     padding-right: 0.7rem;
-        margin: 0;
+    margin: 0;
   }
 
   .slides_panel {
@@ -923,7 +923,7 @@ input[type='search'] {
   }
 
   .close_btn {
-    top: .5rem;
+    top: 0.5rem;
     right: 50%;
     transform: translateX(50%);
     transition: transform 9999s;
